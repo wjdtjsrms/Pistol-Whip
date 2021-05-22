@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public partial class MonsterCtrl : MonoBehaviour  
+public class MonsterCtrl : MonoBehaviour  
 {
+
     public enum MonsterState { idle = 0, trace, attack, die }; // 몬스터 상태정보가 있는 Enumerable 변수 선언
     public MonsterState monsterState = MonsterState.idle; // 몬스터의 현재 상태 정보를 저정 할 Enum 변수
 
@@ -24,9 +25,7 @@ public partial class MonsterCtrl : MonoBehaviour
         monsterTr = this.gameObject.GetComponent<Transform>();
         playerTr = GameObject.FindWithTag("Player").GetComponent<Transform>();
         nvAgent = this.gameObject.GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
-
-        GameManager.Instance.actEnemyDie += MonsterDie;
+        animator = GetComponent<Animator>();      
     }
 
     // Update is called once per frame
@@ -40,14 +39,12 @@ public partial class MonsterCtrl : MonoBehaviour
 
         this.transform.LookAt(new Vector3(playerTr.position.x, this.transform.position.y, playerTr.position.z));
     }
-}
 
-public partial class MonsterCtrl : MonoBehaviour
-{    // 일정한 간격으로 몬스터의 행동 상태를 체크하고 monsterState의 값 변경
+    // 일정한 간격으로 몬스터의 행동 상태를 체크하고 monsterState의 값 변경
     IEnumerator CheckMonsterState()
     {
 
-        while (!isDie)
+        while(!isDie)
         {
             // 성능을 위해 0.2초 동안 기다렸다가 처리를 진행
             yield return new WaitForSeconds(0.2f);
@@ -55,11 +52,12 @@ public partial class MonsterCtrl : MonoBehaviour
             // 몬스터와 플레이어 사이의 거리 측정
             float dist = Vector3.Distance(playerTr.position, monsterTr.position);
 
-            if (dist <= attackDist && !GameManager.Instance.isGameOver)
+            if(dist <= attackDist && !GameManager.Instance.isGameOver)
             {
+                
                 monsterState = MonsterState.attack;
             }
-            else if (dist <= traceDist && !GameManager.Instance.isGameOver)
+            else if(dist <= traceDist && !GameManager.Instance.isGameOver)
             {
                 monsterState = MonsterState.trace;
             }
@@ -74,9 +72,9 @@ public partial class MonsterCtrl : MonoBehaviour
     // 몬스터의 상태가밧에 따라 적절한 동작을 수행하는 함수
     IEnumerator MonsterAction()
     {
-        while (!isDie)
+        while(!isDie)
         {
-            switch (monsterState)
+            switch(monsterState)
             {
                 case MonsterState.idle:
                     nvAgent.isStopped = true; // 추적을 중단한다.
@@ -96,7 +94,7 @@ public partial class MonsterCtrl : MonoBehaviour
             }
             yield return null;
         }
-
+       
     }
 
     public void GetDamage(float amount)
@@ -104,17 +102,17 @@ public partial class MonsterCtrl : MonoBehaviour
         hp -= (int)(amount / 2.0f); // 외계인은 데미지를 절반으로 줄이는 특수 능력
         animator.SetTrigger("IsHit");
 
-        if (hp <= 0)
+        if(hp<=0)
         {
-            GameManager.Instance.EnemyDie(this);
+            MonsterDie();
         }
     }
 
     // 몬스터 사망 시 처리 루틴
-    void MonsterDie()
+    void MonsterDie() 
     {
         // 중복 실행 방지
-        if (isDie == true)
+        if(isDie == true)
         {
             return;
         }
@@ -134,5 +132,4 @@ public partial class MonsterCtrl : MonoBehaviour
 
         GameManager.Instance.GetScored(2);
     }
-
 }

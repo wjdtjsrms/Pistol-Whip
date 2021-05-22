@@ -6,7 +6,6 @@ using UnityEngine.UIElements;
 public class PlayerController : MonoBehaviour
 {
     private float hp = 100.0f;
-    private float damage = 10f;
 
     public float HP
     {
@@ -15,33 +14,41 @@ public class PlayerController : MonoBehaviour
             return hp;
         }
     }
-   
+
+    // Start is called before the first frame update
     void Start()
     {
-        GameManager.Instance.actPlayerDie += Die;
-        GameManager.Instance.actPlayerDamage += GetDamage;
     }
 
-    private void OnTriggerEnter(Collider other)
+    // Update is called once per frame
+    void Update()
     {
-        if (other.gameObject.CompareTag("Punch"))
-        {
-            GameManager.Instance.playerDamage(this);
-        }
+        
+
     }
 
-    public void GetDamage()
+    public void GetDamage(float amount)
     {
-        hp -= damage;
+        hp -= amount;
 
         if(hp<0)
         {
-            GameManager.Instance.playerDie(this);
+            Die();
         }
     }
 
     public void Die()
     {
         gameObject.SetActive(false);
+
+        GameManager.Instance.EndGame();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("Punch"))
+        {
+            GetDamage(10.0f);
+        }
     }
 }

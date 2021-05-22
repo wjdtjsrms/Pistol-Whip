@@ -21,14 +21,13 @@ public class CustomController : MonoBehaviour
 
     public GameObject handGun; // 총 모델
 
-    bool triggerButton = false; // 총알 단발 발사용 불리언
+    bool triggerButton; // 총알 단발 발사용 불리언
 
     public HandState currentHand; // 현재 오른손,왼손인지 알기 위한 변수
-    private bool isPressed = false; // X,A 버튼이 눌렸는지 판독
-
+    private bool isPressed = false;
     void Start()
     {
-        TryInitiaiize(); // 컨트롤러 세팅
+        TryInitiaiize();
     }
     void Update()
     {
@@ -113,7 +112,6 @@ public class CustomController : MonoBehaviour
                 currentControllerModel = null;
                 currentHand = HandState.NONE;
             }
-
             if (currentControllerModel)
             {
                 controllerInstance = Instantiate(currentControllerModel, transform);
@@ -165,7 +163,7 @@ public class CustomController : MonoBehaviour
                 isPressed = true;
                 return true;
 
-            }
+            }         
         }
         else
         {

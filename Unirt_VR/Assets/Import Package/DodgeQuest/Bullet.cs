@@ -23,7 +23,7 @@ public class Bullet : MonoBehaviour
         if(other.tag == "Player")
         {
             PlayerController playercontroller= other.GetComponent<PlayerController>();
-            //playercontroller?.GetDamage(attackAmount);            
+            playercontroller?.GetDamage(attackAmount);            
         }
     }
 
