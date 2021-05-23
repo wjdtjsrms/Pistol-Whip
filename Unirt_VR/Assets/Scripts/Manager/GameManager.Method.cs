@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.XR;
 public partial class GameManager : MonoBehaviour
 {
     private void Awake()
@@ -17,7 +17,7 @@ public partial class GameManager : MonoBehaviour
     }
 
     void Start()
-    { 
+    {
         player = playerGameObject.GetComponent<PlayerController>();
         actPlayerDie += EndGame;
     }
@@ -26,8 +26,17 @@ public partial class GameManager : MonoBehaviour
     {
         if (!isGameOver)
         {
-            HP =  (int)player?.HP;
+            HP = (int)player?.HP;
         }
+
+        if(true) // 개발이 끝나면 isGameOver로 바꾼다.
+        {
+            if (CustomController.IsButtonPressed(CommonUsages.menuButton, ref menumButtonPressed, true))
+            {
+                RestartGame();
+            }
+        }
+
     }
 }
 public partial class GameManager : MonoBehaviour

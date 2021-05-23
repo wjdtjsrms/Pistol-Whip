@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 public partial class GunShoot : MonoBehaviour
 {
@@ -13,12 +14,10 @@ public partial class GunShoot : MonoBehaviour
     [SerializeField]
     private AudioClip fireClip; // 총 발사 사운드 클립
 
-    //public bool isGrab = false;
     private Animator childAnimator; // 총 애니메이션 컴포넌트 자식에게서 받아온다.
     private AudioSource fireAudio; // 발사 사운드를 재생할 오디오소스 컴포넌트
     private LineRenderer bulletLineRender; // 발사될 레이를 그릴 
-
-    public HandState currentGrab; // CustomController에서 정의한다.
+    private bool triggerButton = false; // 총알 단발 발사용 불리언
 
     private void Awake()
     {
@@ -31,36 +30,25 @@ public partial class GunShoot : MonoBehaviour
         bulletLineRender.enabled = false;
     }
 
-    void Start()
+    private void Start()
     {
         childAnimator = GetComponentInChildren<Animator>();
         fireAudio = GetComponent<AudioSource>();
+    }
+
+    private void Update()
+    {     
+        // 오른쪽 트리거 버튼을 누르면 사격한다.
+        if (CustomController.IsButtonPressed(CommonUsages.triggerButton, ref triggerButton, false))
+        {
+            Shoot();
+        }
     }
 }
 
 public partial class GunShoot : MonoBehaviour
 {
-    public void SetGrapState(HandState state)
-    {
-        currentGrab = state;
-    }
-    public void SetGrapNone()
-    {
-        if (!GetComponent<XRGrabInteractable>().isSelected)
-        {
-            currentGrab = HandState.NONE;
-        }
-    }
-    public void SetGrapLeft()
-    {
-        currentGrab = HandState.LEFT;
-    }
-    public void SetGrapRight()
-    {
-        currentGrab = HandState.RIGHT;
-    }
-
-    public void Shoot()
+    private void Shoot()
     {
         GameObject tempFlash;
         tempFlash = Instantiate(muzzleFlashPrefab, barrelLocation.position, barrelLocation.rotation); // 사격 이펙트 생성

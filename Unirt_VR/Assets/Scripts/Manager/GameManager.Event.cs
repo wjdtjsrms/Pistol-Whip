@@ -15,7 +15,7 @@ public partial class GameManager : MonoBehaviour
     {
         if(obj is PlayerController) // 이 이벤트는 PlayerController에서만 호출 가능하다.
         {
-            actPlayerDie.Invoke();
+            actPlayerDie?.Invoke(); // null 아니라면 호출
         }  
     }
 
@@ -23,7 +23,7 @@ public partial class GameManager : MonoBehaviour
     {
         if (obj is PlayerController) // 이 이벤트는 PlayerController에서만 호출 가능하다.
         {
-            actPlayerDamage.Invoke();
+            actPlayerDamage?.Invoke();
         }
     }
 
@@ -31,7 +31,7 @@ public partial class GameManager : MonoBehaviour
     {
         if (obj is MonsterCtrl) // 이 이벤트는 Enemy에서만 호출 가능하다.
         {
-            actEnemyDie.Invoke();
+            actEnemyDie?.Invoke();
         }
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR;
 using System;
 
 // 개발시에만 필요한 기능을 모아둘 클래스
@@ -15,11 +16,11 @@ public class DeveloperOption : MonoBehaviour
     [SerializeField]
     private Button setFreeMove;
     [SerializeField]
-    private Text debugText;
+    private static Text debugText;
     [SerializeField]
     private GameObject childObject;
     #endregion
-
+    bool isPressedXA = false; // 버튼이 눌렸는지 확인하는 변수
     [SerializeField]
     private MovementProvider movementProvider; // 이동 설정 변경을 위해 선언
     [SerializeField]
@@ -34,12 +35,11 @@ public class DeveloperOption : MonoBehaviour
     private void Update()
     {
         SetUI();
-        //debugText.text = customController.IsPrimaryButtonPressed().ToString();
     }
 
     private void SetUI() // 콘트롤러의 x,a 버튼이 눌렸으면 UI를 껏다 킨다. 
-    {
-        if (customController.IsPrimaryButtonPressed())
+    {    
+        if (CustomController.IsButtonPressed(CommonUsages.primaryButton, ref isPressedXA,false))
         {
             childObject.gameObject.SetActive(!childObject.activeSelf);
         }
