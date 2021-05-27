@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.SceneManagement;
 public partial class GunShoot : MonoBehaviour
 {
     #region 총 관련 필드
@@ -76,14 +77,14 @@ public partial class GunShoot : MonoBehaviour
         // 오른쪽 트리거 버튼을 누르면 사격한다.
         if (CustomController.IsButtonPressed(CommonUsages.triggerButton, ref triggerButton, false))
         {
-            if(state == State.Empty) // 총알이 없다면 발사되지 않고 빈 총 소리가 난다.
+            if (state == State.Empty) // 총알이 없다면 발사되지 않고 빈 총 소리가 난다.
             {
                 gunAudio?.PlayOneShot(emptydClip);
             }
-            if(state == State.Ready)
+            if (state == State.Ready)
             {
                 Shot(); // 실제 발사 처리 실행
-            }         
+            }
         }
 
         // 총을 90도로 꺾으면 재장전 된다.
@@ -111,6 +112,11 @@ public partial class GunShoot : MonoBehaviour
                 MonsterCtrl ailen = hit.transform.GetComponent<MonsterCtrl>();
                 ailen?.GetDamage(attackAmount);
             }
+            if (hit.transform.gameObject.CompareTag("Button"))
+            {
+                SceneManager.LoadScene("SampleScene");
+            }
+
         }
         else
         {
@@ -126,7 +132,7 @@ public partial class GunShoot : MonoBehaviour
         bulletText.text = magAmmo.ToString(); // 남은 총알 갱신
         if (magAmmo <= 0)
         {
-            state = State.Empty;        
+            state = State.Empty;
         }
     }
 
@@ -138,9 +144,9 @@ public partial class GunShoot : MonoBehaviour
         lineFaders[++index % lineFaders.Count].StartRender(barrelLocation.position, hitposition); // 사격시 생성되는 라인 렌더러 드로우
     }
 
-    public bool Reloading() 
+    public bool Reloading()
     {
-        if(state == State.Reloading || magAmmo >=  magCapacity)
+        if (state == State.Reloading || magAmmo >= magCapacity)
         {
             return false;
         }
