@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public partial class MonsterCtrl : MonoBehaviour  
+public partial class MonsterCtrl : MonoBehaviour,IShotAble  
 {
     public enum MonsterState { idle = 0, trace, attack, die }; // 몬스터 상태정보가 있는 Enumerable 변수 선언
     public MonsterState monsterState = MonsterState.idle; // 몬스터의 현재 상태 정보를 저정 할 Enum 변수
@@ -35,8 +35,8 @@ public partial class MonsterCtrl : MonoBehaviour
         nvAgent.destination = playerTr.position; // 추적 위치할 위치를 업데이트 한다.
         animator.SetBool("IsTrace", true); // 추적 애니메이션을 활성화 한다.
 
-        StartCoroutine(CheckMonsterState()); // 일정 간격으로 몬스터의 상태를 체크하는 코루틴
-        StartCoroutine(MonsterAction()); // 몬스터의 상태에 따라 설정을 변경하는 코루틴
+        //StartCoroutine(CheckMonsterState()); // 일정 간격으로 몬스터의 상태를 체크하는 코루틴
+        //StartCoroutine(MonsterAction()); // 몬스터의 상태에 따라 설정을 변경하는 코루틴
 
         this.transform.LookAt(new Vector3(playerTr.position.x, this.transform.position.y, playerTr.position.z));
     }
@@ -46,7 +46,6 @@ public partial class MonsterCtrl : MonoBehaviour
 {    // 일정한 간격으로 몬스터의 행동 상태를 체크하고 monsterState의 값 변경
     IEnumerator CheckMonsterState()
     {
-
         while (!isDie)
         {
             // 성능을 위해 0.2초 동안 기다렸다가 처리를 진행
@@ -71,7 +70,7 @@ public partial class MonsterCtrl : MonoBehaviour
 
     }
 
-    // 몬스터의 상태가밧에 따라 적절한 동작을 수행하는 함수
+    // 몬스터의 상태에 따라 적절한 동작을 수행하는 함수
     IEnumerator MonsterAction()
     {
         while (!isDie)
@@ -98,10 +97,9 @@ public partial class MonsterCtrl : MonoBehaviour
         }
 
     }
-
-    public void GetDamage(float amount)
+    public void OnShot(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
-        hp -= (int)(amount / 2.0f); // 외계인은 데미지를 절반으로 줄이는 특수 능력
+        hp -= (int)(damage / 2.0f); // 외계인은 데미지를 절반으로 줄이는 특수 능력
         animator.SetTrigger("IsHit");
 
         if (hp <= 0)

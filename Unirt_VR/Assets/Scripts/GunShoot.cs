@@ -4,8 +4,10 @@ using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.SceneManagement;
 public partial class GunShoot : MonoBehaviour
 {
+    #region 총 관련 필드
     [SerializeField]
     private ParticleSystem muzzle; // 사격 이펙트
     [SerializeField]
@@ -25,7 +27,6 @@ public partial class GunShoot : MonoBehaviour
 
     private Animator childAnimator; // 총 애니메이션 컴포넌트 자식에게서 받아온다.
     private AudioSource gunAudio; // 발사 사운드를 재생할 오디오소스 컴포넌트
-    private LineRenderer bulletLineRender; // 발사될 레이를 그릴 
     private bool triggerButton = false; // 총알 단발 발사용 불리언
     private int magCapacity = 15; // 탄창 용량
     private int magAmmo = 15; // 현재 탄창에 남아 있는 탄알
@@ -38,6 +39,14 @@ public partial class GunShoot : MonoBehaviour
         Reloading // 재장 중
     }
     private State state;
+    #endregion
+
+    #region 라인렌더러 관련 필드
+    [SerializeField]
+    private BulletLineRender lineFader;
+    private List<BulletLineRender> lineFaders;
+    private int index = 0; // 현재 그릴 라인 렌더러의 인덱스
+    #endregion
 
     private void Awake()
     {
@@ -45,9 +54,13 @@ public partial class GunShoot : MonoBehaviour
         {
             barrelLocation = this.transform;
         }
-        bulletLineRender = GetComponent<LineRenderer>();
-        bulletLineRender.positionCount = 2;
-        bulletLineRender.enabled = false;
+
+        // 최대 4발 까지 동시에 보인다.
+        lineFaders = new List<BulletLineRender>();
+        lineFaders.Add(Instantiate(lineFader));
+        lineFaders.Add(Instantiate(lineFader));
+        lineFaders.Add(Instantiate(lineFader));
+        lineFaders.Add(Instantiate(lineFader));
     }
 
     private void Start()
@@ -56,7 +69,7 @@ public partial class GunShoot : MonoBehaviour
         gunAudio = GetComponent<AudioSource>();
         magAmmo = magCapacity; // 탄창을 가득 채운다.
         state = State.Ready; // 총의 현재 상태를 총을 쏠 준비가 된 상태로 변경
-        muzzle.gameObject.transform.position = barrelLocation.position;
+        muzzle.gameObject.transform.position = barrelLocation.position; // 발사 이펙트의 위치를 총구로 변경     
     }
 
     private void Update()
@@ -64,15 +77,17 @@ public partial class GunShoot : MonoBehaviour
         // 오른쪽 트리거 버튼을 누르면 사격한다.
         if (CustomController.IsButtonPressed(CommonUsages.triggerButton, ref triggerButton, false))
         {
-            if(state == State.Empty)
+            if (state == State.Empty) // 총알이 없다면 발사되지 않고 빈 총 소리가 난다.
             {
                 gunAudio?.PlayOneShot(emptydClip);
             }
-            if(state == State.Ready)
+            if (state == State.Ready)
             {
                 Shot(); // 실제 발사 처리 실행
-            }         
+            }
         }
+
+        // 총을 90도로 꺾으면 재장전 된다.
         if (Vector3.Angle(transform.up, Vector3.up) > 100)
         {
             Reloading();
@@ -84,8 +99,6 @@ public partial class GunShoot : MonoBehaviour
 {
     private void Shot()
     {
-        muzzle.Play(); // 코루틴에서 이펙트 호출하면 오류 남
-
         RaycastHit hit;
         Vector3 hitPosition;
 
@@ -93,12 +106,9 @@ public partial class GunShoot : MonoBehaviour
         {
             // 레이가 충돌한 지점 저장
             hitPosition = hit.point;
-
-            if (hit.transform.gameObject.CompareTag("Monster2"))
-            {
-                MonsterCtrl ailen = hit.transform.GetComponent<MonsterCtrl>();
-                ailen?.GetDamage(attackAmount);
-            }
+            // 총과 인터렉션이 있는 타입이라면 그 객체의 함수를 호출한다.
+            IShotAble shotObject = hit.transform.gameObject.GetComponent<IShotAble>();
+            shotObject?.OnShot(attackAmount, hit.point, hit.normal);
         }
         else
         {
@@ -108,53 +118,44 @@ public partial class GunShoot : MonoBehaviour
         }
 
         //발사 이펙트 재생
-        StartCoroutine(ShotEffect(hitPosition));
+        ShotEffect(hitPosition);
 
         magAmmo--;
         bulletText.text = magAmmo.ToString(); // 남은 총알 갱신
         if (magAmmo <= 0)
         {
-            state = State.Empty;        
+            state = State.Empty;
         }
     }
 
-    private IEnumerator ShotEffect(Vector3 hitposition)
+    private void ShotEffect(Vector3 hitposition)
     {
+        muzzle.Play(); // 사격 이펙트 실행
         childAnimator?.SetTrigger("Fire"); // 사격 애니메이션 실행
         gunAudio?.PlayOneShot(fireClip); // 사격 사운드 실행
-
-        // 선의 시작점은 총구의 위치
-        bulletLineRender.SetPosition(0, barrelLocation.position);
-        // 선의 끝점은 입력으로 들어온 충돌 위치
-        bulletLineRender.SetPosition(1, hitposition);
-
-        // 라인 렌더러를 활성화 하여 탄알 궤적을 그린다.
-        bulletLineRender.enabled = true;
-        // 잠시 대기
-        yield return new WaitForSeconds(0.03f);
-        // 라인 렌더러를 활성화 하여 탄알 궤적을 지운다.
-        bulletLineRender.enabled = false;
+        lineFaders[++index % lineFaders.Count].StartRender(barrelLocation.position, hitposition); // 사격시 생성되는 라인 렌더러 드로우
     }
 
     public bool Reloading()
     {
-        if(state == State.Reloading || magAmmo >=  magCapacity)
+        if (state == State.Reloading || magAmmo >= magCapacity)
         {
             return false;
         }
 
+        StopAllCoroutines();
         StartCoroutine(ReloadRoutine());
         return true;
     }
 
     private IEnumerator ReloadRoutine()
     {
-        state = State.Reloading;
-        gunAudio?.PlayOneShot(reloadClip);
+        state = State.Reloading;// 상태를 재장전 중으로 바꾼다.
+        gunAudio?.PlayOneShot(reloadClip); // 재장전 소리를 재생한다.
 
-        yield return new WaitForSeconds(reloadTime);
-        magAmmo = magCapacity;
-        bulletText.text = magAmmo.ToString(); // 남은 총알 갱신
-        state = State.Ready;
+        yield return new WaitForSeconds(reloadTime); // 재장전 시간만큼 기다린다.
+        magAmmo = magCapacity; // 총알을 최대치까지 채운다.
+        bulletText.text = magAmmo.ToString(); // 총알 정보를 UI에 갱신
+        state = State.Ready; // 사격 가능 상태로 바꾼다.
     }
 }
