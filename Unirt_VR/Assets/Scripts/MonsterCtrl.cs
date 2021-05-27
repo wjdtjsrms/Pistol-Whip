@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public partial class MonsterCtrl : MonoBehaviour  
+public partial class MonsterCtrl : MonoBehaviour,IShotAble  
 {
     public enum MonsterState { idle = 0, trace, attack, die }; // 몬스터 상태정보가 있는 Enumerable 변수 선언
     public MonsterState monsterState = MonsterState.idle; // 몬스터의 현재 상태 정보를 저정 할 Enum 변수
@@ -97,10 +97,9 @@ public partial class MonsterCtrl : MonoBehaviour
         }
 
     }
-
-    public void GetDamage(float amount)
+    public void OnShot(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
-        hp -= (int)(amount / 2.0f); // 외계인은 데미지를 절반으로 줄이는 특수 능력
+        hp -= (int)(damage / 2.0f); // 외계인은 데미지를 절반으로 줄이는 특수 능력
         animator.SetTrigger("IsHit");
 
         if (hp <= 0)

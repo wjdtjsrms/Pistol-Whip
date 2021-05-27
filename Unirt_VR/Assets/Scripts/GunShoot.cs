@@ -31,14 +31,6 @@ public partial class GunShoot : MonoBehaviour
     private int magCapacity = 15; // 탄창 용량
     private int magAmmo = 15; // 현재 탄창에 남아 있는 탄알
     private float reloadTime = 1.0f; // 재장전 소요 시간
-    #endregion
-
-    #region 라인렌더러 관련 필드
-    [SerializeField]
-    private BulletLineRender lineFader;
-    private List<BulletLineRender> lineFaders;
-    private int index = 0; // 현재 그릴 라인 렌더러의 인덱스
-    #endregion
 
     private enum State // 총의 현재 상태
     {
@@ -47,6 +39,14 @@ public partial class GunShoot : MonoBehaviour
         Reloading // 재장 중
     }
     private State state;
+    #endregion
+
+    #region 라인렌더러 관련 필드
+    [SerializeField]
+    private BulletLineRender lineFader;
+    private List<BulletLineRender> lineFaders;
+    private int index = 0; // 현재 그릴 라인 렌더러의 인덱스
+    #endregion
 
     private void Awake()
     {
@@ -106,17 +106,9 @@ public partial class GunShoot : MonoBehaviour
         {
             // 레이가 충돌한 지점 저장
             hitPosition = hit.point;
-
-            if (hit.transform.gameObject.CompareTag("Monster2"))
-            {
-                MonsterCtrl ailen = hit.transform.GetComponent<MonsterCtrl>();
-                ailen?.GetDamage(attackAmount);
-            }
-            if (hit.transform.gameObject.CompareTag("Button"))
-            {
-                SceneManager.LoadScene("SampleScene");
-            }
-
+            // 총과 인터렉션이 있는 타입이라면 그 객체의 함수를 호출한다.
+            IShotAble shotObject = hit.transform.gameObject.GetComponent<IShotAble>();
+            shotObject?.OnShot(attackAmount, hit.point, hit.normal);
         }
         else
         {

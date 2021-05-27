@@ -20741,6 +20741,7 @@ GameObject:
   m_Component:
   - component: {fileID: 985361411}
   - component: {fileID: 985361410}
+  - component: {fileID: 985361409}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Button
@@ -20748,6 +20749,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &985361409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985361408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ee145db29c15c149aa19da81e80f873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!65 &985361410
 BoxCollider:
   m_ObjectHideFlags: 0
