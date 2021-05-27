@@ -35,8 +35,8 @@ public partial class MonsterCtrl : MonoBehaviour
         nvAgent.destination = playerTr.position; // 추적 위치할 위치를 업데이트 한다.
         animator.SetBool("IsTrace", true); // 추적 애니메이션을 활성화 한다.
 
-        StartCoroutine(CheckMonsterState()); // 일정 간격으로 몬스터의 상태를 체크하는 코루틴
-        StartCoroutine(MonsterAction()); // 몬스터의 상태에 따라 설정을 변경하는 코루틴
+        //StartCoroutine(CheckMonsterState()); // 일정 간격으로 몬스터의 상태를 체크하는 코루틴
+        //StartCoroutine(MonsterAction()); // 몬스터의 상태에 따라 설정을 변경하는 코루틴
 
         this.transform.LookAt(new Vector3(playerTr.position.x, this.transform.position.y, playerTr.position.z));
     }
@@ -46,7 +46,6 @@ public partial class MonsterCtrl : MonoBehaviour
 {    // 일정한 간격으로 몬스터의 행동 상태를 체크하고 monsterState의 값 변경
     IEnumerator CheckMonsterState()
     {
-
         while (!isDie)
         {
             // 성능을 위해 0.2초 동안 기다렸다가 처리를 진행
@@ -71,7 +70,7 @@ public partial class MonsterCtrl : MonoBehaviour
 
     }
 
-    // 몬스터의 상태가밧에 따라 적절한 동작을 수행하는 함수
+    // 몬스터의 상태에 따라 적절한 동작을 수행하는 함수
     IEnumerator MonsterAction()
     {
         while (!isDie)
