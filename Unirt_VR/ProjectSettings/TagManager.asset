@@ -8,6 +8,7 @@ TagManager:
   - Monster2
   - Punch
   - Sword
+  - Button
   layers:
   - Default
   - TransparentFX
