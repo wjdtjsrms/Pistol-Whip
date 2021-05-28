@@ -12,12 +12,13 @@ public class MovementProvider : MonoBehaviour
         GoFront
     }
 
-    [SerializeField]
-    private float speed = 1.0f; // 이동 속도
+    public float speed = 1.0f; // 이동 속도
+    public float gravityMultiplier = 1.0f; // 중력에 영향을 받는 경우를 처리
     public List<XRController> controllers = null; // 컨트롤러 리스트 (상황에 따라서 1개 혹은 n개가 설정 될 수 있다.)
     private CharacterController characterController = null; // VR Rig의 캐릭터 컨트롤러
     private GameObject head = null; // 카메라의 헤드 위치
     public MoveType moveType = MoveType.FreeMove; //  플레이어 이동 방식 설정
+
 
     private void Awake() // 스크립트 실행시 가장 먼저 한번 실행, setActive(false) 상태여도 실행 된다.
     {

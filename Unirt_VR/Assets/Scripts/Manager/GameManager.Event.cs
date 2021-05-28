@@ -7,7 +7,6 @@ public partial class GameManager : MonoBehaviour
     public event Action actPlayerDie;
     public event Action actPlayerDamage; // 플레이어가 데미지를 입으면 데미지를 입는다, 콤보가 깨진다. 화면이 잠시 빨개진다, 이펙트가 생긴다.
     public event Action actEnemyDie;
-    public event Action actGameStart;
 }
 
 public partial class GameManager : MonoBehaviour
@@ -33,13 +32,6 @@ public partial class GameManager : MonoBehaviour
         if (obj is MonsterCtrl) // 이 이벤트는 Enemy에서만 호출 가능하다.
         {
             actEnemyDie?.Invoke();
-        }
-    }
-    public void GameStart(StartButton obj)
-    {
-        if (obj is StartButton) // 이 이벤트는 StartButton에서만 호출 가능하다.
-        {
-            actGameStart?.Invoke();
         }
     }
 }
