@@ -5,6 +5,8 @@ using UnityEngine.XR;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.SceneManagement;
+using TMPro;
+
 public partial class GunShoot : MonoBehaviour
 {
     #region 총 관련 필드
@@ -13,18 +15,16 @@ public partial class GunShoot : MonoBehaviour
     [SerializeField]
     private Transform barrelLocation; // 사격 이펙트가 생성될 위치
     [SerializeField]
-    private float attackAmount = 35.0f; // 총 공격력
-    [SerializeField]
-    private float fireDistance = 100.0f; // 총 사정거리
-    [SerializeField]
     private AudioClip fireClip; // 총 발사 사운드 클립
     [SerializeField]
     private AudioClip reloadClip; // 총 재장전 사운드 클립
     [SerializeField]
     private AudioClip emptydClip; // 총 재장전 사운드 클립
     [SerializeField]
-    private Text bulletText; // 탄창 수를 알려주는 텍스트
+    private TextMeshPro bulletText; // 탄창 수를 알려주는 텍스트
 
+    private float attackAmount = 35.0f; // 총 공격력
+    private float fireDistance = 35.0f; // 총 사정거리
     private Animator childAnimator; // 총 애니메이션 컴포넌트 자식에게서 받아온다.
     private AudioSource gunAudio; // 발사 사운드를 재생할 오디오소스 컴포넌트
     private bool triggerButton = false; // 총알 단발 발사용 불리언
@@ -43,8 +43,7 @@ public partial class GunShoot : MonoBehaviour
 
     #region 라인렌더러 관련 필드
     [SerializeField]
-    private BulletLineRender lineFader;
-    private List<BulletLineRender> lineFaders;
+    private BulletLineRender[] lineRenders;
     private int index = 0; // 현재 그릴 라인 렌더러의 인덱스
     #endregion
 
@@ -55,12 +54,6 @@ public partial class GunShoot : MonoBehaviour
             barrelLocation = this.transform;
         }
 
-        // 최대 4발 까지 동시에 보인다.
-        lineFaders = new List<BulletLineRender>();
-        lineFaders.Add(Instantiate(lineFader));
-        lineFaders.Add(Instantiate(lineFader));
-        lineFaders.Add(Instantiate(lineFader));
-        lineFaders.Add(Instantiate(lineFader));
     }
 
     private void Start()
@@ -69,7 +62,7 @@ public partial class GunShoot : MonoBehaviour
         gunAudio = GetComponent<AudioSource>();
         magAmmo = magCapacity; // 탄창을 가득 채운다.
         state = State.Ready; // 총의 현재 상태를 총을 쏠 준비가 된 상태로 변경
-        muzzle.gameObject.transform.position = barrelLocation.position; // 발사 이펙트의 위치를 총구로 변경     
+        muzzle.gameObject.transform.position = barrelLocation.position; // 발사 이펙트의 위치를 총구로 변경      
     }
 
     private void Update()
@@ -133,7 +126,7 @@ public partial class GunShoot : MonoBehaviour
         muzzle.Play(); // 사격 이펙트 실행
         childAnimator?.SetTrigger("Fire"); // 사격 애니메이션 실행
         gunAudio?.PlayOneShot(fireClip); // 사격 사운드 실행
-        lineFaders[++index % lineFaders.Count].StartRender(barrelLocation.position, hitposition); // 사격시 생성되는 라인 렌더러 드로우
+        lineRenders[++index % lineRenders.Length].StartRender(barrelLocation.position, hitposition); // 사격시 생성되는 라인 렌더러 드로우
     }
 
     public bool Reloading()

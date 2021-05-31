@@ -7,8 +7,7 @@ using UnityEngine.UI;
 public partial class GameManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject playerGameObject;
-    private PlayerController player;
+    private PlayerController playerController;
     private static GameManager instance;
     private bool menumButtonPressed = false; // 메뉴 버튼 클릭용 불리언
     public bool isGameOver
@@ -25,5 +24,12 @@ public partial class GameManager : MonoBehaviour
     {
         get;
         private set;
+    }
+    public Vector3 PlayerPos
+    {
+        get
+        {
+            return playerController.transform.position;
+        }
     }
 }

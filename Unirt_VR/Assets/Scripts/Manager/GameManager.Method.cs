@@ -18,18 +18,17 @@ public partial class GameManager : MonoBehaviour
 
     void Start()
     {
-        player = playerGameObject.GetComponent<PlayerController>();
         actPlayerDie += EndGame;
     }
 
     void Update()
     {
-        if (!isGameOver)
+        if (!isGameOver) // 데미지를 입을 때만 호출되게 변경
         {
-            HP = (int)player?.HP;
+            HP = (int)playerController?.HP;
         }
 
-        if(true) // 개발이 끝나면 isGameOver로 바꾼다.
+        if (true) // 개발이 끝나면 isGameOver로 바꾼다.
         {
             if (CustomController.IsButtonPressed(CommonUsages.menuButton, ref menumButtonPressed, true))
             {
