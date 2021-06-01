@@ -42,6 +42,7 @@ public class FadeScript : MonoBehaviour
     void Start()
     {
         GameManager.Instance.actGameStart += Fade;
+        GameManager.Instance.actPlayerDamage += Fade;
     }
 
     // Update is called once per frame
