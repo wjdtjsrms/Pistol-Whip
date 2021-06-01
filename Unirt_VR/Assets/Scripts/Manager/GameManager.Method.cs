@@ -14,11 +14,12 @@ public partial class GameManager : MonoBehaviour
 
         Score = 0;
         isGameOver = false;
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Start()
     {
-        actPlayerDie += EndGame;
+        actPlayerDie += EndGame;        
     }
 
     void Update()
@@ -66,5 +67,16 @@ public partial class GameManager : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene("SampleScene");
+    }
+    public void SetMusic()
+    {
+        if(!audioSource.isPlaying)
+        {
+            audioSource.Play();
+        }
+        else
+        {
+            audioSource.Pause();
+        }
     }
 }

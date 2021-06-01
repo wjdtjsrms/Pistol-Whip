@@ -16,6 +16,8 @@ public class DeveloperOption : MonoBehaviour
     [SerializeField]
     private Button setFreeMove;
     [SerializeField]
+    private Button setMusic;
+    [SerializeField]
     private static Text debugText;
     [SerializeField]
     private GameObject childObject;
@@ -31,6 +33,7 @@ public class DeveloperOption : MonoBehaviour
         // 버튼에 이동 설정 변경 이벤트 추가
         setFreeMove.onClick.AddListener(() => movementProvider.moveType = MovementProvider.MoveType.FreeMove);
         setGoFront.onClick.AddListener(() => movementProvider.moveType = MovementProvider.MoveType.GoFront);
+        setMusic.onClick.AddListener(() => GameManager.Instance.SetMusic());
     }
     private void Update()
     {

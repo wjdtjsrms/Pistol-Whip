@@ -26,7 +26,7 @@ public partial class MonsterCtrl : MonoBehaviour,IShotAble
         nvAgent = this.gameObject.GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
 
-        GameManager.Instance.actEnemyDie += MonsterDie;
+        //GameManager.Instance.actEnemyDie += MonsterDie;
     }
 
     // Update is called once per frame
@@ -104,7 +104,8 @@ public partial class MonsterCtrl : MonoBehaviour
 
         if (hp <= 0)
         {
-            GameManager.Instance.EnemyDie(this);
+            Destroy(this.gameObject);
+            //GameManager.Instance.EnemyDie(this);
         }
     }
 

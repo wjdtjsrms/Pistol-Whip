@@ -10,21 +10,29 @@ public class EnemyCtrl : MonoBehaviour, IShotAble
     [SerializeField]
     private Bullet bullet;
     [SerializeField]
-    private TextMeshPro scoreText;
-
+    private GameObject scoreUI;
     [SerializeField]
-    private Transform gunBarrel;
+    private AudioClip attackClip;
+    private AudioSource audioSource;
+    private TextMeshPro scoreText;
+    [SerializeField]
+    private ParticleSystem muzzle;
+    [SerializeField]
+    private Transform barrelLocation;
     private Vector3 moveTargetVec;
     private Vector3 playerPos;
     private Animator animator;
     private float moveSpeed = 4.0f;
     private bool isDie = false;
 
+    YieldInstruction waitShort = new WaitForSeconds(1.0f);
     YieldInstruction waitAttackDely = new WaitForSeconds(2.0f);
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        scoreText = scoreUI.GetComponent<TextMeshPro>();
+        audioSource = GetComponent<AudioSource>();
     }
     // Start is called before the first frame update
     void Start()
@@ -41,7 +49,8 @@ public class EnemyCtrl : MonoBehaviour, IShotAble
         moveTargetVec.y = 0;
         transform.LookAt(moveTargetVec);
         isDie = false;
-        scoreText.enabled = false;
+        scoreUI.SetActive(false);
+        muzzle.gameObject.transform.position = barrelLocation.position; // 발사 이펙트의 위치를 총구로 변경    
         StartCoroutine(MoveCoroutine());
     }
     private void OnDisable()
@@ -76,8 +85,9 @@ public class EnemyCtrl : MonoBehaviour, IShotAble
     void EnemyAttack()
     {
         animator.SetBool("IsAttack", true);
-        Vector3 shotPosition = gunBarrel.position;
-        Instantiate(bullet, gunBarrel.position, transform.rotation).gameObject.transform.LookAt(GameManager.Instance.PlayerPos);
+        muzzle.Play();
+        audioSource.PlayOneShot(attackClip);
+        Instantiate(bullet, barrelLocation.position, transform.rotation).gameObject.transform.LookAt(GameManager.Instance.PlayerPos);
     }
 
     // ybot@Shooting 애니메이션의 Event에서 실행된다.
@@ -92,10 +102,19 @@ public class EnemyCtrl : MonoBehaviour, IShotAble
     {
         StopAllCoroutines();
         GetComponent<Animator>().enabled = false;
-        Vector3 temp = hitNormal;
-        temp.y = 0;
-        GetComponent<Rigidbody>().velocity = temp * 10;
-        scoreText.enabled = true;
+
+        scoreUI.SetActive(true);
+        scoreUI.transform.LookAt(new Vector3(0, GameManager.Instance.PlayerPos.y, 0));
+        scoreUI.transform.Rotate(new Vector3(0, 180, 0));
+
+        var score = Random.Range(80, 120);
+        var color = score > 100 ? Color.red : Color.black;
+        scoreText.text = score.ToString();
+        scoreText.color = color;
+
+        StartCoroutine(ScoreTextCoroutine());
+        GameManager.Instance.EnemyDie(this);
+        GameManager.Instance.GetScored(score);
         // 이펙트를 hitPoint, -hitNormal 방향으로 그린다.
         // 점수 나온다.
         // 점수가 게임 매니저에 추가된다.
@@ -104,11 +123,28 @@ public class EnemyCtrl : MonoBehaviour, IShotAble
         Invoke("SetActiveFalse", 2f);
 
     }
+
+    IEnumerator ScoreTextCoroutine()
+    {
+        yield return waitShort;
+
+        float percent = 0;
+        float speed = 0.5f;
+        while (percent < 1)
+        {
+            percent += Time.deltaTime * speed;      
+            Vector3 size = Vector3.Lerp(scoreUI.transform.localScale, Vector3.zero, percent);
+            scoreUI.transform.localScale = size;
+            yield return null;
+        }
+        yield break;
+
+    }
+
     private void SetActiveFalse()
     {
         scoreText.enabled = false;
         this.gameObject.SetActive(false);
-        StopAllCoroutines();
     }
 
     IEnumerator AttackCoroutine()

@@ -28,9 +28,9 @@ public partial class GameManager : MonoBehaviour
         }
     }
 
-    public void EnemyDie(MonsterCtrl obj)
+    public void EnemyDie(EnemyCtrl obj)
     {
-        if (obj is MonsterCtrl) // 이 이벤트는 Enemy에서만 호출 가능하다.
+        if (obj is EnemyCtrl) // 이 이벤트는 Enemy에서만 호출 가능하다.
         {
             actEnemyDie?.Invoke();
         }

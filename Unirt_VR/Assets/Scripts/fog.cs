@@ -10,22 +10,6 @@ public class fog : MonoBehaviour
         //Example();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    //void Example()
-    //{
-
-    //    RenderSettings.fogColor = Color.blue;
-    //    RenderSettings.fog = true;
-
-    //    RenderSettings.ambientLight = Color.red;
-
-    //    RenderSettings.ambientEquatorColor = Color.yellow;
-    //}
 
     void OnTriggerEnter(Collider other)
     {
@@ -47,30 +31,53 @@ public class fog : MonoBehaviour
         Color amColor5 = new Color(0f, 188/255f, 47/255f);
         Color amEquatColor5 = new Color(164/255f, 0f, 161/255f);
 
+        // now -> fog2
+        // fog2 -> fog3
+        // fog3 -> fog4
+        // fog4 -> fog5
+
+
         if (other.gameObject.tag == "map1")
         {
-            RenderSettings.fogColor = fog2;
-            RenderSettings.ambientLight = amColor2;
-            RenderSettings.ambientEquatorColor = amEquatColor2;
+            StopAllCoroutines();
+            StartCoroutine(ChangeColor(RenderSettings.fogColor, fog2, RenderSettings.ambientLight, amColor2, RenderSettings.ambientEquatorColor, amEquatColor2));
         }
         else if (other.gameObject.tag == "map2")
         {
-            RenderSettings.fogColor = fog3;
-            RenderSettings.ambientLight = amColor3;
-            RenderSettings.ambientEquatorColor = amEquatColor3;
+            StopAllCoroutines();
+            StartCoroutine(ChangeColor(fog2, fog3, amColor2, amColor3, amEquatColor2, amEquatColor3));
         }
         else if (other.gameObject.tag == "map3")
         {
-            RenderSettings.fogColor = fog4;
-            RenderSettings.ambientLight = amColor4;
-            RenderSettings.ambientEquatorColor = amEquatColor4;
+            StopAllCoroutines();
+            StartCoroutine(ChangeColor(fog3, fog4, amColor3, amColor4, amEquatColor3, amEquatColor4));
         }
         else if (other.gameObject.tag == "map4")
         {
-            RenderSettings.fogColor = fog5;
-            RenderSettings.ambientLight = amColor5;
-            RenderSettings.ambientEquatorColor = amEquatColor5;
+            StopAllCoroutines();
+            StartCoroutine(ChangeColor(fog4, fog5, amColor4, amColor5, amEquatColor4, amEquatColor5));
         }
 
+    }
+
+    IEnumerator ChangeColor(Color fogColor1, Color fogColor2, Color ambientLight1, Color ambientLight2, Color ambientEquatorColor1, Color ambientEquatorColor2)
+    {
+        float percent = 0;
+        float speed = 1.0f;
+        while (percent < 1)
+        {
+            percent += Time.deltaTime * speed;
+
+            Color fogColor = Color.Lerp(fogColor1, fogColor2, percent);
+            RenderSettings.fogColor = fogColor;
+
+            Color ambientLight = Color.Lerp(ambientLight1, ambientLight2, percent);
+            RenderSettings.ambientLight = ambientLight;
+
+            Color ambientEquatorColor = Color.Lerp(ambientEquatorColor1, ambientEquatorColor2, percent);
+            RenderSettings.ambientEquatorColor = ambientEquatorColor;
+            yield return null;
+        }
+        yield break;
     }
 }
