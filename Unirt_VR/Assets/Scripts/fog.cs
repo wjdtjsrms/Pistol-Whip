@@ -27,14 +27,19 @@ public class fog : MonoBehaviour
         Color amColor4 = new Color(217/255f, 206/255f, 0f);
         Color amEquatColor4 = new Color(0f, 115/255f, 144/255f);
 
-        Color fog5 = new Color(245/255f, 125/255f, 0f, 255/255f); //주황핑크
-        Color amColor5 = new Color(0f, 188/255f, 47/255f);
-        Color amEquatColor5 = new Color(164/255f, 0f, 161/255f);
+        Color fog5 = new Color(92/255f, 236 / 255f, 187/255f, 255 / 255f); //민트
+        Color amColor5 = new Color(171/255f, 131 / 255f, 96 / 255f);
+        Color amEquatColor5 = new Color(95 / 255f, 157/255f, 243 / 255f);
+
+        Color fog6 = new Color(245 / 255f, 125 / 255f, 0f, 255 / 255f); //주황핑크
+        Color amColor6 = new Color(0f, 188 / 255f, 47 / 255f);
+        Color amEquatColor6 = new Color(164 / 255f, 0f, 161 / 255f);
 
         // now -> fog2
         // fog2 -> fog3
         // fog3 -> fog4
         // fog4 -> fog5
+        // fog5 -> fog6
 
 
         if (other.gameObject.tag == "map1")
@@ -56,6 +61,11 @@ public class fog : MonoBehaviour
         {
             StopAllCoroutines();
             StartCoroutine(ChangeColor(fog4, fog5, amColor4, amColor5, amEquatColor4, amEquatColor5));
+        }
+        else if (other.gameObject.tag == "map5")
+        {
+            StopAllCoroutines();
+            StartCoroutine(ChangeColor(fog5, fog6, amColor5, amColor6, amEquatColor5, amEquatColor6));
         }
 
     }
