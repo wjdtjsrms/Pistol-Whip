@@ -12,9 +12,9 @@ public partial class GameManager : MonoBehaviour
 
 public partial class GameManager : MonoBehaviour
 {
-    public void playerDie(PlayerController obj)
+    public void playerDie(UIManager obj)
     {
-        if(obj is PlayerController) // 이 이벤트는 PlayerController에서만 호출 가능하다.
+        if(obj is UIManager) // 이 이벤트는 UIManager에서만 호출 가능하다.
         {
             actPlayerDie?.Invoke(); // null 아니라면 호출
         }  

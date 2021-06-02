@@ -19,24 +19,19 @@ public partial class GameManager : MonoBehaviour
 
     void Start()
     {
-        actPlayerDie += EndGame;        
+        actPlayerDie += () => isGameOver = true;
+        actPlayerDie += EndGame;
     }
 
     void Update()
     {
-        if (!isGameOver) // 데미지를 입을 때만 호출되게 변경
-        {
-            HP = (int)playerController?.HP;
-        }
-
-        if (true) // 개발이 끝나면 isGameOver로 바꾼다.
+        if (true) // 디버그용 모드
         {
             if (CustomController.IsButtonPressed(CommonUsages.menuButton, ref menumButtonPressed, true))
             {
                 RestartGame();
             }
         }
-
     }
 }
 public partial class GameManager : MonoBehaviour
@@ -60,10 +55,6 @@ public partial class GameManager : MonoBehaviour
     {
         Score += value;
     }
-    private void EndGame()
-    {
-        isGameOver = true;
-    }
     public void RestartGame()
     {
         SceneManager.LoadScene("SampleScene");
@@ -78,5 +69,13 @@ public partial class GameManager : MonoBehaviour
         {
             audioSource.Pause();
         }
+    }
+    public void EndGame() 
+    {
+        Invoke("LoadStartScene", 1f);
+    }
+    private void LoadStartScene()
+    {
+        SceneManager.LoadScene("StartScoreScene");
     }
 }

@@ -48,18 +48,18 @@ public class EnemyPooling : MonoBehaviour
 
     // pos z 축 15씩 올려준다. 
 
-    IEnumerator EnemySpawn()
-    {
-        while(true)
-        {
-            if (EnemyPool.Count != 0)
-            {
-                zPos = Random.Range(1, 20);
-                RandomVetor = new Vector3(0f, 0f, zPos);
-                GameObject prefabInstance = Spawn();
-                prefabInstance.transform.position = gameObject.transform.position + RandomVetor;
-            }
-        }
-        yield return new WaitForSeconds(1f);
-    }
+    //IEnumerator EnemySpawn()
+    //{
+    //    while(true)
+    //    {
+    //        if (EnemyPool.Count != 0)
+    //        {
+    //            zPos = Random.Range(1, 20);
+    //            RandomVetor = new Vector3(0f, 0f, zPos);
+    //            GameObject prefabInstance = Spawn();
+    //            prefabInstance.transform.position = gameObject.transform.position + RandomVetor;
+    //        }
+    //    }
+    //    yield return new WaitForSeconds(1f);
+    //}
 }

@@ -110,11 +110,11 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         GameManager.Instance.EnemyDie(this); // 적 사망 이벤트를 실행한다.
         StartCoroutine(EnemyDieCoroutine()); // 사망 처리 코루틴을 실행시킨다.
 
+        // 이펙트를 hitPoint, hitNormal 방향으로 그린다.
         GameObject BloodObject = ObjectManager.Instance.Fire();
         BloodObject.transform.position = hitPoint;
         BloodObject.transform.rotation = Quaternion.LookRotation(hitNormal);
-
-        // 이펙트를 hitPoint, -hitNormal 방향으로 그린다.
+        
         // 사망 이펙트가 나온다.
     }
 
