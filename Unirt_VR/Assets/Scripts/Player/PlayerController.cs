@@ -35,10 +35,7 @@ public class PlayerController : MonoBehaviour
             GameManager.Instance.playerDamage(this);
         }
 
-    }           
-
-    }         
-
+    }              
     public void Die()
     {
         DeadUI.SetActive(true);

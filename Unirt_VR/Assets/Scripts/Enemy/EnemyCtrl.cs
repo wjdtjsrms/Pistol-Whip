@@ -20,8 +20,6 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     private Transform barrelLocation; // 총알이 나올 위치
     [SerializeField]
     private float limitDistance = 5.0f; // 얼마나 떨어지면 사라지것인지.
-    [SerializeField]
-    private BulletPooling bulletPooling;
     private AudioSource audioSource;
     private TextMeshPro scoreText;
     private Animator animator;
@@ -48,6 +46,8 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
 
             if (animator.GetBool("IsAttack") == laser)
             {
+                line.SetPosition(0, barrelLocation.position);
+                line.SetPosition(1, playerPos);
                 line.enabled = !laser;
             }
         }
@@ -125,14 +125,15 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         playerPos.y = 0;
         transform.LookAt(playerPos);
 
-        drawWarningLine(GameManager.Instance.PlayerPos);
+        //drawWarningLine(GameManager.Instance.PlayerPos); <= 여기 주석 풀면 나옵니다.
+
         animator.SetBool("IsRunning", false);
         StartCoroutine(AttackCoroutine());
 
     }
     public void drawWarningLine(Vector3 playerPos)
     {
-        //line.positionCount = 2;
+        line.positionCount = 2;
         line.enabled = true;
         line.SetPosition(0, barrelLocation.position);  
         line.SetPosition(1, playerPos);
