@@ -17,20 +17,41 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     [SerializeField]
     private ParticleSystem muzzle; // 공격시 사용할 이펙트
     [SerializeField]
+    private LineRenderer line; // 공격선 레이저
+    [SerializeField]
     private Transform barrelLocation; // 총알이 나올 위치
 
     private AudioSource audioSource;
     private TextMeshPro scoreText;
     private Animator animator;
+    private Vector3 sizeUI;
 
     private Vector3 moveTargetVec; // 이동할 목표 위치
     private Vector3 playerPos; // 플레이어의 위치   
     private float moveSpeed = 4.0f; // 이동 속도
     private bool isDie = false; // 현재 적의 상태
+    //private Vector3 originalSize = scoreUI.transform.localScale;
 
     // 코루틴 최적화를 위한 변수 선언
-    YieldInstruction waitShort = new WaitForSeconds(1.0f);
+    YieldInstruction waitShort = new WaitForSeconds(0.5f);
     YieldInstruction waitAttackDely = new WaitForSeconds(2.0f);
+
+    //경고선 프로퍼티
+    bool laser;
+    bool ShotWait
+    {
+        get => laser;
+        set
+        {
+            laser = value;
+
+            if (animator.GetBool("IsAttack") == laser)
+            {
+                line.enabled = !laser;
+            }
+        }
+    }
+
     #endregion
 
     private void Awake()
@@ -39,15 +60,27 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         animator = GetComponent<Animator>();
         scoreText = scoreUI.GetComponent<TextMeshPro>();
         audioSource = GetComponent<AudioSource>();
+
+
+        ShotWait = true;
+
+        sizeUI = scoreUI.transform.localScale;
+
+
     }
 
     // 값을 다시 초기화 한다.
     private void OnEnable()
     {
         StopAllCoroutines();
+
+        animator.enabled = true;
         animator.SetBool("IsRunning", true);
 
-        // y값을 제외한 방향을 바라본다.
+        GetComponent<Collider>().enabled = true;
+
+        scoreUI.transform.localScale = sizeUI;
+        scoreText.enabled = true;
         moveTargetVec = targetPos.position;
         moveTargetVec.y = 0;
         transform.LookAt(moveTargetVec);
@@ -57,8 +90,8 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         muzzle.gameObject.transform.position = barrelLocation.position; // 발사 이펙트의 위치를 총구로 변경    
 
         StartCoroutine(MoveCoroutine());
+        
     }
-
     private void OnDisable()
     {
         StopAllCoroutines();
@@ -67,7 +100,14 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
 
 public partial class EnemyCtrl : MonoBehaviour, IShotAble
 {
-    void EnemyAim()
+
+    public void SetTransform(Transform startPos, Transform targetPos)
+    {
+        this.transform.position = startPos.position;
+        this.targetPos = targetPos;
+    }
+
+    private void EnemyAim()
     {
         StopAllCoroutines();
 
@@ -79,18 +119,24 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         drawWarningLine(GameManager.Instance.PlayerPos);
         animator.SetBool("IsRunning", false);
         StartCoroutine(AttackCoroutine());
+
     }
     public void drawWarningLine(Vector3 playerPos)
     {
-        // 이거 언제 개발하냐
+        //line.positionCount = 2;
+        line.enabled = true;
+        line.SetPosition(0, barrelLocation.position);  
+        line.SetPosition(1, playerPos);
     }
 
-    void EnemyAttack()
+    private void EnemyAttack()
     {
         animator.SetBool("IsAttack", true); // 공격 애니메이션 실행
         muzzle.Play(); // 공격 이펙트 실행
         audioSource.PlayOneShot(attackClip); // 공격 사운드 실행
         Instantiate(bullet, barrelLocation.position, transform.rotation).gameObject.transform.LookAt(GameManager.Instance.PlayerPos);
+
+        StartCoroutine(laserprint());
     }
 
     // ybot@Shooting 애니메이션의 Event에서 실행된다. 삭제하면 아무튼 큰일 난다.
@@ -109,6 +155,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         GetScore(); // 점수를 획득한다.
         GameManager.Instance.EnemyDie(this); // 적 사망 이벤트를 실행한다.
         StartCoroutine(EnemyDieCoroutine()); // 사망 처리 코루틴을 실행시킨다.
+        GetComponent<Collider>().enabled = false;
 
         // 이펙트를 hitPoint, hitNormal 방향으로 그린다.
         GameObject BloodObject = ObjectManager.Instance.Fire();
@@ -158,10 +205,11 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
 
     // Enemy가 공격시 실행 될 코루틴
     IEnumerator AttackCoroutine()
-    {
+    {      
         while (!isDie) // 죽기 전까지 계속 실행된다.
         {
             yield return waitAttackDely;
+            line.enabled = false;
             EnemyAttack();
         }
         yield break;
@@ -179,6 +227,16 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         // 목표 위치에 도착했다면 현재 플레이어 방향을 겨냥한다.
         EnemyAim();
         yield break;
+    }
+
+    // 경고선 출력 코루틴
+    IEnumerator laserprint()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.2f);
+            ShotWait = !ShotWait;
+        }
     }
 }
 

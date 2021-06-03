@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4478878238920846892}
   - component: {fileID: 686789676531818889}
   - component: {fileID: 3342516291637695811}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 4478878238789739611}
   - component: {fileID: 686789676400716798}
   - component: {fileID: 3342516291240320820}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ring (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 4478878238612229400}
   - component: {fileID: 686789676290966205}
   - component: {fileID: 3342516291329750647}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ring (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -254,7 +254,7 @@ GameObject:
   - component: {fileID: 4478878240000328707}
   - component: {fileID: 686789675464870822}
   - component: {fileID: 3342516292718280556}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ring (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -339,7 +339,7 @@ GameObject:
   - component: {fileID: 4194686609574776596}
   - component: {fileID: 2093253955131502743}
   - component: {fileID: 4194686609574776602}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EnemyBullet
   m_TagString: Monster
   m_Icon: {fileID: 0}
@@ -572,7 +572,7 @@ GameObject:
   - component: {fileID: 5005638541758093813}
   - component: {fileID: 5005638541758093812}
   - component: {fileID: 5005638541758093803}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -9,6 +9,11 @@ TagManager:
   - Punch
   - Sword
   - Button
+  - map3
+  - map4
+  - map2
+  - map1
+  - map5
   layers:
   - Default
   - TransparentFX
@@ -16,8 +21,8 @@ TagManager:
   - Grab Ignore Ray
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - Bullet
   - 
   - 
   - 
