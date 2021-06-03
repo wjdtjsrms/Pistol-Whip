@@ -12,18 +12,26 @@ public class Bullet : MonoBehaviour
     private GameObject[] ringObjects;
     private float startRange = -0.01f;
     private float endRange = -0.8f;
-    void Start()
+    private YieldInstruction waitSecond = new WaitForSeconds(3.0f);
+    private void Awake()
     {
         bulletRigidbody = GetComponent<Rigidbody>();
-        bulletRigidbody.velocity = transform.forward * speed;
+    }
 
-        for(int i=0;i<ringObjects.Length;i++)
+    private void OnEnable()
+    {
+        for (int i = 0; i < ringObjects.Length; i++)
         {
-            ringObjects[i].transform.localPosition = new Vector3(0f, 0f, startRange * (i+1));
+            ringObjects[i].transform.localPosition = new Vector3(0f, 0f, startRange * (i + 1));
         }
 
         StartCoroutine(RingMoveCoroutine());
-        Destroy(gameObject, 3f);
+        StartCoroutine(waitActiveFalse());
+        
+    }
+    void Start()
+    {
+        bulletRigidbody.velocity = transform.forward * speed;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -50,6 +58,12 @@ public class Bullet : MonoBehaviour
             }
             yield return null;
         }
+        yield break;
+    }
+    IEnumerator waitActiveFalse()
+    {
+        yield return waitSecond;
+        this.gameObject.SetActive(false);
         yield break;
     }
 }

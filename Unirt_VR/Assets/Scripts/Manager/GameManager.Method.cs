@@ -20,7 +20,8 @@ public partial class GameManager : MonoBehaviour
     void Start()
     {
         actPlayerDie += () => isGameOver = true;
-        actPlayerDie += EndGame;
+        actPlayerDie += () => Invoke("LoadStartScene", 1f);
+        actGameEnd += () => Invoke("LoadStartScene", 3.5f);
     }
 
     void Update()
@@ -69,10 +70,6 @@ public partial class GameManager : MonoBehaviour
         {
             audioSource.Pause();
         }
-    }
-    public void EndGame() 
-    {
-        Invoke("LoadStartScene", 1f);
     }
     private void LoadStartScene()
     {

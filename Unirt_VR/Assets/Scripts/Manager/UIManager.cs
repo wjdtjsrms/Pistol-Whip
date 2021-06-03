@@ -18,8 +18,10 @@ public partial class UIManager : MonoBehaviour
     private bool playerCanDie;
 }
 
+
 public partial class UIManager : MonoBehaviour
 {
+
     private void OnEnable()
     {
         waitTimeText.text = "15";

@@ -7,8 +7,6 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
 {
     #region 필드
     [SerializeField]
-    private Transform targetPos; // 생성 후 이동할 위치
-    [SerializeField]
     private Bullet bullet; // 생성할 불렛의 프리펩
     [SerializeField]
     private GameObject scoreUI; // 사망시 등장할 점수 UI
@@ -18,17 +16,20 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     private ParticleSystem muzzle; // 공격시 사용할 이펙트
     [SerializeField]
     private Transform barrelLocation; // 총알이 나올 위치
-
+    [SerializeField]
+    private float limitDistance = 5.0f; // 얼마나 떨어지면 사라지것인지.
+    [SerializeField]
+    private BulletPooling bulletPooling;
     private AudioSource audioSource;
     private TextMeshPro scoreText;
     private Animator animator;
     private Vector3 sizeUI;
 
+    private Transform targetPos; // 생성 후 이동할 위치
     private Vector3 moveTargetVec; // 이동할 목표 위치
     private Vector3 playerPos; // 플레이어의 위치   
     private float moveSpeed = 4.0f; // 이동 속도
     private bool isDie = false; // 현재 적의 상태
-    //private Vector3 originalSize = scoreUI.transform.localScale;
 
     // 코루틴 최적화를 위한 변수 선언
     YieldInstruction waitShort = new WaitForSeconds(0.5f);
@@ -71,6 +72,14 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     {
         StopAllCoroutines();
     }
+    private void Update()
+    {
+        if(this.gameObject.activeSelf && GameManager.Instance.PlayerPos.z - limitDistance > this.transform.position.z)
+        {
+
+            this.gameObject.SetActive(false);
+        }
+    }
 }
 
 public partial class EnemyCtrl : MonoBehaviour, IShotAble
@@ -105,6 +114,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         animator.SetBool("IsAttack", true); // 공격 애니메이션 실행
         muzzle.Play(); // 공격 이펙트 실행
         audioSource.PlayOneShot(attackClip); // 공격 사운드 실행
+        // bulletPooling.Spawn(barrelLocation); 수정 중
         Instantiate(bullet, barrelLocation.position, transform.rotation).gameObject.transform.LookAt(GameManager.Instance.PlayerPos);
     }
 

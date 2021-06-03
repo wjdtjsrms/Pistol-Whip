@@ -7,6 +7,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private EnemyManager enemyManager;
     private SpawnPoint[] allSpawnPoint;
+    private Vector3 playerPos;
 
     private List<SpawnPoint> musicPoint = new List<SpawnPoint>();
     private List<SpawnPoint> distancePoint = new List<SpawnPoint>();
@@ -14,7 +15,7 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         allSpawnPoint = GetComponentsInChildren<SpawnPoint>();
-        foreach (SpawnPoint child in allSpawnPoint)
+        foreach (var child in allSpawnPoint)
         {
             if (child.OptionCheck == SpawnPoint.CheckOption.Music)
             {
@@ -25,30 +26,41 @@ public class SpawnManager : MonoBehaviour
                 distancePoint.Add(child);
             }
         }
-
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        foreach (SpawnPoint child in musicPoint)
-        {
-            if (child.MusicTime <= Time.time && child.IsUse == false)
-            {
-                child.IsUse = true;
-                enemyManager.Spawn(child.StartPoint, child.EndPoint);
-            }
+        playerPos = GameManager.Instance.PlayerPos;
 
+        foreach (var child in musicPoint)
+        {
+            if (child.IsUse == false && child.MusicTime <= Time.time)
+            {
+                SpawnChild(child);
+            }
         }
 
-        foreach (SpawnPoint child in distancePoint)
+        foreach (var child in distancePoint)
         {
-            if (child.Distance >= Vector3.Distance(child.transform.position, GameManager.Instance.PlayerPos) && child.IsUse == false)
+            if (child.IsUse == false && child.Distance >= (child.transform.position - playerPos).sqrMagnitude)
             {
-                child.IsUse = true;
-                enemyManager.Spawn(child.StartPoint, child.EndPoint);
+                SpawnChild(child);
             }
         }
     }
+
+    private void SpawnChild(SpawnPoint spawnPoint)
+    {
+        spawnPoint.IsUse = true;
+        if (spawnPoint.IsMove == true)
+        {
+            enemyManager.Spawn(spawnPoint.StartPoint, spawnPoint.EndPoint);
+        }
+        else
+        {
+            enemyManager.Spawn(spawnPoint.StartPoint, spawnPoint.StartPoint);
+        }
+    }
+
 }
