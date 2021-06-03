@@ -45,8 +45,14 @@ public class BulletPooling : MonoBehaviour
             if (!bullet.activeInHierarchy)
             {
                 bullet.transform.position = barrelLocation.position;
-                Vector3 temp = GameManager.Instance.PlayerPos + Vector3.forward * 3.0f; // 플레이어가 1초뒤 도달할 위치
-                bullet.gameObject.transform.LookAt(temp);
+                // 총알은 랜덤 속도를 갖는다.
+                int randomTime = Random.Range(1, 3);
+                // 위치 + (벡터 * 시간) = 현재 위치에서 벡터만큼의 속도와 방향으로 시간만큼 이동한 목표 위치
+                Vector3 targetVec = GameManager.Instance.PlayerPos + (Vector3.forward * 3.0f) * randomTime; // 3.0f 는 플레이어의 속도이다.
+                // 총구의 위치에서 목표위치까지 목표 시간에 도달하는 속도를 구한다.
+                bullet.GetComponent<Bullet>().speed = Vector3.Distance(barrelLocation.position, targetVec) / randomTime; // 속도 = 거리 / 시간
+                // 총알을 목표위치 방향으로 돌린다.
+                bullet.gameObject.transform.LookAt(targetVec);
                 bullet.SetActive(true);
                 return bullet;
             }
