@@ -20,6 +20,7 @@ public class Bullet : MonoBehaviour
 
     private void OnEnable()
     {
+        bulletRigidbody.velocity = transform.forward * speed;
         for (int i = 0; i < ringObjects.Length; i++)
         {
             ringObjects[i].transform.localPosition = new Vector3(0f, 0f, startRange * (i + 1));
@@ -29,12 +30,6 @@ public class Bullet : MonoBehaviour
         StartCoroutine(waitActiveFalse());
         
     }
-    void Start()
-    {
-        bulletRigidbody.velocity = transform.forward * speed;
-        Destroy(this.gameObject, 3f);
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")

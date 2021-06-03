@@ -19,7 +19,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     [SerializeField]
     private Transform barrelLocation; // 총알이 나올 위치
     [SerializeField]
-    private float limitDistance = 5.0f; // 얼마나 떨어지면 사라지것인지.
+    private float limitDistance = 6.0f; // 얼마나 떨어지면 사라지것인지.
     private AudioSource audioSource;
     private TextMeshPro scoreText;
     private Animator animator;
@@ -62,12 +62,8 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         scoreText = scoreUI.GetComponent<TextMeshPro>();
         audioSource = GetComponent<AudioSource>();
 
-
         ShotWait = true;
-
         sizeUI = scoreUI.transform.localScale;
-
-
     }
 
     // 값을 다시 초기화 한다.
@@ -144,8 +140,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         animator.SetBool("IsAttack", true); // 공격 애니메이션 실행
         muzzle.Play(); // 공격 이펙트 실행
         audioSource.PlayOneShot(attackClip); // 공격 사운드 실행
-        // bulletPooling.Spawn(barrelLocation); 수정 중
-        Instantiate(bullet, barrelLocation.position, transform.rotation).gameObject.transform.LookAt(GameManager.Instance.PlayerPos);
+        BulletPooling.Instance.Spawn(barrelLocation);
 
         StartCoroutine(laserprint());
     }
