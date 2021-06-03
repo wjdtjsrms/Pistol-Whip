@@ -22,14 +22,16 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     private AudioSource audioSource;
     private TextMeshPro scoreText;
     private Animator animator;
+    private Vector3 sizeUI;
 
     private Vector3 moveTargetVec; // 이동할 목표 위치
     private Vector3 playerPos; // 플레이어의 위치   
     private float moveSpeed = 4.0f; // 이동 속도
     private bool isDie = false; // 현재 적의 상태
+    //private Vector3 originalSize = scoreUI.transform.localScale;
 
     // 코루틴 최적화를 위한 변수 선언
-    YieldInstruction waitShort = new WaitForSeconds(1.0f);
+    YieldInstruction waitShort = new WaitForSeconds(0.5f);
     YieldInstruction waitAttackDely = new WaitForSeconds(2.0f);
     #endregion
 
@@ -39,15 +41,22 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         animator = GetComponent<Animator>();
         scoreText = scoreUI.GetComponent<TextMeshPro>();
         audioSource = GetComponent<AudioSource>();
+        sizeUI = scoreUI.transform.localScale;
+
     }
 
     // 값을 다시 초기화 한다.
     private void OnEnable()
     {
         StopAllCoroutines();
+
+        animator.enabled = true;
         animator.SetBool("IsRunning", true);
 
-        // y값을 제외한 방향을 바라본다.
+        GetComponent<Collider>().enabled = true;
+
+        scoreUI.transform.localScale = sizeUI;
+        scoreText.enabled = true;
         moveTargetVec = targetPos.position;
         moveTargetVec.y = 0;
         transform.LookAt(moveTargetVec);
@@ -58,7 +67,6 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
 
         StartCoroutine(MoveCoroutine());
     }
-
     private void OnDisable()
     {
         StopAllCoroutines();
@@ -67,7 +75,14 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
 
 public partial class EnemyCtrl : MonoBehaviour, IShotAble
 {
-    void EnemyAim()
+
+    public void SetTransform(Transform startPos, Transform targetPos)
+    {
+        this.transform.position = startPos.position;
+        this.targetPos = targetPos;
+    }
+
+    private void EnemyAim()
     {
         StopAllCoroutines();
 
@@ -85,7 +100,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         // 이거 언제 개발하냐
     }
 
-    void EnemyAttack()
+    private void EnemyAttack()
     {
         animator.SetBool("IsAttack", true); // 공격 애니메이션 실행
         muzzle.Play(); // 공격 이펙트 실행
@@ -109,6 +124,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         GetScore(); // 점수를 획득한다.
         GameManager.Instance.EnemyDie(this); // 적 사망 이벤트를 실행한다.
         StartCoroutine(EnemyDieCoroutine()); // 사망 처리 코루틴을 실행시킨다.
+        GetComponent<Collider>().enabled = false;
 
         // 이펙트를 hitPoint, hitNormal 방향으로 그린다.
         GameObject BloodObject = ObjectManager.Instance.Fire();

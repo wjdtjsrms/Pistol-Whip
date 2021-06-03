@@ -47,7 +47,7 @@ public partial class UIManager : MonoBehaviour
         if(playerCanDie == true)
         {
             StopAllCoroutines();
-            GameManager.Instance.playerDie(this);
+            //GameManager.Instance.playerDie(this);
         }
         crushHeart.gameObject.SetActive(true);
         waitTimeText.gameObject.SetActive(true);
