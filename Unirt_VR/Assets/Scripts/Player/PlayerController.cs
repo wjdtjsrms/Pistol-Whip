@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject DeadUI;
     void Start()
     {
         GameManager.Instance.actPlayerDie += Die;
@@ -24,6 +26,6 @@ public class PlayerController : MonoBehaviour
 
     public void Die()
     {
-        gameObject.SetActive(false);
+        DeadUI.SetActive(true);
     }    
 }
