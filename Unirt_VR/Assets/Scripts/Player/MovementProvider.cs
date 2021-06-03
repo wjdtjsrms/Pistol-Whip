@@ -30,6 +30,7 @@ public class MovementProvider : MonoBehaviour
     {
         // 초기 설정을 처리
         PositionController();
+        GameManager.Instance.actGameEnd += PlayerStop;
     }
 
     // 이동 처리가 입력보다 먼저 실행된다, 입력에 즉각적으로 화면이 갱신되면 어지럽기 때문이다. 
@@ -92,5 +93,10 @@ public class MovementProvider : MonoBehaviour
 
         Vector3 movement = direction * speed;
         characterController.Move(movement * Time.deltaTime);
+    }
+
+    void PlayerStop()
+    {
+        speed = 0.0f;
     }
 }

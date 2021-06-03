@@ -8,10 +8,22 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
+
+    private AudioClip damageClip;
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
+
     private GameObject DeadUI;
+
     void Start()
     {
-        GameManager.Instance.actPlayerDie += Die;
+        GameManager.Instance.actPlayerDie += () => gameObject.SetActive(false);
+        GameManager.Instance.actPlayerDamage += () => audioSource.PlayOneShot(damageClip);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -22,6 +34,9 @@ public class PlayerController : MonoBehaviour
             other.gameObject.SetActive(false);
             GameManager.Instance.playerDamage(this);
         }
+
+    }           
+
     }         
 
     public void Die()

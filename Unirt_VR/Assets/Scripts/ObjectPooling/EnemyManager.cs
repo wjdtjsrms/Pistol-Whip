@@ -5,25 +5,25 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     [SerializeField]
-    private EnemyCtrl Enemy;
+    private EnemyCtrl enemy;
     [SerializeField]
-    private int EnemyCount = 20;
-    private List<GameObject> EnemyPool = new List<GameObject>();
+    private int enemyCount = 20;
+    private List<GameObject> enemyPool = new List<GameObject>();
 
     private void Awake()
     {
-        for (int i = 0; i < EnemyCount; i++)
+        for (int i = 0; i < enemyCount; i++)
         {
-            GameObject prefabInstance = Instantiate(Enemy.gameObject);
+            GameObject prefabInstance = Instantiate(enemy.gameObject);
             prefabInstance.transform.SetParent(transform);
             prefabInstance.SetActive(false);
-            EnemyPool.Add(prefabInstance);
+            enemyPool.Add(prefabInstance);
         }
     }
 
     public GameObject Spawn(Transform startPos, Transform targetPos)
     {
-        foreach (GameObject enemy in EnemyPool)
+        foreach (GameObject enemy in enemyPool)
         {
             if (!enemy.activeInHierarchy)
             {
@@ -34,9 +34,9 @@ public class EnemyManager : MonoBehaviour
         }
 
         // 메모리풀을 전부 사용중일때만 사용
-        GameObject enemyInstance = Instantiate(Enemy.gameObject);
+        GameObject enemyInstance = Instantiate(enemy.gameObject);
         enemyInstance.transform.SetParent(transform);
-        EnemyPool.Add(enemyInstance);
+        enemyPool.Add(enemyInstance);
         return new GameObject();
 
     }
