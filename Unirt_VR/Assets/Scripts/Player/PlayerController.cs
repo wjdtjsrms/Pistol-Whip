@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
+
     private AudioClip damageClip;
     private AudioSource audioSource;
 
@@ -15,6 +16,9 @@ public class PlayerController : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
     }
+
+
+    private GameObject DeadUI;
 
     void Start()
     {
@@ -30,5 +34,13 @@ public class PlayerController : MonoBehaviour
             other.gameObject.SetActive(false);
             GameManager.Instance.playerDamage(this);
         }
+
     }           
+
+    }         
+
+    public void Die()
+    {
+        DeadUI.SetActive(true);
+    }    
 }

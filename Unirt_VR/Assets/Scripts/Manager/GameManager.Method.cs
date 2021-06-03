@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.XR;
 public partial class GameManager : MonoBehaviour
 {
+  
     private void Awake()
     {
         if (instance == null)
@@ -32,11 +33,14 @@ public partial class GameManager : MonoBehaviour
             {
                 RestartGame();
             }
+            
         }
+      
     }
 }
 public partial class GameManager : MonoBehaviour
 {
+    
     public static GameManager Instance
     {
         get
@@ -70,6 +74,11 @@ public partial class GameManager : MonoBehaviour
         {
             audioSource.Pause();
         }
+    }
+
+    public void EndGame() 
+    {
+        isGameOver = true;
     }
     private void LoadStartScene()
     {

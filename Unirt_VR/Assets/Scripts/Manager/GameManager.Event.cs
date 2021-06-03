@@ -9,6 +9,7 @@ public partial class GameManager : MonoBehaviour
     public event Action actEnemyDie;
     public event Action actGameStart;
     public event Action actGameEnd;
+
 }
 
 public partial class GameManager : MonoBehaviour
@@ -43,6 +44,7 @@ public partial class GameManager : MonoBehaviour
             actGameStart?.Invoke();
         }
     }
+
     public void GameEnd(FinishPoint obj)
     {
         if (obj is FinishPoint) // 이 이벤트는 StartButton에서만 호출 가능하다.
@@ -50,4 +52,5 @@ public partial class GameManager : MonoBehaviour
             actGameEnd?.Invoke();
         }
     }
+
 }

@@ -7,6 +7,8 @@ using TMPro;
 public partial class UIManager : MonoBehaviour
 {
     [SerializeField]
+    private GameObject gameOverText;
+    [SerializeField]
     private GameObject crushHeart;
     [SerializeField]
     private TextMeshProUGUI comboText;
@@ -33,6 +35,7 @@ public partial class UIManager : MonoBehaviour
 
     void Start()
     {
+        GameManager.Instance.actPlayerDie += PlayerGameOver;
         GameManager.Instance.actEnemyDie += ComboUp;
         GameManager.Instance.actPlayerDamage += PlayerGetDamage;
     }
@@ -69,6 +72,10 @@ public partial class UIManager : MonoBehaviour
         waitTimeText.gameObject.SetActive(false);
         playerCanDie = false;
         yield break;
+    }
+    private void PlayerGameOver()
+    {
+        gameOverText.SetActive(true);
     }
 
 }
