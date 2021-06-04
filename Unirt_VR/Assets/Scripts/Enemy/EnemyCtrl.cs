@@ -166,6 +166,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
 
         EnemyDamage();
 
+
         animator.enabled = false; // 레그돌 활성화를 위해 애니메이터를 끈다
         isDie = true; // 얘는 이제 죽었다.
 
