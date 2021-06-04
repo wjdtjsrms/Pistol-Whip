@@ -49,10 +49,9 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         {
             laser = value;
 
-            if (animator.GetBool("IsAttack") == laser)
+            if (animator.GetBool("IsAttack") == laser) //IsAttack이 false일땐 라인렌더러 true, true일땐 false
             {
-                line.SetPosition(0, barrelLocation.position);
-                line.SetPosition(1, playerPos);
+                drawWarningLine(GameManager.Instance.PlayerPos);
                 line.enabled = !laser;
             }
         }
@@ -128,24 +127,25 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         playerPos.y = 0;
         transform.LookAt(playerPos);
 
-        //drawWarningLine(GameManager.Instance.PlayerPos); <= 여기 주석 풀면 나옵니다.
+        drawWarningLine(GameManager.Instance.PlayerPos); // 경고선 출력 메소드 호출
 
         animator.SetBool("IsRunning", false);
         StartCoroutine(AttackCoroutine());
 
     }
-    public void drawWarningLine(Vector3 playerPos)
+    public void drawWarningLine(Vector3 playerPos) // 경고선 출력
     {
-        line.positionCount = 2;
+        //line.positionCount = 2;       
+        line.SetPosition(0, barrelLocation.position);
+        line.SetPosition(1, playerPos); 
         line.enabled = true;
-        line.SetPosition(0, barrelLocation.position);  
-        line.SetPosition(1, playerPos);
     }
 
     private void EnemyAttack()
     {
         animator.SetBool("IsAttack", true); // 공격 애니메이션 실행
         muzzle.Play(); // 공격 이펙트 실행
+        line.enabled = false;
         audioSource.PlayOneShot(attackClip); // 공격 사운드 실행
         BulletPooling.Instance.Spawn(barrelLocation);
 
@@ -163,6 +163,9 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     {
         StopAllCoroutines();
 
+
+        EnemyDamage();
+
         animator.enabled = false; // 레그돌 활성화를 위해 애니메이터를 끈다
         isDie = true; // 얘는 이제 죽었다.
 
@@ -173,6 +176,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         StartCoroutine(EnemyDieCoroutine()); // 사망 처리 코루틴을 실행시킨다.
         GetComponent<Collider>().enabled = false;
 
+
         // 이펙트를 hitPoint, hitNormal 방향으로 그린다.
         GameObject BloodObject = ObjectManager.Instance.Fire();
         BloodObject.transform.position = hitPoint;
@@ -180,6 +184,16 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         
         // 사망 이펙트가 나온다.
     }
+    public void EnemyDamage()
+    {
+        animator.enabled = false; // 레그돌 활성화를 위해 애니메이터를 끈다
+        isDie = true; // 얘는 이제 죽었다.
+        GetScore(); // 점수를 획득한다.
+        GameManager.Instance.EnemyDie(this); // 적 사망 이벤트를 실행한다.
+        StartCoroutine(EnemyDieCoroutine()); // 사망 처리 코루틴을 실행시킨다.
+        GetComponent<Collider>().enabled = false;
+    }
+
 
     // 점수를 보이게 하고 게임 매니저에 점수를 추가하는 함수
     private void GetScore()
@@ -225,7 +239,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         while (!isDie) // 죽기 전까지 계속 실행된다.
         {
             yield return waitAttackDely;
-            line.enabled = false;
+            
             EnemyAttack();
         }
         yield break;
@@ -250,7 +264,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.1f); // 0.1초마다 경고선을 끄고 켜게
             ShotWait = !ShotWait;
         }
     }
