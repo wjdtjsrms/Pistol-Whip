@@ -23,6 +23,8 @@ public partial class CustomController : MonoBehaviour
     private GameObject handModel; // 핸드 모델 prefab
     private GameObject handInstance; // 생성된 핸드 인스턴스를 참조하는 변수
     private Animator handModelAnimator; // 핸드 모델 애니메이션 변수
+    //[SerializeField]
+    //private ParticleSystem punch;
     #endregion
 
     void Start()
@@ -76,7 +78,7 @@ public partial class CustomController : MonoBehaviour
 }
 
 // 초기화용 함수
-public partial class CustomController : MonoBehaviour 
+public partial class CustomController : MonoBehaviour
 {
     void TryInitiaiize()
     {
@@ -100,15 +102,15 @@ public partial class CustomController : MonoBehaviour
     }
 
     // 왼손 오른손 설정
-    void SetControllerModel(ref GameObject currentControllerModel) 
+    void SetControllerModel(ref GameObject currentControllerModel)
     {
-        if (availableDevice.name.Contains("Left")) 
+        if (availableDevice.name.Contains("Left"))
         {
             currentControllerModel = controllerModels[1];
             leftInputDevice = availableDevice;
 
         }
-        else if (availableDevice.name.Contains("Right")) 
+        else if (availableDevice.name.Contains("Right"))
         {
             currentControllerModel = controllerModels[2];
             rightInputDevice = availableDevice;
@@ -156,6 +158,19 @@ public partial class CustomController : MonoBehaviour
         else
         {
             handModelAnimator.SetFloat("Grip", 0);
+        }
+    }
+
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (handModelAnimator.GetFloat("Grip") >= 0.7F)
+        {
+            if (other.CompareTag("Hit"))
+            {
+                other.GetComponent<EnemyCtrl>().EnemyDamage();
+                //Debug.Log("잡았다");
+            }
         }
     }
 }

@@ -14,6 +14,7 @@ TagManager:
   - map2
   - map1
   - map5
+  - Hit
   layers:
   - Default
   - TransparentFX
