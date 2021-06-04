@@ -5,13 +5,13 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     // Start is called before the first frame update
-    public float speed = 6f;
+    public float bulletspeed = 6f;
     public float attackAmount = 50.0f;
     private Rigidbody bulletRigidbody;
     [SerializeField]
     private GameObject[] ringObjects;
     private float startRange = -0.01f;
-    private float endRange = -0.8f;
+    private float endRange = -0.07f;
     private YieldInstruction waitSecond = new WaitForSeconds(3.0f);
     private void Awake()
     {
@@ -20,7 +20,7 @@ public class Bullet : MonoBehaviour
 
     private void OnEnable()
     {
-        bulletRigidbody.velocity = transform.forward * speed;
+        bulletRigidbody.velocity = transform.forward * bulletspeed;
         for (int i = 0; i < ringObjects.Length; i++)
         {
             ringObjects[i].transform.localPosition = new Vector3(0f, 0f, startRange * (i + 1));
@@ -47,7 +47,7 @@ public class Bullet : MonoBehaviour
         while (percent < 1)
         {
             percent += Time.deltaTime * speed;
-            float range = Mathf.Lerp(startRange, endRange, percent);
+            float range = Mathf.Lerp(startRange, endRange * bulletspeed, percent);
             for (int i = 0; i < ringObjects.Length; i++)
             {
                 ringObjects[i].transform.localPosition = new Vector3(0f, 0f, range * (i + 1));
