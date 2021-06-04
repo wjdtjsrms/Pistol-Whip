@@ -1547,7 +1547,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5206418308942074258, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
       propertyPath: moveType
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5206418309393265861, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 5206418309393265861, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
       propertyPath: m_TagString
