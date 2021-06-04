@@ -25,6 +25,11 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     private Animator animator;
     private Vector3 sizeUI;
 
+    [SerializeField]
+    private ParticleSystem appear_Effect;
+    [SerializeField]
+    private ParticleSystem disappear_Effect;
+
     private Transform targetPos; // 생성 후 이동할 위치
     private Vector3 moveTargetVec; // 이동할 목표 위치
     private Vector3 playerPos; // 플레이어의 위치   
@@ -70,6 +75,8 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     private void OnEnable()
     {
         StopAllCoroutines();
+
+        appear_Effect.Play();
 
         animator.enabled = true;
         animator.SetBool("IsRunning", true);
@@ -158,6 +165,9 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
 
         animator.enabled = false; // 레그돌 활성화를 위해 애니메이터를 끈다
         isDie = true; // 얘는 이제 죽었다.
+
+        disappear_Effect.Play();
+
         GetScore(); // 점수를 획득한다.
         GameManager.Instance.EnemyDie(this); // 적 사망 이벤트를 실행한다.
         StartCoroutine(EnemyDieCoroutine()); // 사망 처리 코루틴을 실행시킨다.
