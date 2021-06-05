@@ -12,15 +12,14 @@ public class fog : MonoBehaviour
     }
 
     private ColorSetting[] colorSettings = new ColorSetting[6];
-
-    int index = 0;
+    private int index = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         RenderSettings.fog = true;
 
-        colorSettings[0].fog = RenderSettings.fogColor;
+        colorSettings[0].fog = RenderSettings.fogColor; // 스타트 컬러
         colorSettings[0].amColor = RenderSettings.ambientLight;
         colorSettings[0].amEquatColor = RenderSettings.ambientEquatorColor;
 

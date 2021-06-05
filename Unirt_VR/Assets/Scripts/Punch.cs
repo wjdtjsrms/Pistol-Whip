@@ -5,15 +5,16 @@ using UnityEngine;
 public class Punch : MonoBehaviour
 {
     [SerializeField]
-    private CustomController customController;
+    private CustomController customController; // Grip 값을 가져올 콘트롤러
     [SerializeField]
-    private GameObject appleWatch;
-
+    private GameObject appleWatch; // 보여줄 UI 오브젝트
     private float gripValue = 0f;
+
     private void Update()
     {
         gripValue = customController.GripValue;
-        if(gripValue > 0.7f)
+
+        if (gripValue > 0.7f)
         {
             appleWatch.gameObject.SetActive(false);
         }

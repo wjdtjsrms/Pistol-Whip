@@ -20,43 +20,41 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     private Transform barrelLocation; // 총알이 나올 위치
     [SerializeField]
     private float limitDistance = 6.0f; // 얼마나 떨어지면 사라지것인지.
+    [SerializeField]
+    private ParticleSystem appear_Effect; // 등장 이팩트
+    [SerializeField]
+    private ParticleSystem disappear_Effect; // 사망시 이팩트
+
     private AudioSource audioSource;
     private TextMeshPro scoreText;
     private Animator animator;
-    private Vector3 sizeUI;
-
-    [SerializeField]
-    private ParticleSystem appear_Effect;
-    [SerializeField]
-    private ParticleSystem disappear_Effect;
 
     private Transform targetPos; // 생성 후 이동할 위치
     private Vector3 moveTargetVec; // 이동할 목표 위치
     private Vector3 playerPos; // 플레이어의 위치   
     private float moveSpeed = 4.0f; // 이동 속도
     private bool isDie = false; // 현재 적의 상태
+    private Vector3 sizeUI; // 점수 UI의 기본 크기
 
     // 코루틴 최적화를 위한 변수 선언
-    YieldInstruction waitShort = new WaitForSeconds(0.5f);
-    YieldInstruction waitAttackDely = new WaitForSeconds(3.0f);
+    private YieldInstruction waitShort = new WaitForSeconds(0.5f);
+    private YieldInstruction waitAttackDely = new WaitForSeconds(3.0f);
 
-    //경고선 프로퍼티
-    bool laser;
-    bool ShotWait
+    private bool laser;
+    private bool ShotWait // 경고선 프로퍼티
     {
         get => laser;
         set
         {
             laser = value;
 
-            if (animator.GetBool("IsAttack") == laser) //IsAttack이 false일땐 라인렌더러 true, true일땐 false
+            if (animator.GetBool("IsAttack") == laser) // IsAttack이 false일땐 라인렌더러 true, true일땐 false
             {
                 drawWarningLine(GameManager.Instance.PlayerPos);
                 line.enabled = !laser;
             }
         }
     }
-
     #endregion
 
     private void Awake()
@@ -67,47 +65,58 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         audioSource = GetComponent<AudioSource>();
 
         //ShotWait = true;
+
+        // 기본 점수 UI의 크기를 기억한다.
         sizeUI = scoreUI.transform.localScale;
     }
 
     private void Start()
     {
+        // 필요한 이벤트 리스너들을 등록한다.
         GameManager.Instance.actPlayerDie += () => gameObject.SetActive(false);
         GameManager.Instance.actGamePause += () => gameObject.SetActive(false);
         GameManager.Instance.actGameRestart += () => gameObject.SetActive(true);
     }
+
     // 값을 다시 초기화 한다.
     private void OnEnable()
     {
         StopAllCoroutines();
 
-        appear_Effect.Play();
-
+        // 값들을 기본값으로 되돌린다.
+        isDie = false;
         animator.enabled = true;
         animator.SetBool("IsRunning", true);
-
         GetComponent<Collider>().enabled = true;
 
+        // 등장 이팩트를 보여준다.
+        appear_Effect.Play();
+
+        // 발사 이펙트의 위치를 총구로 변경    
+        muzzle.gameObject.transform.position = barrelLocation.position;
+
+        // 점수 UI를 초기화 한다.
         scoreUI.transform.localScale = sizeUI;
+        scoreUI.SetActive(false);
         scoreText.enabled = true;
+
+        // 목표 위치를 바라본다.
         moveTargetVec = targetPos.position;
         moveTargetVec.y = 0;
         transform.LookAt(moveTargetVec);
 
-        isDie = false;
-        scoreUI.SetActive(false);
-        muzzle.gameObject.transform.position = barrelLocation.position; // 발사 이펙트의 위치를 총구로 변경    
-
+        // 목표 위치로 이동한다.
         StartCoroutine(MoveCoroutine());
-        
     }
     private void OnDisable()
     {
         StopAllCoroutines();
     }
+
     private void Update()
     {
-        if(this.gameObject.activeSelf && GameManager.Instance.PlayerPos.z - limitDistance > this.transform.position.z)
+        // 플레이어보다 뒤에 위치한 적은 꺼버린다.
+        if (this.gameObject.activeSelf && GameManager.Instance.PlayerPos.z - limitDistance > this.transform.position.z)
         {
 
             this.gameObject.SetActive(false);
@@ -117,7 +126,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
 
 public partial class EnemyCtrl : MonoBehaviour, IShotAble
 {
-
+    // 생성될 위치와 이동할 위치를 설정해준다. EnemyManager에서 호출한다.
     public void SetTransform(Transform startPos, Transform targetPos)
     {
         this.transform.position = startPos.position;
@@ -137,12 +146,11 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
 
         animator.SetBool("IsRunning", false);
         StartCoroutine(AttackCoroutine());
-
     }
-    public void drawWarningLine(Vector3 playerPos) // 경고선 출력
-    {  
+    private void drawWarningLine(Vector3 playerPos) // 경고선 출력
+    {
         line.SetPosition(0, barrelLocation.position);
-        line.SetPosition(1, playerPos); 
+        line.SetPosition(1, playerPos);
         line.enabled = true;
     }
 
@@ -150,15 +158,16 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     {
         animator.SetBool("IsAttack", true); // 공격 애니메이션 실행
         muzzle.Play(); // 공격 이펙트 실행
-        line.enabled = false;
         audioSource.PlayOneShot(attackClip); // 공격 사운드 실행
-        BulletPooling.Instance.Spawn(barrelLocation);
+        BulletPooling.Instance.Spawn(barrelLocation); // 총알 생성
 
+        // 경고선을 그린다.
+        line.enabled = false;
         //StartCoroutine(laserprint());
     }
 
-    // ybot@Shooting 애니메이션의 Event에서 실행된다. 삭제하면 아무튼 큰일 난다.
-    void ResetAttack()
+    // ybot@Shooting 애니메이션의 Event에서 실행된다. 참조 0개라고 삭제하면 큰일 난다.
+    private void ResetAttack()
     {
         animator.SetBool("IsAttack", false);
     }
@@ -169,20 +178,10 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         StopAllCoroutines();
         EnemyDamage();
 
-        animator.enabled = false; // 레그돌 활성화를 위해 애니메이터를 끈다
-        isDie = true; // 얘는 이제 죽었다.
-     
-        GetScore(); // 점수를 획득한다.
-        GameManager.Instance.EnemyDie(this); // 적 사망 이벤트를 실행한다.
-        StartCoroutine(EnemyDieCoroutine()); // 사망 처리 코루틴을 실행시킨다.
-        GetComponent<Collider>().enabled = false;
-
-
         // 이펙트를 hitPoint, hitNormal 방향으로 그린다.
         GameObject BloodObject = ObjectManager.Instance.Fire();
         BloodObject.transform.position = hitPoint;
         BloodObject.transform.rotation = Quaternion.LookRotation(hitNormal);
-
         // 사망 이펙트가 나온다.
         disappear_Effect.Play();
     }
@@ -191,11 +190,11 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         animator.enabled = false; // 레그돌 활성화를 위해 애니메이터를 끈다
         isDie = true; // 얘는 이제 죽었다.
         GetScore(); // 점수를 획득한다.
+        GetComponent<Collider>().enabled = false; // Enemy 히트박스를 끈다
+
         GameManager.Instance.EnemyDie(this); // 적 사망 이벤트를 실행한다.
         StartCoroutine(EnemyDieCoroutine()); // 사망 처리 코루틴을 실행시킨다.
-        GetComponent<Collider>().enabled = false;
     }
-
 
     // 점수를 보이게 하고 게임 매니저에 점수를 추가하는 함수
     private void GetScore()
@@ -219,7 +218,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     {
         yield return waitShort; // 잠시 기다린다.
 
-        // Lerp를 사용하기 위한 변수
+        // Lerp를 상태를 저장하기 위한 변수
         float percent = 0;
         float speed = 0.5f;
 
@@ -234,16 +233,15 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         scoreText.enabled = false; // 점수 UI를 끈다.
         this.gameObject.SetActive(false); // 이 오브젝트를 끈다.
         yield break;
-
     }
 
     // Enemy가 공격시 실행 될 코루틴
     IEnumerator AttackCoroutine()
-    {      
+    {
         while (!isDie) // 죽기 전까지 계속 실행된다.
         {
             yield return waitAttackDely;
-            
+
             EnemyAttack();
         }
         yield break;

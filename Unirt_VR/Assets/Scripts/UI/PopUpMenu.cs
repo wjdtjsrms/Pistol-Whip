@@ -12,8 +12,8 @@ public class PopUpMenu : MonoBehaviour
     {
         if (CustomController.IsButtonPressed(CommonUsages.secondaryButton, ref isPressedB, false))
         {
-            GameManager.Instance.GamePause(this);
-            childObject.gameObject.SetActive(true);
+            GameManager.Instance.GamePause(this); // 일시정지 이벤트를 호출한다.
+            childObject.gameObject.SetActive(true); 
         }
     }
 }

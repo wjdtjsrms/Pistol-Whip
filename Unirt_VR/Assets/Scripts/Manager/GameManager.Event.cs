@@ -4,10 +4,9 @@ using UnityEngine;
 using System;
 public partial class GameManager : MonoBehaviour
 {
-    public event Action actPlayerDie;
-    public event Action actPlayerDamage; // 플레이어가 데미지를 입으면 데미지를 입는다, 콤보가 깨진다. 화면이 잠시 빨개진다, 이펙트가 생긴다.
-
-    public event Action actEnemyDie;
+    public event Action actPlayerDie; // 플레이어 사망시
+    public event Action actPlayerDamage; // 플레이어가 데미지 입었을때
+    public event Action actEnemyDie; // 애너미 사망시
 
     public event Action actGameStart; // 게임 처음 시작
     public event Action actGameEnd; // 게임 끝

@@ -28,7 +28,7 @@ public partial class CustomController : MonoBehaviour
     {
         get
         {
-            if(handModelAnimator != null)
+            if (handModelAnimator != null)
             {
                 return handModelAnimator.GetFloat("Grip");
             }
@@ -65,7 +65,7 @@ public partial class CustomController : MonoBehaviour
 }
 
 // 버튼 클릭 체크 함수
-public partial class CustomController : MonoBehaviour 
+public partial class CustomController : MonoBehaviour
 {
     // 확인할 버튼, 중복 클릭 방지용 불리언, 왼쪽 버튼인지 오른쪽 버튼인지 확인하는 불리언
     public static bool IsButtonPressed(InputFeatureUsage<bool> inputFeature, ref bool isPressed, bool isLeft) // 버튼이 중복으로 눌리지 않게 해주는 함수
@@ -172,6 +172,7 @@ public partial class CustomController : MonoBehaviour
         }
     }
 
+    // 근접 공격을 위한 함수
     void OnTriggerEnter(Collider other)
     {
         if (handModelAnimator.GetFloat("Grip") >= 0.7F)
