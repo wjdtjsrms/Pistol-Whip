@@ -17,7 +17,12 @@ public class Bullet : MonoBehaviour
     {
         bulletRigidbody = GetComponent<Rigidbody>();
     }
-
+    private void Start()
+    {
+        GameManager.Instance.actPlayerDie += () => gameObject.SetActive(false);
+        GameManager.Instance.actGamePause += () => gameObject.SetActive(false);
+        GameManager.Instance.actGameRestart += () => gameObject.SetActive(true);
+    }
     private void OnEnable()
     {
         bulletRigidbody.velocity = transform.forward * bulletspeed;

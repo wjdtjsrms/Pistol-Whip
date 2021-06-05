@@ -21,7 +21,11 @@ public partial class GameManager : MonoBehaviour
     void Start()
     {
         actPlayerDie += () => isGameOver = true;
-        actPlayerDie += () => Invoke("LoadStartScene", 1f);
+        actPlayerDie += () => audioSource.Pause();
+
+        actGamePause +=() => audioSource.Pause();
+        actGameRestart += () => audioSource.Play();
+
         actGameEnd += () => Invoke("LoadStartScene", 3.5f);
     }
 
@@ -32,10 +36,8 @@ public partial class GameManager : MonoBehaviour
             if (CustomController.IsButtonPressed(CommonUsages.menuButton, ref menumButtonPressed, true))
             {
                 RestartGame();
-            }
-            
-        }
-      
+            }         
+        }    
     }
 }
 public partial class GameManager : MonoBehaviour
@@ -74,11 +76,6 @@ public partial class GameManager : MonoBehaviour
         {
             audioSource.Pause();
         }
-    }
-
-    public void EndGame() 
-    {
-        isGameOver = true;
     }
     private void LoadStartScene()
     {

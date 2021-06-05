@@ -38,7 +38,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
 
     // 코루틴 최적화를 위한 변수 선언
     YieldInstruction waitShort = new WaitForSeconds(0.5f);
-    YieldInstruction waitAttackDely = new WaitForSeconds(2.0f);
+    YieldInstruction waitAttackDely = new WaitForSeconds(3.0f);
 
     //경고선 프로퍼티
     bool laser;
@@ -66,10 +66,16 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         scoreText = scoreUI.GetComponent<TextMeshPro>();
         audioSource = GetComponent<AudioSource>();
 
-        ShotWait = true;
+        //ShotWait = true;
         sizeUI = scoreUI.transform.localScale;
     }
 
+    private void Start()
+    {
+        GameManager.Instance.actPlayerDie += () => gameObject.SetActive(false);
+        GameManager.Instance.actGamePause += () => gameObject.SetActive(false);
+        GameManager.Instance.actGameRestart += () => gameObject.SetActive(true);
+    }
     // 값을 다시 초기화 한다.
     private void OnEnable()
     {
@@ -127,15 +133,14 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         playerPos.y = 0;
         transform.LookAt(playerPos);
 
-        drawWarningLine(GameManager.Instance.PlayerPos); // 경고선 출력 메소드 호출
+        //drawWarningLine(GameManager.Instance.PlayerPos); // 경고선 출력 메소드 호출
 
         animator.SetBool("IsRunning", false);
         StartCoroutine(AttackCoroutine());
 
     }
     public void drawWarningLine(Vector3 playerPos) // 경고선 출력
-    {
-        //line.positionCount = 2;       
+    {  
         line.SetPosition(0, barrelLocation.position);
         line.SetPosition(1, playerPos); 
         line.enabled = true;
@@ -149,7 +154,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         audioSource.PlayOneShot(attackClip); // 공격 사운드 실행
         BulletPooling.Instance.Spawn(barrelLocation);
 
-        StartCoroutine(laserprint());
+        //StartCoroutine(laserprint());
     }
 
     // ybot@Shooting 애니메이션의 Event에서 실행된다. 삭제하면 아무튼 큰일 난다.
@@ -162,16 +167,11 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     public void OnShot(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
         StopAllCoroutines();
-
-
         EnemyDamage();
-
 
         animator.enabled = false; // 레그돌 활성화를 위해 애니메이터를 끈다
         isDie = true; // 얘는 이제 죽었다.
-
-        disappear_Effect.Play();
-
+     
         GetScore(); // 점수를 획득한다.
         GameManager.Instance.EnemyDie(this); // 적 사망 이벤트를 실행한다.
         StartCoroutine(EnemyDieCoroutine()); // 사망 처리 코루틴을 실행시킨다.
@@ -182,8 +182,9 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         GameObject BloodObject = ObjectManager.Instance.Fire();
         BloodObject.transform.position = hitPoint;
         BloodObject.transform.rotation = Quaternion.LookRotation(hitNormal);
-        
+
         // 사망 이펙트가 나온다.
+        disappear_Effect.Play();
     }
     public void EnemyDamage()
     {
@@ -203,8 +204,10 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         var color = score > 100 ? Color.red : Color.black; // 100점 이상은 빨강, 이하는 검정색으로 표시된다.
 
         scoreUI.SetActive(true); // 점수 UI를 킨다.
-        scoreUI.transform.LookAt(new Vector3(0, GameManager.Instance.PlayerPos.y, 0)); // 플레이어 방향을 바라보게 한다.
-        scoreUI.transform.Rotate(new Vector3(0, 180, 0));
+        Vector3 vec = GameManager.Instance.PlayerPos - transform.position;
+        vec.Normalize();
+        Quaternion q = Quaternion.LookRotation(-vec);
+        scoreUI.transform.rotation = q; // 점수 UI가 플레이어를 바라보게 한다.
 
         scoreText.text = score.ToString(); //  점수로 업데이트 한다.
         scoreText.color = color; // 색깔을 바꾼다.

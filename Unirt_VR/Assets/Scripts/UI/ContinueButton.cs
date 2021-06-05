@@ -4,23 +4,12 @@ using UnityEngine;
 
 public class ContinueButton : MonoBehaviour, IShotAble
 {
-    public static bool GameIsPaused = false;
-
-    public GameObject SettingWindow;
+    [SerializeField]
+    private GameObject SettingWindow;
 
     public void OnShot(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
-        Continue();
-    }
-    // Update is called once per frame
-    public void Continue()
-    {
+        GameManager.Instance.GameRestart(this);
         SettingWindow.SetActive(false);
-    }
-    public void Resume()
-    {
-
-        Time.timeScale = 1f;
-        GameIsPaused = false;
     }
 }

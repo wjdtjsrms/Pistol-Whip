@@ -4,24 +4,14 @@ using UnityEngine;
 
 public class CheckMsButtonNo : MonoBehaviour, IShotAble
 {
+    [SerializeField]
+    private GameObject SettingWindow;
+    [SerializeField]
+    private GameObject CheckMsBox;
 
-    public GameObject SettingWindow;
-    public GameObject CheckMsBox;
-    // Start is called before the first frame update
     public void OnShot(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
-        CheckMsNo();
-    }
-  
-    // Update is called once per frame
-    public void CheckMsNo()// 홈 버튼 클릭시 
-    {
-
+        SettingWindow.SetActive(true);
         CheckMsBox.SetActive(false);
-        if(CheckMsBox ==null)
-        {
-            SettingWindow.SetActive(false);
-            CheckMsBox.SetActive(false);
-        }
     }
 }

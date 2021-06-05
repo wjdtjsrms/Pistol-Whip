@@ -7,7 +7,7 @@ using TMPro;
 public partial class UIManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject gameOverText;
+    private GameObject gameOverUI;
     [SerializeField]
     private GameObject crushHeart;
     [SerializeField]
@@ -29,19 +29,20 @@ public partial class UIManager : MonoBehaviour
         waitTimeText.text = "15";
         comboText.text = "0";
 
+        gameOverUI.gameObject.SetActive(false);
         crushHeart.gameObject.SetActive(false);
         waitTimeText.gameObject.SetActive(false);
     }
 
     void Start()
     {
-        GameManager.Instance.actPlayerDie += PlayerGameOver;
+        GameManager.Instance.actPlayerDie += () => gameOverUI.SetActive(true);
         GameManager.Instance.actEnemyDie += ComboUp;
         GameManager.Instance.actPlayerDamage += PlayerGetDamage;
     }
     private void ComboUp()
     {
-        if(nowCombo <= 8)
+        if(nowCombo < 8)
         {
             nowCombo++;
             comboText.text = nowCombo.ToString();
@@ -52,7 +53,7 @@ public partial class UIManager : MonoBehaviour
         if(playerCanDie == true)
         {
             StopAllCoroutines();
-            //GameManager.Instance.playerDie(this);
+            GameManager.Instance.playerDie(this);
         }
         crushHeart.gameObject.SetActive(true);
         waitTimeText.gameObject.SetActive(true);
@@ -73,9 +74,4 @@ public partial class UIManager : MonoBehaviour
         playerCanDie = false;
         yield break;
     }
-    private void PlayerGameOver()
-    {
-        gameOverText.SetActive(true);
-    }
-
 }
