@@ -658,7 +658,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1201226162}
-  m_RootOrder: 3
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &279554426
 BoxCollider:
@@ -1171,6 +1171,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 29fbfafea1b043f409df8593150e0520, type: 2}
+    - target: {fileID: -773207679637417655, guid: 73731d9f349397a4fb806926395881b2, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: -538101569497658160, guid: 73731d9f349397a4fb806926395881b2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -1595,7 +1599,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5206418309464581997, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 5206418309464581997, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3653,6 +3657,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 29fbfafea1b043f409df8593150e0520, type: 2}
+    - target: {fileID: -8313373379485844341, guid: 9bb5245f420420840934a0ca57d658b7, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: -8040307745734058665, guid: 9bb5245f420420840934a0ca57d658b7, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -3697,6 +3705,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 29fbfafea1b043f409df8593150e0520, type: 2}
+    - target: {fileID: 2677778479826147706, guid: 9bb5245f420420840934a0ca57d658b7, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3061246122010524089, guid: 9bb5245f420420840934a0ca57d658b7, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -6023,7 +6035,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1048648905}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1992018185
 BoxCollider:
