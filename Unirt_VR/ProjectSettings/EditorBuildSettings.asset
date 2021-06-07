@@ -9,9 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/StartScoreScene.unity
     guid: 52dc4eb1021cc454c9aac448a61758a0
   - enabled: 1
-    path: Assets/Scenes/Tutorial.unity
-    guid: e8cf1d29775c7e24f9dd35148a6437c0
-  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: fd1564d18d9b0d140b5170186277c343
   - enabled: 1

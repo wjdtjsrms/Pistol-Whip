@@ -72,4 +72,8 @@ public partial class GameManager : MonoBehaviour
             audioSource.Pause();
         }
     }
+    private void LoadStartScene()
+    {
+        SceneManager.LoadSceneAsync("StartScoreScene");
+    }
 }
