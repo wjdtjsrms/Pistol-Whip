@@ -3205,7 +3205,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5206418309144027840, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
   m_PrefabInstance: {fileID: 482243887}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 482243893}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92112de0867720e42bd41d13e857268c, type: 3}
@@ -3232,23 +3232,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 9218508807204497152, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
   m_PrefabInstance: {fileID: 482243887}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &482243893 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5206418309144027842, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
-  m_PrefabInstance: {fileID: 482243887}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &482243894
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 482243893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11b04a8634f5eb849a40d68053200d52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &482243895 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5206418308942073961, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
@@ -11795,7 +11778,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1259604479, guid: 96e7d62a81f21664f9495122a68607a6, type: 3}
       propertyPath: enemyCount
-      value: 100
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1527906847477354485, guid: 96e7d62a81f21664f9495122a68607a6, type: 3}
       propertyPath: m_Name
@@ -14146,7 +14129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e9b89b81a513ee4689e1e575ec63d9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameOverText: {fileID: 0}
+  gameOverUI: {fileID: 0}
   crushHeart: {fileID: 1978976042}
   comboText: {fileID: 1881175976}
   waitTimeText: {fileID: 1721461923}
@@ -14793,7 +14776,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14491a7b283024f478b0e042acf3ed14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireTime: 0.01
   Blood_Prefab: {fileID: 7665376844088189661, guid: e9f993cb49e4ad14e8820074f37f7c16, type: 3}
   BloodCount: 5
 --- !u!4 &1893794936
@@ -16357,18 +16339,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5206418310502552350, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
   m_PrefabInstance: {fileID: 482243887}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2101257388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2101257387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11b04a8634f5eb849a40d68053200d52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &2101257390
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -16611,7 +16581,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 262285892891166445, guid: aa44113f889aa2a48a810531058504b5, type: 3}
       propertyPath: bulletCount
-      value: 100
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 262285892891166447, guid: aa44113f889aa2a48a810531058504b5, type: 3}
       propertyPath: m_Name
