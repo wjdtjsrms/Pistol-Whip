@@ -14,9 +14,10 @@ public class MovementProvider : MonoBehaviour
 
 
     [SerializeField]
-    private  float speed = 3.0f; // 이동 속도
+    private float speed = 3.0f; // 이동 속도
+    [SerializeField]
+    private List<XRController> controllers = null; // 컨트롤러 리스트 (상황에 따라서 1개 혹은 n개가 설정 될 수 있다.)
 
-    public List<XRController> controllers = null; // 컨트롤러 리스트 (상황에 따라서 1개 혹은 n개가 설정 될 수 있다.)
     private CharacterController characterController = null; // VR Rig의 캐릭터 컨트롤러
     private GameObject head = null; // 카메라의 헤드 위치
     public MoveType moveType = MoveType.FreeMove; //  플레이어 이동 방식 설정
@@ -55,6 +56,18 @@ public class MovementProvider : MonoBehaviour
             GoFront(); // Z축 방향으로 이동함
         }
     }
+    void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Checkpoint"))
+        {
+            speed = 0.12f;
+        }
+        else
+        {
+            speed = 1.0f;
+        }
+    }
+
     void GoFront()
     {
         Vector3 movement = Vector3.forward * speed;
@@ -83,6 +96,7 @@ public class MovementProvider : MonoBehaviour
             }
         }
     }
+
 
     void CheckForMovement(InputDevice device)
     {
