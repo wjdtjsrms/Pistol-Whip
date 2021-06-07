@@ -6,9 +6,9 @@ public class SpawnPoint : MonoBehaviour
 {
     #region 필드
     public enum CheckOption { Music = 0, Distance }
-    [SerializeField]
+
     private Transform startPoint; // 스폰할 위치
-    [SerializeField]
+
     private Transform endPoint; // 스폰 후 움직일 위치
     [SerializeField]
     private bool isMove = true; // 스폰 후 이동할 것인지 이 경우 startPoint에서 가만히 있는다.
@@ -18,6 +18,10 @@ public class SpawnPoint : MonoBehaviour
     private int musicTime = 0; // CheckOption.Music 인 경우 음악의 실행 되고 언제 스폰 될것인가?
     [SerializeField]
     private float distance = 0f;// CheckOption.Distance 인 경우 플레이어와 거리가 언제일때 스폰 될것인가?
+    [SerializeField]
+    private int hp = 0; // 몇 대 맞는 적이 스폰 될것인가?
+
+
     #endregion
     #region 프로퍼티
     public Transform StartPoint // 스폰할 위치
@@ -62,8 +66,16 @@ public class SpawnPoint : MonoBehaviour
             return distance;
         }
     }
+    public int HP // CheckOption.Distance 인 경우 플레이어와 거리가 언제일때 스폰 될것인가?
+    {
+        get
+        {
+            return hp;
+        }
+    }
 
-    public bool IsUse // CheckOption.Distance 인 경우 플레이어와 거리가 언제일때 스폰 될것인가?
+
+    public bool IsUse // 이미 사용된 포인트인가?
     {
         get;set;
     }

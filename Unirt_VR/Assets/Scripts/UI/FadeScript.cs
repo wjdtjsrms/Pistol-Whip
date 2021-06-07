@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class FadeScript : MonoBehaviour
 {
@@ -19,10 +20,36 @@ public class FadeScript : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(FadeFollow());
     }
+    public void FadeLoadStart()
+    {
+        StopAllCoroutines();
+        StartCoroutine(FadeLoad("StartScoreScene"));
+    }
+    public void FadeLoadPlay()
+    {
+        StopAllCoroutines();
+        StartCoroutine(FadeLoad("SampleScene"));
+    }
     public void FadeRed()
     {
         StopAllCoroutines();
         StartCoroutine(DamageFade());
+    }
+    IEnumerator FadeLoad(string sceneName)
+    {
+        BlackFade.gameObject.SetActive(true);
+        time = 0f;
+        Color alpha = BlackFade.color;
+        while (alpha.a < 1f)
+        {
+            time += Time.deltaTime / F_time;
+            alpha.a = Mathf.Lerp(0, 1, time);
+            BlackFade.color = alpha;
+            yield return null;
+        }
+        AsyncOperation asyncOper = SceneManager.LoadSceneAsync(sceneName);
+        asyncOper.allowSceneActivation = true;
+        yield break;
     }
 
     IEnumerator FadeFollow()
@@ -30,10 +57,10 @@ public class FadeScript : MonoBehaviour
         BlackFade.gameObject.SetActive(true);
         time = 0f;
         Color alpha = BlackFade.color;
-        while(alpha.a < 1f)
+        while (alpha.a < 1f)
         {
             time += Time.deltaTime / F_time;
-            alpha.a = Mathf.Lerp(0,1, time);
+            alpha.a = Mathf.Lerp(0, 1, time);
             BlackFade.color = alpha;
             yield return null;
         }
@@ -76,9 +103,9 @@ public class FadeScript : MonoBehaviour
 
     void Start()
     {
-        GameManager.Instance.actGameStart += FadeBlack;
-        //GameManager.Instance.actPlayerDie += FadeBlack;
-        GameManager.Instance.actGameEnd += () => Invoke("FadeBlack", 3f);
+        GameManager.Instance.actGameStart += FadeLoadPlay;
+        GameManager.Instance.actGameEnd += FadeLoadStart;
         GameManager.Instance.actPlayerDamage += FadeRed;
+
     }
 }

@@ -2948,6 +2948,7 @@ MonoBehaviour:
   limitDistance: 5
   appear_Effect: {fileID: 3705828697102667330}
   disappear_Effect: {fileID: 3705828697102667330}
+  enemyMaterial: {fileID: 2100000, guid: d0b952861dad7fa44b2ec736ea2ea3cd, type: 2}
 --- !u!54 &7230858876646849217
 Rigidbody:
   m_ObjectHideFlags: 0
