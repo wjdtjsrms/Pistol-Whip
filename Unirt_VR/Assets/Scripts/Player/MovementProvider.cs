@@ -83,6 +83,17 @@ public class MovementProvider : MonoBehaviour
             }
         }
     }
+    void OnTriggerStay(Collider other)
+    {
+        if(other.CompareTag("Checkpoint"))
+        {
+            speed = 0.12f;
+        }
+        else
+        {
+            speed = 1.0f;
+        }
+    }
 
     void CheckForMovement(InputDevice device)
     {
