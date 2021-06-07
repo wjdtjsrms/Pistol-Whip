@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-
     private AudioClip damageClip;
     private AudioSource audioSource;
 

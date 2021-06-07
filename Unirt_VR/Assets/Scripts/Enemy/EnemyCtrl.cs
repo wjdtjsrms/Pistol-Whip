@@ -25,6 +25,11 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     private Animator animator;
     private Vector3 sizeUI;
 
+    [SerializeField]
+    private ParticleSystem appear_effect; //적 출현 이펙트
+    [SerializeField]
+    private ParticleSystem disappear_effect;  //적 사라지는 이펙트
+
     private Transform targetPos; // 생성 후 이동할 위치
     private Vector3 moveTargetVec; // 이동할 목표 위치
     private Vector3 playerPos; // 플레이어의 위치   
@@ -69,6 +74,8 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     private void OnEnable()
     {
         StopAllCoroutines();
+
+        appear_effect.Play(); // 적 나타나는 Effect
 
         animator.enabled = true;
         animator.SetBool("IsRunning", true);
@@ -162,8 +169,6 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         GameObject BloodObject = ObjectManager.Instance.Fire();
         BloodObject.transform.position = hitPoint;
         BloodObject.transform.rotation = Quaternion.LookRotation(hitNormal);
-        
-        // 사망 이펙트가 나온다.
     }
     public void EnemyDamage()
     {
@@ -173,8 +178,8 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         GameManager.Instance.EnemyDie(this); // 적 사망 이벤트를 실행한다.
         StartCoroutine(EnemyDieCoroutine()); // 사망 처리 코루틴을 실행시킨다.
         GetComponent<Collider>().enabled = false;
+        disappear_effect.Play(); // 적 사라지는 Effect 실행
     }
-
 
     // 점수를 보이게 하고 게임 매니저에 점수를 추가하는 함수
     private void GetScore()

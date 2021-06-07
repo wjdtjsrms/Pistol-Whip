@@ -95,6 +95,7 @@ public partial class GunShoot : MonoBehaviour
         RaycastHit hit;
         Vector3 hitPosition;
 
+
         if (Physics.Raycast(barrelLocation.position, barrelLocation.forward, out hit, fireDistance))
         {
             // 레이가 충돌한 지점 저장
@@ -102,6 +103,7 @@ public partial class GunShoot : MonoBehaviour
             // 총과 인터렉션이 있는 타입이라면 그 객체의 함수를 호출한다.
             IShotAble shotObject = hit.transform.gameObject.GetComponent<IShotAble>();
             shotObject?.OnShot(attackAmount, hit.point, hit.normal);
+           
         }
         else
         {
@@ -109,7 +111,6 @@ public partial class GunShoot : MonoBehaviour
             // 탄알이 최대 사정거리까지 날아갔을 때의 위치를 충돌 위치를 사용
             hitPosition = barrelLocation.position + barrelLocation.forward * fireDistance;
         }
-
         //발사 이펙트 재생
         ShotEffect(hitPosition);
 

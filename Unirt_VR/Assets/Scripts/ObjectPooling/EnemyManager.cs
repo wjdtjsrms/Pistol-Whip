@@ -7,7 +7,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField]
     private EnemyCtrl enemy;
     [SerializeField]
-    private int enemyCount = 20;
+    private int enemyCount = 100;
     private List<GameObject> enemyPool = new List<GameObject>();
 
     private void Awake()
