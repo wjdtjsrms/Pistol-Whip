@@ -22,16 +22,25 @@ public partial class GameManager : MonoBehaviour
         get;
         private set;
     }
-    public int HP
-    {
-        get;
-        private set;
-    }
     public Vector3 PlayerPos
     {
         get
         {
             return playerController.transform.position;
+        }
+    }
+    public float MusicPlayTime
+    {
+        get
+        {
+            if (audioSource.clip != null)
+            {
+                return audioSource.time;
+            }
+            else
+            {
+                return 0f;
+            }
         }
     }
 }

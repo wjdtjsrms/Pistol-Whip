@@ -9,12 +9,8 @@ TagManager:
   - Punch
   - Sword
   - Button
-  - map3
-  - map4
-  - map2
-  - map1
-  - map5
   - Hit
+  - Map
   layers:
   - Default
   - TransparentFX

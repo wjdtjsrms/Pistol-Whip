@@ -30,7 +30,8 @@ public partial class GunShoot : MonoBehaviour
     private bool triggerButton = false; // 총알 단발 발사용 불리언
     private int magCapacity = 15; // 탄창 용량
     private int magAmmo = 15; // 현재 탄창에 남아 있는 탄알
-    private float reloadTime = 1.0f; // 재장전 소요 시간
+    private float reloadTime = 0.5f; // 재장전 소요 시간
+    private int layerMask; // 레이와 충돌할 객체를 검출하기 위한 레이어마스크
 
     private enum State // 총의 현재 상태
     {
@@ -53,7 +54,6 @@ public partial class GunShoot : MonoBehaviour
         {
             barrelLocation = this.transform;
         }
-
     }
 
     private void Start()
@@ -62,7 +62,8 @@ public partial class GunShoot : MonoBehaviour
         gunAudio = GetComponent<AudioSource>();
         magAmmo = magCapacity; // 탄창을 가득 채운다.
         state = State.Ready; // 총의 현재 상태를 총을 쏠 준비가 된 상태로 변경
-        muzzle.gameObject.transform.position = barrelLocation.position; // 발사 이펙트의 위치를 총구로 변경      
+        muzzle.gameObject.transform.position = barrelLocation.position; // 발사 이펙트의 위치를 총구로 변경        
+        layerMask = (1 << LayerMask.NameToLayer("UI")) + (1 << LayerMask.NameToLayer("Enemy")); // 쏜 레이는 Enemy 와 UI 레이어만 충돌한다.
     }
 
     private void Update()
@@ -95,8 +96,7 @@ public partial class GunShoot : MonoBehaviour
         RaycastHit hit;
         Vector3 hitPosition;
 
-
-        if (Physics.Raycast(barrelLocation.position, barrelLocation.forward, out hit, fireDistance))
+        if (Physics.Raycast(barrelLocation.position, barrelLocation.forward, out hit, fireDistance, layerMask))
         {
             // 레이가 충돌한 지점 저장
             hitPosition = hit.point;

@@ -12,8 +12,10 @@ public class MovementProvider : MonoBehaviour
         GoFront
     }
 
+
     [SerializeField]
-    private float speed = 3.0f; // 이동 속도
+    private  float speed = 3.0f; // 이동 속도
+
     public List<XRController> controllers = null; // 컨트롤러 리스트 (상황에 따라서 1개 혹은 n개가 설정 될 수 있다.)
     private CharacterController characterController = null; // VR Rig의 캐릭터 컨트롤러
     private GameObject head = null; // 카메라의 헤드 위치
@@ -30,7 +32,13 @@ public class MovementProvider : MonoBehaviour
     {
         // 초기 설정을 처리
         PositionController();
-        GameManager.Instance.actGameEnd += PlayerStop;
+
+        // 필요한 이벤트리스너들을 등록
+        GameManager.Instance.actGameStart += () => speed = 3.0f;
+        GameManager.Instance.actPlayerDie += () => speed = 0.0f; ;
+        GameManager.Instance.actGamePause += () => speed = 0.0f; ;
+        GameManager.Instance.actGameEnd += () => speed = 0.0f; ;
+        GameManager.Instance.actGameRestart += () => speed = 3.0f;
     }
 
     // 이동 처리가 입력보다 먼저 실행된다, 입력에 즉각적으로 화면이 갱신되면 어지럽기 때문이다. 
@@ -38,7 +46,7 @@ public class MovementProvider : MonoBehaviour
     {
         PositionController(); // 현재 위치에 맞게 위치를 설정함
 
-        if(moveType == MoveType.FreeMove)
+        if (moveType == MoveType.FreeMove)
         {
             FreeMove(); // 설정된 컨트롤러 중에서 인풋 입력이 있다면 이동처리를 함
         }
@@ -93,10 +101,5 @@ public class MovementProvider : MonoBehaviour
 
         Vector3 movement = direction * speed;
         characterController.Move(movement * Time.deltaTime);
-    }
-
-    void PlayerStop()
-    {
-        speed = 0.0f;
     }
 }

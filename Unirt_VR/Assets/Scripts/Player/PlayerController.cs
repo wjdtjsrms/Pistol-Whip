@@ -16,9 +16,6 @@ public class PlayerController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-
-    private GameObject DeadUI;
-
     void Start()
     {
         GameManager.Instance.actPlayerDie += () => gameObject.SetActive(false);
@@ -33,10 +30,5 @@ public class PlayerController : MonoBehaviour
             other.gameObject.SetActive(false);
             GameManager.Instance.playerDamage(this);
         }
-
-    }              
-    public void Die()
-    {
-        DeadUI.SetActive(true);
-    }    
+    }
 }

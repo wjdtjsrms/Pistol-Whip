@@ -88,7 +88,7 @@ public class FadeScript : MonoBehaviour
     void Start()
     {
         GameManager.Instance.actGameStart += FadeBlack;
-        GameManager.Instance.actPlayerDie += FadeBlack;
+        //GameManager.Instance.actPlayerDie += FadeBlack;
         GameManager.Instance.actGameEnd += () => Invoke("FadeBlack", 3f);
         GameManager.Instance.actPlayerDamage += FadeRed;
     }
