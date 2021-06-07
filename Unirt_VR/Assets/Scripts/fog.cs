@@ -4,73 +4,58 @@ using UnityEngine;
 
 public class fog : MonoBehaviour
 {
+    private struct ColorSetting
+    {
+        public Color fog;
+        public Color amColor;
+        public Color amEquatColor;
+    }
+
+    private ColorSetting[] colorSettings = new ColorSetting[6];
+    private int index = 0;
+
     // Start is called before the first frame update
     void Start()
     {
-        //Example();
+        RenderSettings.fog = true;
+
+        colorSettings[0].fog = RenderSettings.fogColor; // 스타트 컬러
+        colorSettings[0].amColor = RenderSettings.ambientLight;
+        colorSettings[0].amEquatColor = RenderSettings.ambientEquatorColor;
+
+        colorSettings[1].fog = new Color(255 / 255f, 148 / 255f, 93 / 255f, 255 / 255f); //핑크보라색
+        colorSettings[1].amColor = new Color(166 / 255f, 0f, 139 / 255f);
+        colorSettings[1].amEquatColor = new Color(57 / 255f, 0f, 202 / 255f);
+
+        colorSettings[2].fog = new Color(117 / 255f, 255 / 255f, 76 / 255f, 255 / 255f); //연두색
+        colorSettings[2].amColor = new Color(133 / 255f, 78 / 255f, 0f);
+        colorSettings[2].amEquatColor = new Color(0f, 63 / 255f, 164 / 255f);
+
+        colorSettings[3].fog = new Color(108 / 255f, 55 / 255f, 248 / 255f, 255 / 255f); //파랑
+        colorSettings[3].amColor = new Color(217 / 255f, 206 / 255f, 0f);
+        colorSettings[3].amEquatColor = new Color(0f, 115 / 255f, 144 / 255f);
+
+        colorSettings[4].fog = new Color(92 / 255f, 236 / 255f, 187 / 255f, 255 / 255f); //민트
+        colorSettings[4].amColor = new Color(171 / 255f, 131 / 255f, 96 / 255f);
+        colorSettings[4].amEquatColor = new Color(95 / 255f, 157 / 255f, 243 / 255f);
+
+        colorSettings[5].fog = new Color(245 / 255f, 125 / 255f, 0f, 255 / 255f); //주황핑크
+        colorSettings[5].amColor = new Color(0f, 188 / 255f, 47 / 255f);
+        colorSettings[5].amEquatColor = new Color(164 / 255f, 0f, 161 / 255f);
+
     }
 
 
     void OnTriggerEnter(Collider other)
     {
-        RenderSettings.fog = true;
-
-        Color fog2 = new Color(255 / 255f, 148 / 255f, 93 / 255f, 255 / 255f); //핑크보라색
-        Color amColor2 = new Color(166/ 255f, 0f, 139 / 255f);
-        Color amEquatColor2 = new Color(57/255f, 0f, 202/255f);
-
-        Color fog3 = new Color(117 / 255f, 255 / 255f, 76 / 255f, 255 / 255f); //연두색
-        Color amColor3 = new Color(133/255f, 78/255f, 0f);
-        Color amEquatColor3 = new Color(0f, 63/255f, 164/255f);
-
-        Color fog4 = new Color(108/255f, 55/255f, 248/255f, 255/255f); //파랑
-        Color amColor4 = new Color(217/255f, 206/255f, 0f);
-        Color amEquatColor4 = new Color(0f, 115/255f, 144/255f);
-
-        Color fog5 = new Color(92/255f, 236 / 255f, 187/255f, 255 / 255f); //민트
-        Color amColor5 = new Color(171/255f, 131 / 255f, 96 / 255f);
-        Color amEquatColor5 = new Color(95 / 255f, 157/255f, 243 / 255f);
-
-        Color fog6 = new Color(245 / 255f, 125 / 255f, 0f, 255 / 255f); //주황핑크
-        Color amColor6 = new Color(0f, 188 / 255f, 47 / 255f);
-        Color amEquatColor6 = new Color(164 / 255f, 0f, 161 / 255f);
-
-        // now -> fog2
-        // fog2 -> fog3
-        // fog3 -> fog4
-        // fog4 -> fog5
-        // fog5 -> fog6
-
-
-        if (other.gameObject.tag == "map1")
+        if (other.gameObject.tag == "Map")
         {
             StopAllCoroutines();
-            StartCoroutine(ChangeColor(RenderSettings.fogColor, fog2, RenderSettings.ambientLight, amColor2, RenderSettings.ambientEquatorColor, amEquatColor2));
+            StartCoroutine(ChangeColor(colorSettings[index++], colorSettings[index]));
         }
-        else if (other.gameObject.tag == "map2")
-        {
-            StopAllCoroutines();
-            StartCoroutine(ChangeColor(fog2, fog3, amColor2, amColor3, amEquatColor2, amEquatColor3));
-        }
-        else if (other.gameObject.tag == "map3")
-        {
-            StopAllCoroutines();
-            StartCoroutine(ChangeColor(fog3, fog4, amColor3, amColor4, amEquatColor3, amEquatColor4));
-        }
-        else if (other.gameObject.tag == "map4")
-        {
-            StopAllCoroutines();
-            StartCoroutine(ChangeColor(fog4, fog5, amColor4, amColor5, amEquatColor4, amEquatColor5));
-        }
-        else if (other.gameObject.tag == "map5")
-        {
-            StopAllCoroutines();
-            StartCoroutine(ChangeColor(fog5, fog6, amColor5, amColor6, amEquatColor5, amEquatColor6));
-        }
-
     }
 
-    IEnumerator ChangeColor(Color fogColor1, Color fogColor2, Color ambientLight1, Color ambientLight2, Color ambientEquatorColor1, Color ambientEquatorColor2)
+    IEnumerator ChangeColor(ColorSetting colorSetting1, ColorSetting colorSetting2)
     {
         float percent = 0;
         float speed = 1.0f;
@@ -78,13 +63,13 @@ public class fog : MonoBehaviour
         {
             percent += Time.deltaTime * speed;
 
-            Color fogColor = Color.Lerp(fogColor1, fogColor2, percent);
+            Color fogColor = Color.Lerp(colorSetting1.fog, colorSetting2.fog, percent);
             RenderSettings.fogColor = fogColor;
 
-            Color ambientLight = Color.Lerp(ambientLight1, ambientLight2, percent);
+            Color ambientLight = Color.Lerp(colorSetting1.amColor, colorSetting2.amColor, percent);
             RenderSettings.ambientLight = ambientLight;
 
-            Color ambientEquatorColor = Color.Lerp(ambientEquatorColor1, ambientEquatorColor2, percent);
+            Color ambientEquatorColor = Color.Lerp(colorSetting1.amEquatColor, colorSetting2.amEquatColor, percent);
             RenderSettings.ambientEquatorColor = ambientEquatorColor;
             yield return null;
         }

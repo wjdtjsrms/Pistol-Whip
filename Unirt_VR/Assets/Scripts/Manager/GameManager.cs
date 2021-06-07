@@ -11,6 +11,7 @@ public partial class GameManager : MonoBehaviour
     private AudioSource audioSource;
     private static GameManager instance;
     private bool menumButtonPressed = false; // 메뉴 버튼 클릭용 불리언
+
     public bool isGameOver
     {
         get;
@@ -21,16 +22,25 @@ public partial class GameManager : MonoBehaviour
         get;
         private set;
     }
-    public int HP
-    {
-        get;
-        private set;
-    }
     public Vector3 PlayerPos
     {
         get
         {
             return playerController.transform.position;
+        }
+    }
+    public float MusicPlayTime
+    {
+        get
+        {
+            if (audioSource.clip != null)
+            {
+                return audioSource.time;
+            }
+            else
+            {
+                return 0f;
+            }
         }
     }
 }
