@@ -11,7 +11,6 @@ public partial class GameManager : MonoBehaviour
     private AudioSource audioSource;
     private static GameManager instance;
     private bool menumButtonPressed = false; // 메뉴 버튼 클릭용 불리언
-
     public bool isGameOver
     {
         get;

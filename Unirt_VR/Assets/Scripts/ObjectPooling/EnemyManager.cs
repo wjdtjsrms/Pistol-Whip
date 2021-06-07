@@ -7,9 +7,8 @@ public class EnemyManager : MonoBehaviour
     [SerializeField]
     private EnemyCtrl enemy; // 사용할 Enemy 프리펩
     [SerializeField]
-    private int enemyCount = 20; // 생성할 갯수
+    private int enemyCount = 10; // 생성할 갯수
     private List<GameObject> enemyPool = new List<GameObject>(); // 생성된 객체를 담을 리스트
-
 
     private void Awake()
     {

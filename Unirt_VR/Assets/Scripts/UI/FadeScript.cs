@@ -14,15 +14,6 @@ public class FadeScript : MonoBehaviour
     private float F_time_Red = 0.4f;
     private YieldInstruction waitOneSecond = new WaitForSeconds(1f);
 
-    [SerializeField]
-    private ParticleSystem Player_hit_Effect;  // 플레이어 피격 이펙트
-
-    //[SerializeField]
-    //private GameObject Player_recovery_Effect;  //플레이어 회복 이펙트
-
-
-
-
     public void FadeBlack()
     {
         StopAllCoroutines();
@@ -33,7 +24,6 @@ public class FadeScript : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(DamageFade());
     }
-
 
     IEnumerator FadeFollow()
     {
@@ -70,7 +60,6 @@ public class FadeScript : MonoBehaviour
             time += Time.deltaTime / F_time_Red;
             alpha.a = Mathf.Lerp(0, 1, time);
             RedFade.color = alpha;
-            Player_hit_Effect.Play(); // 플레이어 피격 파티클 생성
             yield return null;
         }
         time = 0f;
