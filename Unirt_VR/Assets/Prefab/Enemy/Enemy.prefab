@@ -2946,6 +2946,8 @@ MonoBehaviour:
   line: {fileID: 922638763461977816}
   barrelLocation: {fileID: 7536846576551885426}
   limitDistance: 5
+  appear_Effect: {fileID: 3705828697102667330}
+  disappear_Effect: {fileID: 3705828697102667330}
   appear_effect: {fileID: 3705828697102667330}
   disappear_effect: {fileID: 3705828697102667330}
 --- !u!54 &7230858876646849217
