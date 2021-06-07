@@ -21,18 +21,15 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     [SerializeField]
     private float limitDistance = 6.0f; // 얼마나 떨어지면 사라지것인지.
     [SerializeField]
-    private ParticleSystem appear_Effect; // 등장 이팩트
+    private ParticleSystem appear_effect; //적 출현 이펙트
     [SerializeField]
-    private ParticleSystem disappear_Effect; // 사망시 이팩트
+    private ParticleSystem disappear_effect;  //적 사라지는 이펙트
 
     private AudioSource audioSource;
     private TextMeshPro scoreText;
     private Animator animator;
 
-    [SerializeField]
-    private ParticleSystem appear_effect; //적 출현 이펙트
-    [SerializeField]
-    private ParticleSystem disappear_effect;  //적 사라지는 이펙트
+
 
     private Transform targetPos; // 생성 후 이동할 위치
     private Vector3 moveTargetVec; // 이동할 목표 위치
@@ -99,8 +96,6 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         animator.SetBool("IsRunning", true);
         GetComponent<Collider>().enabled = true;
 
-        // 등장 이팩트를 보여준다.
-        appear_Effect.Play();
 
         // 발사 이펙트의 위치를 총구로 변경    
         muzzle.gameObject.transform.position = barrelLocation.position;
@@ -193,8 +188,6 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         BloodObject.transform.position = hitPoint;
         BloodObject.transform.rotation = Quaternion.LookRotation(hitNormal);
 
-        // 사망 이펙트가 나온다.
-        disappear_Effect.Play();
 
     }
     public void EnemyDamage()
