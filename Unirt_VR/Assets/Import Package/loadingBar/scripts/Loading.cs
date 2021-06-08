@@ -18,6 +18,7 @@ public class Loading : MonoBehaviour
         imageComp = rectComponent.GetComponent<Image>();
         up = true;
     }
+
     private void Update()
     {
         rectComponent.Rotate(0f, 0f, rotateSpeed * Time.deltaTime);

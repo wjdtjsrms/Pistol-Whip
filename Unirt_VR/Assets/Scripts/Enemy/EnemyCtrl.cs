@@ -35,7 +35,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     private Transform targetPos; // 생성 후 이동할 위치
     private Vector3 moveTargetVec; // 이동할 목표 위치
     private Vector3 playerPos; // 플레이어의 위치   
-    private float moveSpeed = 4.0f; // 이동 속도
+    private float moveSpeed = 4.5f; // 이동 속도
     private bool isDie = false; // 현재 적의 상태
     private Vector3 sizeUI; // 점수 UI의 기본 크기
 

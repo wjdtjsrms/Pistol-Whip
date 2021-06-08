@@ -59,10 +59,9 @@ public class TypeWriterEffect : MonoBehaviour, IShotAble
     public void OnShot(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
         
-        if (Diacnt == 9)
+        if (Diacnt == 6)
         {
             dialogUI.SetActive(false);
-            checkPoint.SetActive(false);
         }
         else
         {
