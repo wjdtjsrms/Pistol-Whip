@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class fog : MonoBehaviour
 {
+
+    [SerializeField]
+    private Light directionalLight;
+
     private struct ColorSetting
     {
         public Color fog;
@@ -71,6 +75,16 @@ public class fog : MonoBehaviour
 
             Color ambientEquatorColor = Color.Lerp(colorSetting1.amEquatColor, colorSetting2.amEquatColor, percent);
             RenderSettings.ambientEquatorColor = ambientEquatorColor;
+
+            if(index == 2)
+            {
+                directionalLight.intensity = Mathf.Lerp(1.0f, 0.0f, percent);
+            }
+            if (index == 3)
+            {
+                directionalLight.intensity = Mathf.Lerp(0.0f, 1.0f, percent);
+            }
+
             yield return null;
         }
         yield break;

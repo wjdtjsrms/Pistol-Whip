@@ -38,7 +38,7 @@ public partial class UIManager : MonoBehaviour
     {
         // 필요한 이벤트 리스너들을 등록한다.
         GameManager.Instance.actPlayerDie += () => gameOverUI.SetActive(true);
-        GameManager.Instance.actEnemyDie += ComboUp;
+        GameManager.Instance.actEnemyDie += ComboUp; 
         GameManager.Instance.actPlayerDamage += PlayerGetDamage;
     }
 

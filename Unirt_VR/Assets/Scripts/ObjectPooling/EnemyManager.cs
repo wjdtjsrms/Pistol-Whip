@@ -22,14 +22,14 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    public GameObject Spawn(Transform startPos, Transform targetPos)
+    public GameObject Spawn(Transform startPos, Transform targetPos, int hp)
     {
         foreach (GameObject enemy in enemyPool)
         {
             if (!enemy.activeInHierarchy)
             {
                 // 시작 위치와 도착 위치를 설정한 후 스폰시킨다.
-                enemy.GetComponent<EnemyCtrl>().SetTransform(startPos, targetPos);
+                enemy.GetComponent<EnemyCtrl>().SetValue(startPos, targetPos, hp);
                 enemy.SetActive(true);
                 return enemy;
             }

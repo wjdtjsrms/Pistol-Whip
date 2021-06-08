@@ -59,11 +59,11 @@ public class SpawnManager : MonoBehaviour
         spawnPoint.IsUse = true;
         if (spawnPoint.IsMove == true)
         {
-            enemyManager.Spawn(spawnPoint.StartPoint, spawnPoint.EndPoint);
+            enemyManager.Spawn(spawnPoint.StartPoint, spawnPoint.EndPoint, spawnPoint.HP);
         }
         else
         {
-            enemyManager.Spawn(spawnPoint.StartPoint, spawnPoint.StartPoint);
+            enemyManager.Spawn(spawnPoint.StartPoint, spawnPoint.StartPoint, spawnPoint.HP);
         }
     }
 

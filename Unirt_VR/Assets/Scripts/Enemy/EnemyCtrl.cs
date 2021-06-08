@@ -24,15 +24,18 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     private ParticleSystem appear_Effect; // 등장 이팩트
     [SerializeField]
     private ParticleSystem disappear_Effect; // 사망시 이팩트
+    [SerializeField]
+    private Material enemyMaterial;
 
     private AudioSource audioSource;
     private TextMeshPro scoreText;
     private Animator animator;
+    private int hp = 0;
 
     private Transform targetPos; // 생성 후 이동할 위치
     private Vector3 moveTargetVec; // 이동할 목표 위치
     private Vector3 playerPos; // 플레이어의 위치   
-    private float moveSpeed = 4.0f; // 이동 속도
+    private float moveSpeed = 4.5f; // 이동 속도
     private bool isDie = false; // 현재 적의 상태
     private Vector3 sizeUI; // 점수 UI의 기본 크기
 
@@ -127,10 +130,11 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
 public partial class EnemyCtrl : MonoBehaviour, IShotAble
 {
     // 생성될 위치와 이동할 위치를 설정해준다. EnemyManager에서 호출한다.
-    public void SetTransform(Transform startPos, Transform targetPos)
+    public void SetValue(Transform startPos, Transform targetPos, int hp)
     {
         this.transform.position = startPos.position;
         this.targetPos = targetPos;
+        this.hp = hp;
     }
 
     private void EnemyAim()
@@ -175,15 +179,18 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     // 적이 플레이어가 쏜 총알에 맞아을때 실행될 함수
     public void OnShot(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
-        StopAllCoroutines();
-        EnemyDamage();
-
         // 이펙트를 hitPoint, hitNormal 방향으로 그린다.
         GameObject BloodObject = ObjectManager.Instance.Fire();
         BloodObject.transform.position = hitPoint;
         BloodObject.transform.rotation = Quaternion.LookRotation(hitNormal);
-        // 사망 이펙트가 나온다.
-        disappear_Effect.Play();
+
+        if (--hp <= 0)
+        {
+            StopAllCoroutines();
+            EnemyDamage();         
+            disappear_Effect.Play();  // 사망 이펙트가 나온다.
+        }
+
     }
     public void EnemyDamage()
     {
