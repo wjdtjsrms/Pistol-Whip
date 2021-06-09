@@ -28,6 +28,13 @@ public partial class GameManager : MonoBehaviour
             return playerController.transform.position;
         }
     }
+    public Transform PlayerTransform
+    {
+        get
+        {
+            return playerController.transform;
+        }
+    }
     public float MusicPlayTime
     {
         get

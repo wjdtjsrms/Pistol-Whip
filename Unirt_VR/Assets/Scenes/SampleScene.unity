@@ -1212,7 +1212,7 @@ MonoBehaviour:
   checkOption: 1
   musicTime: 0
   distance: 50
-  hp: 3
+  hp: 0
 --- !u!1 &271156909
 GameObject:
   m_ObjectHideFlags: 0
@@ -1366,7 +1366,7 @@ MonoBehaviour:
   checkOption: 1
   musicTime: 0
   distance: 50
-  hp: 3
+  hp: 0
 --- !u!1 &313840493
 GameObject:
   m_ObjectHideFlags: 0
@@ -2955,6 +2955,10 @@ PrefabInstance:
       propertyPath: fadeSceneLoad
       value: 
       objectReference: {fileID: 1458864605}
+    - target: {fileID: 5206418308942074258, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
+      propertyPath: moveType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5206418309464581996, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
       propertyPath: m_Name
       value: CONTROLLERS
@@ -2973,7 +2977,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5206418309464581997, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -69.3
+      value: -41.02
       objectReference: {fileID: 0}
     - target: {fileID: 5206418309464581997, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
       propertyPath: m_LocalRotation.w
@@ -9037,7 +9041,7 @@ MonoBehaviour:
   checkOption: 1
   musicTime: 0
   distance: 50
-  hp: 3
+  hp: 0
 --- !u!1 &809320749
 GameObject:
   m_ObjectHideFlags: 0
@@ -9516,7 +9520,7 @@ MonoBehaviour:
   checkOption: 1
   musicTime: 0
   distance: 50
-  hp: 3
+  hp: 0
 --- !u!1 &892278770
 GameObject:
   m_ObjectHideFlags: 0
@@ -13455,7 +13459,7 @@ MonoBehaviour:
   checkOption: 1
   musicTime: 0
   distance: 50
-  hp: 3
+  hp: 0
 --- !u!1 &1742271873
 GameObject:
   m_ObjectHideFlags: 0
@@ -14691,7 +14695,7 @@ MonoBehaviour:
   checkOption: 1
   musicTime: 0
   distance: 50
-  hp: 3
+  hp: 0
 --- !u!1001 &1973502551
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15224,7 +15228,7 @@ MonoBehaviour:
   checkOption: 1
   musicTime: 0
   distance: 50
-  hp: 3
+  hp: 0
 --- !u!1 &2019686606
 GameObject:
   m_ObjectHideFlags: 0
@@ -20075,7 +20079,7 @@ MonoBehaviour:
   checkOption: 1
   musicTime: 0
   distance: 100
-  hp: 3
+  hp: 0
 --- !u!4 &7485396412173439493
 Transform:
   m_ObjectHideFlags: 0
@@ -20125,7 +20129,7 @@ MonoBehaviour:
   checkOption: 1
   musicTime: 0
   distance: 50
-  hp: 3
+  hp: 0
 --- !u!4 &7485396412406169623
 Transform:
   m_ObjectHideFlags: 0
@@ -20269,7 +20273,7 @@ MonoBehaviour:
   checkOption: 1
   musicTime: 0
   distance: 100
-  hp: 3
+  hp: 0
 --- !u!4 &7485396412804285637
 Transform:
   m_ObjectHideFlags: 0

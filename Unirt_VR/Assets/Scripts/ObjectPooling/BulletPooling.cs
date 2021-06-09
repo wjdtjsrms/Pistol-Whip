@@ -48,8 +48,8 @@ public class BulletPooling : MonoBehaviour
             if (!bullet.activeInHierarchy)
             {
                 bullet.transform.position = barrelLocation.position;
-                // 총알은 1.5 ~ 2.5 초후 도착한다.
-                var TargetTime = Random.Range(1.5f, 2.5f);
+                // 총알은 2.5 초후 도착한다.
+                var TargetTime = 2.5f;
                 // 위치 + (벡터 * 시간) = 현재 위치에서 벡터만큼의 속도와 방향으로 시간만큼 이동한 목표 위치
                 var targetVec = GameManager.Instance.PlayerPos + (Vector3.forward * 3.0f) * TargetTime; // 3.0f 는 플레이어 속도
                 // 총구의 위치에서 목표위치까지 목표 시간에 도달하는 속도를 구한다.

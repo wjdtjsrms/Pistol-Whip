@@ -41,23 +41,11 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
 
     // 코루틴 최적화를 위한 변수 선언
     private YieldInstruction waitShort = new WaitForSeconds(0.5f);
-    private YieldInstruction waitAttackDely = new WaitForSeconds(3.0f);
+    private YieldInstruction waitTwoSecond = new WaitForSeconds(2.0f);
+    private YieldInstruction waitAttackDely = new WaitForSeconds(5.0f);
 
-    private bool laser;
-    private bool ShotWait // 경고선 프로퍼티
-    {
-        get => laser;
-        set
-        {
-            laser = value;
+    private bool isAim = false;
 
-            if (animator.GetBool("IsAttack") == laser) // IsAttack이 false일땐 라인렌더러 true, true일땐 false
-            {
-                drawWarningLine(GameManager.Instance.PlayerPos);
-                line.enabled = !laser;
-            }
-        }
-    }
     #endregion
 
     private void Awake()
@@ -66,8 +54,6 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         animator = GetComponent<Animator>();
         scoreText = scoreUI.GetComponent<TextMeshPro>();
         audioSource = GetComponent<AudioSource>();
-
-        //ShotWait = true;
 
         // 기본 점수 UI의 크기를 기억한다.
         sizeUI = scoreUI.transform.localScale;
@@ -118,10 +104,18 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
 
     private void Update()
     {
+
+        if(animator.GetBool("IsRunning") == false)
+        {   
+            // y값을 제외한 방향을 바라본다.
+            playerPos = GameManager.Instance.PlayerPos;
+            playerPos.y = 0;
+            transform.LookAt(playerPos);
+        }
+
         // 플레이어보다 뒤에 위치한 적은 꺼버린다.
         if (this.gameObject.activeSelf && GameManager.Instance.PlayerPos.z - limitDistance > this.transform.position.z)
         {
-
             this.gameObject.SetActive(false);
         }
     }
@@ -139,23 +133,48 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
 
     private void EnemyAim()
     {
-        StopAllCoroutines();
-
-        // y값을 제외한 방향을 바라본다.
-        playerPos = GameManager.Instance.PlayerPos;
-        playerPos.y = 0;
-        transform.LookAt(playerPos);
-
-        //drawWarningLine(GameManager.Instance.PlayerPos); // 경고선 출력 메소드 호출
-
+        StopAllCoroutines();  
         animator.SetBool("IsRunning", false);
         StartCoroutine(AttackCoroutine());
     }
     private void drawWarningLine(Vector3 playerPos) // 경고선 출력
     {
+        
+        
         line.SetPosition(0, barrelLocation.position);
         line.SetPosition(1, playerPos);
         line.enabled = true;
+    }
+
+    IEnumerator drawWarningLine()
+    {
+        float size = 0f;
+        float dir = 0.0f;
+        Vector3 dirVec;
+        Vector3 ForwardVec;
+        while (isAim == true)
+        {
+            dirVec = (GameManager.Instance.PlayerPos - barrelLocation.position).normalized;
+            ForwardVec = GameManager.Instance.PlayerTransform.forward;
+
+            float dot = Vector3.Dot(dirVec, ForwardVec);
+            size = Mathf.Lerp(0.08f, 0, Mathf.Abs(dot) + 0.1f);
+
+            Vector3 cross = Vector3.Cross(dirVec, ForwardVec);
+            dir = Vector3.Dot(cross, Vector3.up) > 0 ? 1.0f : -1.0f;
+
+            
+            line.SetPosition(0, barrelLocation.position);
+            Vector3 temp = GameManager.Instance.PlayerPos;
+            temp.x += 0.15f * dir;
+
+            line.SetPosition(1, temp);
+            line.startWidth = size;
+            line.endWidth = size;
+            line.enabled = true;
+            yield return null;
+        }
+        yield break;
     }
 
     private void EnemyAttack()
@@ -164,10 +183,6 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         muzzle.Play(); // 공격 이펙트 실행
         audioSource.PlayOneShot(attackClip); // 공격 사운드 실행
         BulletPooling.Instance.Spawn(barrelLocation); // 총알 생성
-
-        // 경고선을 그린다.
-        line.enabled = false;
-        //StartCoroutine(laserprint());
     }
 
     // ybot@Shooting 애니메이션의 Event에서 실행된다. 참조 0개라고 삭제하면 큰일 난다.
@@ -245,11 +260,14 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     // Enemy가 공격시 실행 될 코루틴
     IEnumerator AttackCoroutine()
     {
+        yield return waitShort;
         while (!isDie) // 죽기 전까지 계속 실행된다.
         {
-            yield return waitAttackDely;
-
+            StartCoroutine(laserprint());
+            yield return waitTwoSecond;
             EnemyAttack();
+
+            yield return waitAttackDely;
         }
         yield break;
     }
@@ -271,11 +289,13 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     // 경고선 출력 코루틴
     IEnumerator laserprint()
     {
-        while (true)
-        {
-            yield return new WaitForSeconds(0.1f); // 0.1초마다 경고선을 끄고 켜게
-            ShotWait = !ShotWait;
-        }
+        isAim = true;
+        drawWarningLine(GameManager.Instance.PlayerPos);
+        StartCoroutine(drawWarningLine());
+        yield return waitTwoSecond;
+        isAim = false; 
+        line.enabled = false;
+        yield break;
     }
 }
 
