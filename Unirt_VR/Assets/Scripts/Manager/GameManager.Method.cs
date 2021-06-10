@@ -25,7 +25,7 @@ public partial class GameManager : MonoBehaviour
         actPlayerDie += () => audioSource.Pause();
         actGamePause += () => audioSource.Pause();
         actGameRestart += () => audioSource.Play();
-        actGameEnd += () => Invoke("LoadStartScene", 3.5f);
+        //actGameEnd += () => Invoke("LoadStartScene", 3.5f);
     }
 
     void Update()

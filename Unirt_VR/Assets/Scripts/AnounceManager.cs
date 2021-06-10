@@ -51,6 +51,10 @@ public class AnounceManager : MonoBehaviour
         j = 0;
         j = TypeWriterEffect.instance.Diacnt;
         audioSourceAnounce[j].Play();
+        if(j!= TypeWriterEffect.instance.Diacnt)
+        {
+            audioSourceAnounce[j].Stop();
+        }
     }
     
 }
