@@ -43,7 +43,7 @@ public partial class UIManager : MonoBehaviour
     {
         // 필요한 이벤트 리스너들을 등록한다.
         GameManager.Instance.actPlayerDie += () => gameOverUI.SetActive(true);
-        GameManager.Instance.actEnemyDie += ComboUp;
+        GameManager.Instance.actEnemyDie += ComboUp; 
         GameManager.Instance.actPlayerDamage += PlayerGetDamage;
     }
 
@@ -63,7 +63,7 @@ public partial class UIManager : MonoBehaviour
         if (playerCanDie == true)
         {
             StopAllCoroutines();
-            GameManager.Instance.playerDie(this);
+            //GameManager.Instance.playerDie(this);
         }
         // 데미지를 표시하는 ui를 표시한다.
         crushHeart.gameObject.SetActive(true);

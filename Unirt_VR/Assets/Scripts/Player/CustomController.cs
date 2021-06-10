@@ -179,6 +179,7 @@ public partial class CustomController : MonoBehaviour
         {
             if (other.CompareTag("Hit"))
             {
+                FadeScript.Instance.FadeWhite();
                 other.GetComponent<EnemyCtrl>().EnemyDamage();
             }
         }
