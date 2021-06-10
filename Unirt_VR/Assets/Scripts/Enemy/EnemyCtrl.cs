@@ -32,6 +32,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     private Animator animator;
     private int hp = 0;
     private int score = 0;
+    private int layerMask; // 레이와 충돌할 객체를 검출하기 위한 레이어마스크
 
     private Transform targetPos; // 생성 후 이동할 위치
     private Vector3 moveTargetVec; // 이동할 목표 위치
@@ -58,6 +59,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
 
         // 기본 점수 UI의 크기를 기억한다.
         sizeUI = scoreUI.transform.localScale;
+        layerMask = (1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("Wall")); // 쏜 레이는 Player 와 Wall 레이어만 충돌한다.
     }
 
     private void Start()
@@ -114,6 +116,8 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
             transform.LookAt(playerPos);
         }
 
+
+
         // 플레이어보다 뒤에 위치한 적은 꺼버린다.
         if (this.gameObject.activeSelf && GameManager.Instance.PlayerPos.z - limitDistance > this.transform.position.z)
         {
@@ -149,6 +153,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     {
         float size = 0f;
         float dir = 0.0f;
+        RaycastHit hit;
         Vector3 dirVec;
         Vector3 ForwardVec;
         while (isAim == true)
@@ -156,21 +161,30 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
             dirVec = (GameManager.Instance.PlayerPos - barrelLocation.position).normalized;
             ForwardVec = GameManager.Instance.PlayerTransform.forward;
 
-            float dot = Vector3.Dot(dirVec, ForwardVec);
-            size = Mathf.Lerp(0.08f, 0, Mathf.Abs(dot) + 0.1f);
+            if (Physics.Raycast(barrelLocation.position, dirVec, out hit, 20f, layerMask))
+            {
 
-            Vector3 cross = Vector3.Cross(dirVec, ForwardVec);
-            dir = Vector3.Dot(cross, Vector3.up) > 0 ? 1.0f : -1.0f;
+                if(hit.transform.tag  == "Player")
+                {
+                    float dot = Vector3.Dot(dirVec, ForwardVec);
+                    size = Mathf.Lerp(0.08f, 0, Mathf.Abs(dot) + 0.1f);
 
-            
-            line.SetPosition(0, barrelLocation.position);
-            Vector3 temp = GameManager.Instance.PlayerPos;
-            temp.x += 0.15f * dir;
+                    Vector3 cross = Vector3.Cross(dirVec, ForwardVec);
+                    dir = Vector3.Dot(cross, Vector3.up) > 0 ? 1.0f : -1.0f;
 
-            line.SetPosition(1, temp);
-            line.startWidth = size;
-            line.endWidth = size;
-            line.enabled = true;
+
+                    line.SetPosition(0, barrelLocation.position);
+                    Vector3 temp = GameManager.Instance.PlayerPos;
+                    temp.x += 0.15f * dir;
+
+                    line.SetPosition(1, temp);
+                    line.startWidth = size;
+                    line.endWidth = size;
+                    line.enabled = true;
+                }
+
+            }
+
             yield return null;
         }
         yield break;
@@ -292,7 +306,6 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     IEnumerator laserprint()
     {
         isAim = true;
-        drawWarningLine(GameManager.Instance.PlayerPos);
         StartCoroutine(drawWarningLine());
         yield return waitTwoSecond;
         isAim = false; 

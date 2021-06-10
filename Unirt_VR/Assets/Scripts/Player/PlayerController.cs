@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
         // 총알 및 무엇이 되었든 플레이어에게 데미지를 줄 수 있는 존재는 Monster Tag를 가진다.
         if (other.gameObject.CompareTag("Monster"))
         {
@@ -32,21 +33,4 @@ public class PlayerController : MonoBehaviour
             
         }
     }
-
-    IEnumerator WaitforASecond()  //startCorutine();  stopCoroutine() 까지 추가하기. 
-    {
-        float wait_a = 3.0f;
-
-        while(audioSource)
-        {
-
-            yield return null;
-
-        }
-        yield return null;
-
-    }
-
-
-
 }

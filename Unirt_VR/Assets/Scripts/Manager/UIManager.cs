@@ -101,8 +101,6 @@ public partial class UIManager : MonoBehaviour
         }
 
         Cure();
-
-
         yield break;
     }
 }
