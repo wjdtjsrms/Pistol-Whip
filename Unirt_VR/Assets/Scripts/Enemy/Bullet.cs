@@ -42,6 +42,13 @@ public class Bullet : MonoBehaviour
         StartCoroutine(waitActiveFalse());
 
     }
+    private void OnTriggerStay(Collider other)
+    {
+        if(other.tag != "Player")
+        {
+            gameObject.SetActive(false);
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
 
@@ -51,7 +58,6 @@ public class Bullet : MonoBehaviour
         }
         else
         {
-            StopAllCoroutines();
             gameObject.SetActive(false);
         }
     }

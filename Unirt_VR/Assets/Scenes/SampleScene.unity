@@ -240,7 +240,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 198366713769239514, guid: 6b5835275e848824784de5490bf6faed, type: 3}
       propertyPath: playOnAwake
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b5835275e848824784de5490bf6faed, type: 3}
@@ -2240,10 +2240,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d88cd19ac2a7a84c9d5ae80493e5300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMove: 0
+  isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!1 &370701350
 GameObject:
@@ -7375,6 +7375,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 90953601, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
+      propertyPath: melleClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 5b6b5bcedd902b245a137824c5403547, type: 3}
     - target: {fileID: 482243896, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
       propertyPath: m_InteractionManager
       value: 
@@ -7401,7 +7405,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5206418308942073966, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -44.8
       objectReference: {fileID: 0}
     - target: {fileID: 5206418308942074258, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
       propertyPath: moveType
@@ -7429,7 +7433,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5206418309464581997, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -41.02
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5206418309464581997, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7796,7 +7800,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -13192,10 +13196,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d88cd19ac2a7a84c9d5ae80493e5300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMove: 0
+  isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!1 &647430821
 GameObject:
@@ -13385,7 +13389,7 @@ MonoBehaviour:
   isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!1 &704495995
 GameObject:
@@ -14547,7 +14551,7 @@ MonoBehaviour:
   isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!1 &903614698
 GameObject:
@@ -15835,10 +15839,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d88cd19ac2a7a84c9d5ae80493e5300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMove: 0
+  isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!1 &1126608638
 GameObject:
@@ -16334,7 +16338,7 @@ MonoBehaviour:
   isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!1 &1186818633
 GameObject:
@@ -18564,7 +18568,7 @@ MonoBehaviour:
   isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!1 &1415384860
 GameObject:
@@ -20071,7 +20075,7 @@ MonoBehaviour:
   isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!1 &1603277427
 GameObject:
@@ -20368,10 +20372,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d88cd19ac2a7a84c9d5ae80493e5300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMove: 0
+  isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!1 &1675498956 stripped
 GameObject:
@@ -21147,10 +21151,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d88cd19ac2a7a84c9d5ae80493e5300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMove: 0
+  isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!1 &1772094268
 GameObject:
@@ -24923,7 +24927,7 @@ MonoBehaviour:
   isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!1 &2110230147
 GameObject:
@@ -26520,10 +26524,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d88cd19ac2a7a84c9d5ae80493e5300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMove: 0
+  isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!1 &4108875105765630426
 GameObject:
@@ -26663,10 +26667,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d88cd19ac2a7a84c9d5ae80493e5300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMove: 0
+  isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!4 &4108875106162447400
 Transform:
@@ -26696,10 +26700,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d88cd19ac2a7a84c9d5ae80493e5300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMove: 0
+  isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!1 &4108875106162447403
 GameObject:
@@ -26853,7 +26857,7 @@ MonoBehaviour:
   isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!1 &4108875106598060810
 GameObject:
@@ -27006,10 +27010,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d88cd19ac2a7a84c9d5ae80493e5300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMove: 0
+  isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!1 &4108875106786160139
 GameObject:
@@ -27040,10 +27044,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d88cd19ac2a7a84c9d5ae80493e5300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMove: 0
+  isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!1 &4108875106799659692
 GameObject:
@@ -27123,10 +27127,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d88cd19ac2a7a84c9d5ae80493e5300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMove: 0
+  isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!1 &4108875107019115010
 GameObject:
@@ -29572,10 +29576,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d88cd19ac2a7a84c9d5ae80493e5300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMove: 0
+  isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!4 &7428712713057298689
 Transform:
@@ -29658,7 +29662,7 @@ MonoBehaviour:
   isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!4 &7428712713419153724
 Transform:
@@ -29708,7 +29712,7 @@ MonoBehaviour:
   isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!1 &7428712713743427036
 GameObject:
@@ -29818,7 +29822,7 @@ MonoBehaviour:
   isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!4 &7428712713848925698
 Transform:
@@ -29868,7 +29872,7 @@ MonoBehaviour:
   isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!4 &7428712713929243540
 Transform:
@@ -29915,7 +29919,7 @@ MonoBehaviour:
   isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!4 &7428712714008086110
 Transform:
@@ -29995,7 +29999,7 @@ MonoBehaviour:
   isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!4 &7428712714132109261
 Transform:
@@ -30045,7 +30049,7 @@ MonoBehaviour:
   isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!4 &7428712714203415453
 Transform:
@@ -30347,7 +30351,7 @@ MonoBehaviour:
   isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!4 &7428712714696362049
 Transform:
@@ -30487,7 +30491,7 @@ MonoBehaviour:
   isMove: 1
   checkOption: 1
   musicTime: 0
-  distance: 100
+  distance: 300
   hp: 0
 --- !u!4 &7428712714935911362
 Transform:
