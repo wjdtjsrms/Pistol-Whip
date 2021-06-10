@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-    private AudioClip damageClip;
+    private AudioClip damageClip;   
     private AudioSource audioSource;
 
     private void Awake()
@@ -29,6 +29,24 @@ public class PlayerController : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             GameManager.Instance.playerDamage(this);
+            
         }
     }
+
+    IEnumerator WaitforASecond()  //startCorutine();  stopCoroutine() 까지 추가하기. 
+    {
+        float wait_a = 3.0f;
+
+        while(audioSource)
+        {
+
+            yield return null;
+
+        }
+        yield return null;
+
+    }
+
+
+
 }

@@ -30,12 +30,25 @@ public partial class FadeScript : MonoBehaviour
     }
     #endregion
 
+
+    [SerializeField]
+    private ParticleSystem Player_Hit_Effect; // 플레이어 피격 이펙트
+    [SerializeField]
+    private AudioSource hit_Audio; //플레이어 히트 사운드 재생할 오디오 소스 
+
+    [SerializeField]
+    private AudioClip[] player_hit_Clip; //플레이어 히트 오디오클립
+
+    public void FadeBlack()
+
     private void Awake()
     {
         if (null == instance)
         {
             instance = this;
         }
+
+        hit_Audio = GameObject.Find("Canvas").GetComponent<AudioSource>(); // 오디오 컴포넌트를 가져옵니다.
     }
 
     void Start()
@@ -45,6 +58,7 @@ public partial class FadeScript : MonoBehaviour
         GameManager.Instance.actPlayerDamage += FadeRed;
     }
 }
+
 public partial class FadeScript : MonoBehaviour
 {
     public void FadeLoadStart()
@@ -87,7 +101,15 @@ public partial class FadeScript : MonoBehaviour
 
     IEnumerator FadeFollow(Image fadeImage, float fTime)
     {
+
+        Player_Hit_Effect.Play(); // 히트 이펙트 실행
+
+        //int []_temp = new AudioClip [3];
+        //hit_Audio.clip = player_hit_Clip[_temp];
+        //hit_Audio.Play();
+
         fadeImage.gameObject.SetActive(true);
+
         time = 0f;
         Color alpha = fadeImage.color;
         while (alpha.a < 1f)
@@ -108,5 +130,7 @@ public partial class FadeScript : MonoBehaviour
         fadeImage.gameObject.SetActive(false);
         yield break;
     }
-
 }
+
+
+
