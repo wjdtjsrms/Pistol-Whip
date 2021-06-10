@@ -30,8 +30,9 @@ public class Punch : MonoBehaviour
             if (other.CompareTag("Hit"))
             {
                 FadeScript.Instance.FadeWhite();
-                audioSource.PlayOneShot(melleClip);
                 other.GetComponent<EnemyCtrl>().EnemyDamage();
+                audioSource.PlayOneShot(melleClip);
+
             }
         }
     }
