@@ -14,10 +14,15 @@ public partial class UIManager : MonoBehaviour
     private TextMeshProUGUI comboText; // 현재 콤보수를 나타내는 UI
     [SerializeField]
     private TextMeshProUGUI waitTimeText; // 회복까지 남은 시간이 나오는 UI
+    [SerializeField]
+    private ParticleSystem Restore_Effect; //Player회복하는 파티클
+
 
     private YieldInstruction waitOneSecond = new WaitForSeconds(1.0f); // 1초를 대기하는 객체
     private int nowCombo = 0; // 현재 콤보수
     private bool playerCanDie; // 플레이어의 현재 상태를 나타내는 불리언
+
+
 }
 
 
@@ -84,6 +89,7 @@ public partial class UIManager : MonoBehaviour
         crushHeart.gameObject.SetActive(false);
         waitTimeText.gameObject.SetActive(false);
         playerCanDie = false;
+        Restore_Effect.Play(); // 회복 이펙트와 함께 회복
         yield break;
     }
 }

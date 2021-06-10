@@ -64,7 +64,7 @@ public partial class GameManager : MonoBehaviour
     public void SetMusic()
     {
         if (!audioSource.isPlaying)
-        {
+        {   
             audioSource.Play();
         }
         else

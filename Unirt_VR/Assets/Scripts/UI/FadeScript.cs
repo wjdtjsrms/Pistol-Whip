@@ -14,6 +14,14 @@ public class FadeScript : MonoBehaviour
     private float F_time_Red = 0.4f;
     private YieldInstruction waitOneSecond = new WaitForSeconds(1f);
 
+    [SerializeField]
+    private ParticleSystem Player_Hit_Effect; // 플레이어 피격 이펙트
+    [SerializeField]
+    private AudioSource hit_Audio; //플레이어 히트 사운드 재생할 오디오 소스 
+
+    [SerializeField]
+    private AudioClip[] player_hit_Clip; //플레이어 히트 오디오클립
+
     public void FadeBlack()
     {
         StopAllCoroutines();
@@ -52,7 +60,15 @@ public class FadeScript : MonoBehaviour
 
     IEnumerator DamageFade()
     {
-        RedFade.gameObject.SetActive(true);
+        Player_Hit_Effect.Play(); // 히트 이펙트 실행
+
+        //int []_temp = new AudioClip [3];
+
+        //hit_Audio.clip = player_hit_Clip[_temp];
+        //hit_Audio.Play();
+
+
+
         time = 0f;
         Color alpha = RedFade.color;
         while (alpha.a < 1f)
@@ -76,6 +92,9 @@ public class FadeScript : MonoBehaviour
 
     void Start()
     {
+        hit_Audio = GameObject.Find("Canvas").GetComponent<AudioSource>(); // 오디오 컴포넌트를 가져옵니다.
+
+
         GameManager.Instance.actGameStart += FadeBlack;
         //GameManager.Instance.actPlayerDie += FadeBlack;
         GameManager.Instance.actGameEnd += () => Invoke("FadeBlack", 3f);
