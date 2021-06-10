@@ -31,9 +31,9 @@ public class fog : MonoBehaviour
         colorSettings[1].amColor = new Color(166 / 255f, 0f, 139 / 255f);
         colorSettings[1].amEquatColor = new Color(57 / 255f, 0f, 202 / 255f);
 
-        colorSettings[2].fog = new Color(117 / 255f, 255 / 255f, 76 / 255f, 255 / 255f); //연두색
-        colorSettings[2].amColor = new Color(133 / 255f, 78 / 255f, 0f);
-        colorSettings[2].amEquatColor = new Color(0f, 63 / 255f, 164 / 255f);
+        colorSettings[2].fog = new Color(0 / 255f, 0 / 255f, 0 / 255f, 0 / 255f); //연두색
+        colorSettings[2].amColor = new Color(0 / 255f, 0 / 255f, 0f);
+        colorSettings[2].amEquatColor = new Color(0f, 0 / 255f, 0 / 0f);
 
         colorSettings[3].fog = new Color(108 / 255f, 55 / 255f, 248 / 255f, 255 / 255f); //파랑
         colorSettings[3].amColor = new Color(217 / 255f, 206 / 255f, 0f);
