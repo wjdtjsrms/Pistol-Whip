@@ -10,6 +10,8 @@ public class FinishPoint : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             GameManager.Instance.GameEnd(this);
+            GameManager.Instance.SaveOperation();
+            
         }
     }
 }

@@ -12,6 +12,12 @@ public partial class GameManager : MonoBehaviour
     public event Action actGameEnd; // 게임 끝
     public event Action actGamePause; // 게임 일시 정지
     public event Action actGameRestart; // 게임 재개
+
+    public event Action SaveOperate; //현재점수 저장 이벤트
+    public event Action LoadOperate; //현재점수 불러오기 이벤트
+    public event Action SaveRank; // 랭킹 저장 이벤트
+    public event Action LoadRank; // 랭킹 불러오기 이벤트
+
 }
 
 public partial class GameManager : MonoBehaviour
@@ -69,6 +75,25 @@ public partial class GameManager : MonoBehaviour
         {
             actGameRestart?.Invoke();
         }
+    }
+    public void SaveOperation() // 점수 저장
+    {
+        SaveOperate?.Invoke();
+    }
+
+    public void LoadOperation() // 점수 불러오기
+    {
+        LoadOperate?.Invoke();
+    }
+
+    public void SaveRanking() // 랭킹 저장
+    {
+        SaveRank?.Invoke();
+    }
+
+    public void LoadRanking() // 랭킹 불러오기
+    {
+        LoadRank?.Invoke();
     }
 
 }

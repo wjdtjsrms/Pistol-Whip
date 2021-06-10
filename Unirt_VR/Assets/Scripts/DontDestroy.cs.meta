@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 46f38beb3970d3048b4800e5cd78d690
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - startUI: {fileID: 195199962789934004, guid: 46aca9a21a05df743bf3fe8906dee364, type: 3}
+  - ScoreUI: {fileID: 7163949754469633144, guid: 4d30a2a8f66f7c94982ca949f64ed0df, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
