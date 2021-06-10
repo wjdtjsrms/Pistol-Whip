@@ -171,17 +171,4 @@ public partial class CustomController : MonoBehaviour
             handModelAnimator.SetFloat("Grip", 0);
         }
     }
-
-    // 근접 공격을 위한 함수
-    void OnTriggerEnter(Collider other)
-    {
-        if (handModelAnimator.GetFloat("Grip") >= 0.7F)
-        {
-            if (other.CompareTag("Hit"))
-            {
-                FadeScript.Instance.FadeWhite();
-                other.GetComponent<EnemyCtrl>().EnemyDamage();
-            }
-        }
-    }
 }

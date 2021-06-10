@@ -22,6 +22,7 @@ public partial class GameManager : MonoBehaviour
 
 public partial class GameManager : MonoBehaviour
 {
+    
     public void playerDie(UIManager obj)
     {
         if (obj is UIManager) // 이 이벤트는 UIManager에서만 호출 가능하다.
