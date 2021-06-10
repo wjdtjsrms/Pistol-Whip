@@ -38311,6 +38311,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 195199962789934001, guid: 46aca9a21a05df743bf3fe8906dee364, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 5206418309955537413}
     - target: {fileID: 195199962789934004, guid: 46aca9a21a05df743bf3fe8906dee364, type: 3}
       propertyPath: m_Name
       value: MusicCanvas
@@ -40094,6 +40098,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5566950145357597945, guid: 4d30a2a8f66f7c94982ca949f64ed0df, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 5206418309955537413}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d30a2a8f66f7c94982ca949f64ed0df, type: 3}
 --- !u!1001 &9200417771616869259

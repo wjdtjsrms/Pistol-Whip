@@ -39,8 +39,6 @@ public partial class FadeScript : MonoBehaviour
     [SerializeField]
     private AudioClip[] player_hit_Clip; //플레이어 히트 오디오클립
 
-    public void FadeBlack()
-
     private void Awake()
     {
         if (null == instance)
