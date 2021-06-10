@@ -172,7 +172,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         animator.SetBool("IsAttack", false);
     }
 
-    // 적이 플레이어가 쏜 총알에 맞아을때 실행될 함수
+    // 적이 플레이어가 쏜 총알에 맞았을때 실행될 함수
     public void OnShot(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
         StopAllCoroutines();

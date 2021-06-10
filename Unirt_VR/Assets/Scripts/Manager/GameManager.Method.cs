@@ -13,6 +13,7 @@ public partial class GameManager : MonoBehaviour
         }
 
         Score = 0;
+        Count = 0;
         isGameOver = false;
         audioSource = GetComponent<AudioSource>();
     }
@@ -59,6 +60,12 @@ public partial class GameManager : MonoBehaviour
     public void GetScored(int value)
     {
         Score += value;
+    }
+
+    // 플레이 횟수(랭킹 관련 집계)
+    public void GetCount(int value)
+    {
+        Count += value;
     }
 
     public void SetMusic()

@@ -58,7 +58,7 @@ public partial class UIManager : MonoBehaviour
         if (playerCanDie == true)
         {
             StopAllCoroutines();
-            GameManager.Instance.playerDie(this);
+            //GameManager.Instance.playerDie(this);
         }
         // 데미지를 표시하는 ui를 표시한다.
         crushHeart.gameObject.SetActive(true);
