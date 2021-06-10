@@ -31,6 +31,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     private TextMeshPro scoreText;
     private Animator animator;
     private int hp = 0;
+    private int score = 0;
 
     private Transform targetPos; // 생성 후 이동할 위치
     private Vector3 moveTargetVec; // 이동할 목표 위치
@@ -138,9 +139,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         StartCoroutine(AttackCoroutine());
     }
     private void drawWarningLine(Vector3 playerPos) // 경고선 출력
-    {
-        
-        
+    {     
         line.SetPosition(0, barrelLocation.position);
         line.SetPosition(1, playerPos);
         line.enabled = true;
@@ -202,7 +201,8 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         if (--hp <= 0)
         {
             StopAllCoroutines();
-            EnemyDamage();         
+            EnemyDamage();
+            GetScore(); // 점수를 획득한다.
             disappear_Effect.Play();  // 사망 이펙트가 나온다.
         }
 
@@ -211,7 +211,10 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     {
         animator.enabled = false; // 레그돌 활성화를 위해 애니메이터를 끈다
         isDie = true; // 얘는 이제 죽었다.
-        GetScore(); // 점수를 획득한다.
+
+        score = Random.Range(80, 120);
+        GameManager.Instance.GetScored(score); // 게임매니저에 점수를 추가한다.
+       
         GetComponent<Collider>().enabled = false; // Enemy 히트박스를 끈다
 
         GameManager.Instance.EnemyDie(this); // 적 사망 이벤트를 실행한다.
@@ -221,7 +224,6 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     // 점수를 보이게 하고 게임 매니저에 점수를 추가하는 함수
     private void GetScore()
     {
-        var score = Random.Range(80, 120); // 점수는 우선 랜덤으로 책정한다.
         var color = score > 100 ? Color.red : Color.black; // 100점 이상은 빨강, 이하는 검정색으로 표시된다.
 
         scoreUI.SetActive(true); // 점수 UI를 킨다.
@@ -232,7 +234,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
 
         scoreText.text = score.ToString(); //  점수로 업데이트 한다.
         scoreText.color = color; // 색깔을 바꾼다.
-        GameManager.Instance.GetScored(score); // 게임매니저에 점수를 추가한다.
+       
     }
 
     // Enemy가 사망시 실행 될 코루틴

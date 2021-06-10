@@ -22,13 +22,6 @@ public partial class UIManager : MonoBehaviour
     private int nowCombo = 0; // 현재 콤보수
     private bool playerCanDie; // 플레이어의 현재 상태를 나타내는 불리언
 
-
-}
-
-
-public partial class UIManager : MonoBehaviour
-{
-
     private void Awake()
     {
         // 초기화를 진행한다.
@@ -43,9 +36,16 @@ public partial class UIManager : MonoBehaviour
     {
         // 필요한 이벤트 리스너들을 등록한다.
         GameManager.Instance.actPlayerDie += () => gameOverUI.SetActive(true);
-        GameManager.Instance.actEnemyDie += ComboUp; 
+        GameManager.Instance.actEnemyDie += ComboUp;
         GameManager.Instance.actPlayerDamage += PlayerGetDamage;
     }
+
+}
+
+
+public partial class UIManager : MonoBehaviour
+{
+
 
     // 최대 8콤보까지 증가한다.
     private void ComboUp()
@@ -75,21 +75,34 @@ public partial class UIManager : MonoBehaviour
         StartCoroutine(wait15Second());
     }
 
+    private void Cure()
+    {
+        if (playerCanDie == true)
+        {
+            // 15초가 지났다면 다시 회복한다.
+            crushHeart.gameObject.SetActive(false);
+            waitTimeText.gameObject.SetActive(false);
+            playerCanDie = false;
+            Restore_Effect.Play(); // 회복 이펙트와 함께 회복
+        }
+
+    }
+
     // 15초안에 데미지를 한번 더 입으면 죽는다.
     IEnumerator wait15Second()
     {
         playerCanDie = true; // 플레이어는 이제 죽을 수 있다.
+
         // 15초를 대기한다.
         for (int i = 15; i >= 0; i--)
         {
             yield return waitOneSecond;
             waitTimeText.text = i.ToString();
         }
-        // 15초가 지났다면 다시 회복한다.
-        crushHeart.gameObject.SetActive(false);
-        waitTimeText.gameObject.SetActive(false);
-        playerCanDie = false;
-        Restore_Effect.Play(); // 회복 이펙트와 함께 회복
+
+        Cure();
+
+
         yield break;
     }
 }
