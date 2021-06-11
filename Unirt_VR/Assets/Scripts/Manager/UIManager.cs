@@ -25,7 +25,7 @@ public partial class UIManager : MonoBehaviour
     private YieldInstruction waitOneSecond = new WaitForSeconds(1.0f); // 1초를 대기하는 객체
     private int nowCombo = 0; // 현재 콤보수
     private bool playerCanDie; // 플레이어의 현재 상태를 나타내는 불리언
-
+    private bool isGameStop = false;
     private void Awake()
     {
         // 초기화를 진행한다.
@@ -44,6 +44,9 @@ public partial class UIManager : MonoBehaviour
         GameManager.Instance.actPlayerDie += () => gameOverUI.SetActive(true);
         GameManager.Instance.actEnemyDie += ComboUp;
         GameManager.Instance.actPlayerDamage += PlayerGetDamage;
+
+        GameManager.Instance.actGamePause += () => isGameStop = true;
+        GameManager.Instance.actGameRestart += () => isGameStop = false;
     }
 }
 
@@ -99,12 +102,13 @@ public partial class UIManager : MonoBehaviour
         for (int i = 15; i >= 0; i--)
         {
             yield return waitOneSecond;
+            while(isGameStop)
+            {
+                yield return null;
+            }
             waitTimeText.text = i.ToString();
         }
-
         Cure();
-
-
         yield break;
     }
 }

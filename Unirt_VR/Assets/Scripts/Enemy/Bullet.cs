@@ -42,11 +42,23 @@ public class Bullet : MonoBehaviour
         StartCoroutine(waitActiveFalse());
 
     }
+    private void OnTriggerStay(Collider other)
+    {
+        if(other.tag != "Player")
+        {
+            gameObject.SetActive(false);
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
+
         if (other.tag == "Player")
         {
             PlayerController playercontroller = other.GetComponent<PlayerController>();
+        }
+        else
+        {
+            gameObject.SetActive(false);
         }
     }
 

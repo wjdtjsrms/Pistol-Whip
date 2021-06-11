@@ -32,6 +32,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     private Animator animator;
     private int hp = 0;
     private int score = 0;
+    private int layerMask; // 레이와 충돌할 객체를 검출하기 위한 레이어마스크
 
     private Transform targetPos; // 생성 후 이동할 위치
     private Vector3 moveTargetVec; // 이동할 목표 위치
@@ -58,6 +59,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
 
         // 기본 점수 UI의 크기를 기억한다.
         sizeUI = scoreUI.transform.localScale;
+        layerMask = (1 << LayerMask.NameToLayer("Player")) + (1 << LayerMask.NameToLayer("Wall")); // 쏜 레이는 Player 와 Wall 레이어만 충돌한다.
     }
 
     private void Start()
@@ -65,7 +67,12 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
         // 필요한 이벤트 리스너들을 등록한다.
         GameManager.Instance.actPlayerDie += () => gameObject.SetActive(false);
         GameManager.Instance.actGamePause += () => gameObject.SetActive(false);
-        GameManager.Instance.actGameRestart += () => gameObject.SetActive(true);
+        GameManager.Instance.actGameRestart += () => 
+        { if(isDie == false)
+            {
+                gameObject.SetActive(true);
+            }       
+        };
     }
 
     // 값을 다시 초기화 한다.
@@ -92,7 +99,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
 
         // 목표 위치를 바라본다.
         moveTargetVec = targetPos.position;
-        moveTargetVec.y = 0;
+        // moveTargetVec.y = 0; 만악의 근원
         transform.LookAt(moveTargetVec);
 
         // 목표 위치로 이동한다.
@@ -107,10 +114,17 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     {
 
         if(animator.GetBool("IsRunning") == false)
-        {   
-            // y값을 제외한 방향을 바라본다.
+        {
             playerPos = GameManager.Instance.PlayerPos;
-            playerPos.y = 0;
+            if (this.transform.position.y > 0)
+            {
+                // y값이 있다면 그 값만큼 위를 쳐다본다.
+                playerPos.y += this.transform.position.y;
+            }
+            else
+            {    // y값을 제외한 방향을 바라본다.
+                playerPos.y = 0;
+            }
             transform.LookAt(playerPos);
         }
 
@@ -149,6 +163,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     {
         float size = 0f;
         float dir = 0.0f;
+        RaycastHit hit;
         Vector3 dirVec;
         Vector3 ForwardVec;
         while (isAim == true)
@@ -162,7 +177,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
             Vector3 cross = Vector3.Cross(dirVec, ForwardVec);
             dir = Vector3.Dot(cross, Vector3.up) > 0 ? 1.0f : -1.0f;
 
-            
+
             line.SetPosition(0, barrelLocation.position);
             Vector3 temp = GameManager.Instance.PlayerPos;
             temp.x += 0.15f * dir;
@@ -171,6 +186,8 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
             line.startWidth = size;
             line.endWidth = size;
             line.enabled = true;
+
+
             yield return null;
         }
         yield break;
@@ -291,9 +308,18 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     // 경고선 출력 코루틴
     IEnumerator laserprint()
     {
+        RaycastHit hit;
         isAim = true;
-        drawWarningLine(GameManager.Instance.PlayerPos);
-        StartCoroutine(drawWarningLine());
+        if (Physics.Raycast(barrelLocation.position, (GameManager.Instance.PlayerPos - barrelLocation.position).normalized, out hit, 20f, layerMask))
+        {
+
+            if (hit.transform.tag == "Player")
+            {
+                StartCoroutine(drawWarningLine());
+            }
+
+        }
+
         yield return waitTwoSecond;
         isAim = false; 
         line.enabled = false;
