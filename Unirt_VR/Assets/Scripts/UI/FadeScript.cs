@@ -79,7 +79,7 @@ public partial class FadeScript : MonoBehaviour
     public void FadeWhite()
     {
         StopAllCoroutines();
-        StartCoroutine(FadeFollow(WhiteFade, 0.6f));
+        StartCoroutine(FadeFollow(WhiteFade, 0.4f));
     }
 
     IEnumerator FadeLoad(string sceneName) // 로드가 끝날때까지 페이드 아웃 하는 함수

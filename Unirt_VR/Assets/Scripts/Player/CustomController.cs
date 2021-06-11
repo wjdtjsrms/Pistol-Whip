@@ -58,12 +58,6 @@ public partial class CustomController : MonoBehaviour
     {
         TryInitiaiize(); // 컨트롤러 세팅
         //xr = (XRController)GameObject.FindObjectOfType(typeof(XRController)); // XRController 찾기
-       
-       
-        Debug.Log(Leftxr);
-        Debug.Log(Rightxr);
-
-
     }
     void Update()
     {
