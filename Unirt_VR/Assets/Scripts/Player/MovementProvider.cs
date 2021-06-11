@@ -38,6 +38,7 @@ public class MovementProvider : MonoBehaviour
         GameManager.Instance.actGamePause += () => speed = 0.0f; ;
         GameManager.Instance.actGameEnd += () => speed = 0.0f; ;
         GameManager.Instance.actGameRestart += () => speed = 3.0f;
+        GameManager.Instance.actGameRestart += () => moveType = MoveType.GoFront;
     }
 
     // 이동 처리가 입력보다 먼저 실행된다, 입력에 즉각적으로 화면이 갱신되면 어지럽기 때문이다. 

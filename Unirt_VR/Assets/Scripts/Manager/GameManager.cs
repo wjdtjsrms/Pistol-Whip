@@ -2,16 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 
 public partial class GameManager : MonoBehaviour
 {
 
     [SerializeField]
     private PlayerController playerController;
+    [SerializeField]
+    private TextMeshProUGUI readyText;
     private AudioSource audioSource;
     private static GameManager instance;
     private bool menumButtonPressed = false; // 메뉴 버튼 클릭용 불리언
+    private YieldInstruction waitOneSecond = new WaitForSeconds(1.0f);
     public  List<DataFormat> Scoreinfo = new List<DataFormat>(); // 플레이어 번호와 점수를 저장할 List
     public List<DataFormat> Saveinfo = new List<DataFormat>();
 

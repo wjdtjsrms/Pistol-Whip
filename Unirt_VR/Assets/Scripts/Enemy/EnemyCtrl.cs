@@ -163,7 +163,6 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     {
         float size = 0f;
         float dir = 0.0f;
-        RaycastHit hit;
         Vector3 dirVec;
         Vector3 ForwardVec;
         while (isAim == true)
