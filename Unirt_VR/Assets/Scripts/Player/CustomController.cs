@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public partial class CustomController : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public partial class CustomController : MonoBehaviour
     private InputDevice availableDevice; // 현재 사용중인 컨트롤러
     private static InputDevice rightInputDevice; // 오른손 컨트롤러 인풋 디바이스
     private static InputDevice leftInputDevice; // 왼손 컨트롤러 인풋 디바이스
+    private XRController Leftxr;
+    private XRController Rightxr;
+
     #endregion
 
     #region 핸드 모델 초기화 변수
@@ -36,11 +40,29 @@ public partial class CustomController : MonoBehaviour
         }
     }
 
+    public float TriggerValue
+    {
+        get
+        {
+            if (handModelAnimator != null)
+            {
+                return handModelAnimator.GetFloat("Trigger");
+            }
+            return 0f;
+        }
+    }
+
     #endregion
 
     void Start()
     {
         TryInitiaiize(); // 컨트롤러 세팅
+        //xr = (XRController)GameObject.FindObjectOfType(typeof(XRController)); // XRController 찾기
+       
+       
+        Debug.Log(Leftxr);
+        Debug.Log(Rightxr);
+
 
     }
     void Update()
@@ -54,12 +76,25 @@ public partial class CustomController : MonoBehaviour
         {
             handInstance.SetActive(false);
             controllerInstance.SetActive(true);
+
+            if (availableDevice.TryGetFeatureValue(CommonUsages.trigger, out float triggerValue))
+            {
+                if (triggerValue > 0.7f)
+                {
+                    ActivateHaptic2();
+                }
+            }
         }
         else // 핸드를 렌더한다.
         {
             handInstance.SetActive(true);
             controllerInstance.SetActive(false);
             UpdateHandAnimation(); // 핸드 애니메이션은 여기서만 수행한다.
+
+
+
+
+
         }
     }
 }
@@ -110,6 +145,7 @@ public partial class CustomController : MonoBehaviour
             handInstance = Instantiate(handModel, transform); // 핸드 인스턴스 추가
             handModelAnimator = handInstance.GetComponent<Animator>(); // 핸드 인스턴스에 추가되어 있는 애니메이터를 가져온다.
         }
+
     }
 
     // 왼손 오른손 설정
@@ -119,13 +155,13 @@ public partial class CustomController : MonoBehaviour
         {
             currentControllerModel = controllerModels[1];
             leftInputDevice = availableDevice;
-
+            Leftxr = GameObject.Find("Left Teleport Ray").GetComponent<XRController>(); // XRController 찾기
         }
         else if (availableDevice.name.Contains("Right"))
         {
             currentControllerModel = controllerModels[2];
             rightInputDevice = availableDevice;
-
+            Rightxr = GameObject.Find("Right Teleport Ray").GetComponent<XRController>(); // XRController 찾기
         }
         else
         {
@@ -155,6 +191,7 @@ public partial class CustomController : MonoBehaviour
         if (availableDevice.TryGetFeatureValue(CommonUsages.trigger, out float triggerValue))
         {
             handModelAnimator.SetFloat("Trigger", triggerValue);
+
         }
         else
         {
@@ -170,5 +207,17 @@ public partial class CustomController : MonoBehaviour
         {
             handModelAnimator.SetFloat("Grip", 0);
         }
+
     }
+
+    public void ActivateHaptic1() // 왼쪽 그립 햅틱 함수
+    {
+        Leftxr.SendHapticImpulse(1.0f, 0.3f); // XRController의 SendHapticlmpulse 함수 사용
+    }
+
+    public void ActivateHaptic2() // 오른쪽 트리거 햅틱 함수
+    {
+        Rightxr.SendHapticImpulse(0.3f, 0.1f); // XRController의 SendHapticlmpulse 함수 사용
+    }
+
 }

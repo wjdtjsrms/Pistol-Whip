@@ -79,6 +79,7 @@ public partial class GunShoot : MonoBehaviour
             {
                 Shot(); // 실제 발사 처리 실행
             }
+
         }
 
         // 총을 90도로 꺾으면 재장전 된다.

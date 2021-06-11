@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FinishPoint : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject ClearUI;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -11,7 +13,9 @@ public class FinishPoint : MonoBehaviour
         {
             GameManager.Instance.GameEnd(this);
             GameManager.Instance.SaveOperation();
-            
+            ClearUI.SetActive(false);
+
+
         }
     }
 }

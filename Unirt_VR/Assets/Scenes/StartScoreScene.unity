@@ -7015,7 +7015,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d71973bdc3a0ea45b7f44433af79874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obj: {fileID: 0}
+  obj: {fileID: 715195233}
 --- !u!1001 &343086531
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13171,6 +13171,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 3936618010447266565, guid: 08c80db126e8a7f4fbc982a47540c640, type: 3}
   m_PrefabInstance: {fileID: 714220110}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &715195233 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4562160515888790539, guid: 68702aa346b69084ba56a4bc335987b5, type: 3}
+  m_PrefabInstance: {fileID: 1278365688}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &716673995
 PrefabInstance:
@@ -23827,6 +23832,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScoreCanvas_New
       objectReference: {fileID: 0}
+    - target: {fileID: 4562160515888790539, guid: 68702aa346b69084ba56a4bc335987b5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68702aa346b69084ba56a4bc335987b5, type: 3}
 --- !u!224 &1278365689 stripped
@@ -27751,7 +27760,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: c1cb5dd396cd0e842a3f232ac997ecc7, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 5eeedd7a7b275f14bb37ab1fafdab9bc, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
