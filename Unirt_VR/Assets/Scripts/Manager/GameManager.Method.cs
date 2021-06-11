@@ -25,7 +25,8 @@ public partial class GameManager : MonoBehaviour
         actPlayerDie += () => audioSource.Pause();
         actGamePause += () => audioSource.Pause();
         actGameRestart += () => audioSource.Play();
-        //actGameEnd += () => Invoke("LoadStartScene", 3.5f);
+
+        StartCoroutine(ReadyGame());
     }
 
     void Update()
@@ -41,6 +42,38 @@ public partial class GameManager : MonoBehaviour
 }
 public partial class GameManager : MonoBehaviour
 {
+
+    private IEnumerator ReadyGame()
+    {
+        yield return waitOneSecond;
+
+        actGamePause?.Invoke();
+
+        for(int i = 5; i > 0; i--)
+        {
+            readyText.text = i.ToString();
+            yield return waitOneSecond;
+        }
+        readyText.fontSize = 45;
+        readyText.text = "MUSIC START";
+        yield return waitOneSecond;
+
+        float percent = 0;
+        float speed = 0.5f;
+        
+        while (percent < 1)
+        {
+            percent += Time.deltaTime * speed;
+            Vector3 size = Vector3.Lerp(readyText.transform.localScale, Vector3.zero, percent);
+            readyText.transform.localScale = size;
+            yield return null;
+        }
+
+        actGameRestart?.Invoke();
+    }
+
+
+
     public static GameManager Instance
     {
         get
