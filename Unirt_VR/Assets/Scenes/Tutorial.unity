@@ -42368,6 +42368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 2192196751363211439}
+  readyText: {fileID: 0}
   Scoreinfo: []
   Saveinfo: []
 --- !u!1 &6663719249410593640
