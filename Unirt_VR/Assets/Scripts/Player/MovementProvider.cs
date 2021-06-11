@@ -34,8 +34,8 @@ public class MovementProvider : MonoBehaviour
 
         // 필요한 이벤트리스너들을 등록
         GameManager.Instance.actGameStart += () => speed = 3.0f;
-        GameManager.Instance.actPlayerDie += () => speed = 0.0f; ;
-        GameManager.Instance.actGamePause += () => speed = 0.0f; ;
+        GameManager.Instance.actPlayerDie += () => speed = 0.0f; 
+        GameManager.Instance.actGamePause += () => speed = 0.0f; 
         GameManager.Instance.actGameEnd += () => speed = 0.0f; ;
         GameManager.Instance.actGameRestart += () => speed = 3.0f;
         GameManager.Instance.actGameRestart += () => moveType = MoveType.GoFront;

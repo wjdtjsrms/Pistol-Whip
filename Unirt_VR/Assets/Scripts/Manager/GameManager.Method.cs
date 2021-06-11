@@ -26,7 +26,11 @@ public partial class GameManager : MonoBehaviour
         actGamePause += () => audioSource.Pause();
         actGameRestart += () => audioSource.Play();
 
-        StartCoroutine(ReadyGame());
+        if(SceneManager.GetActiveScene().name == "SampleScene")
+        {
+            StartCoroutine(ReadyGame());
+        }
+
     }
 
     void Update()
