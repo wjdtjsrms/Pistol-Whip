@@ -33,6 +33,8 @@ public partial class FadeScript : MonoBehaviour
 
     [SerializeField]
     private ParticleSystem Player_Hit_Effect; // 플레이어 피격 이펙트
+    [SerializeField]
+    private ParticleSystem Player_Restore_Effect; // 플레이어 회복 이펙트
     //[SerializeField]
     //private AudioSource hit_Audio; //플레이어 히트 사운드 재생할 오디오 소스 
 
@@ -101,7 +103,6 @@ public partial class FadeScript : MonoBehaviour
     {
 
         Player_Hit_Effect.Play(); // 히트 이펙트 실행
-
 
         fadeImage.gameObject.SetActive(true);
 
