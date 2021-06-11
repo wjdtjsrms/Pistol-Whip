@@ -12,25 +12,20 @@ public class ScoreLoad : MonoBehaviour
     Text Score;
     [SerializeField]
     Text[] ScoreRank;
-    //[SerializeField]
-    //List<DataFormat> Scoreinfo = new List<DataFormat>();
     string filePath;
 
-    // Start is called before the first frame update
     private void Start()
     {
         filePath = Application.persistentDataPath + "/SaveFile" + "/score.json";
         GameManager.Instance.LoadOperate += LoadScore;
-        //GameManager.Instance.LoadRank += LoadRanked;
     }
 
     public void LoadScore()
     {
         
-        if (File.Exists(filePath))
+        if (File.Exists(filePath)) //파일이 존재할때
         {
-
-            var data = File.ReadAllText(filePath);
+            var data = File.ReadAllText(filePath); // 파일 불러오기
             GameManager.Instance.Scoreinfo = JsonConvert.DeserializeObject<List<DataFormat>>(data);
 
             //Scoreinfo = JsonConvert.DeserializeObject<List<DataFormat>>(data);
@@ -38,39 +33,16 @@ public class ScoreLoad : MonoBehaviour
             //var descListOb = GameManager.Instance.Scoreinfo.OrderBy(x => x.score);
             //var json = JsonConvert.SerializeObject(descListOb);
 
-            Score.text = GameManager.Instance.Scoreinfo[GameManager.Instance.Scoreinfo.Count-1].score.ToString();
+            Score.text = GameManager.Instance.Scoreinfo[GameManager.Instance.Scoreinfo.Count-1].score.ToString(); // 현재 점수 표시
 
-            var sortedProducts = (from prod in GameManager.Instance.Scoreinfo
+            var sortedProducts = (from prod in GameManager.Instance.Scoreinfo // 내림차순 정렬 (점수 높은 순대로)
                                   orderby prod.score descending
                                   select prod).ToList();
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 5; i++) // 랭킹 상위 5명 표시하기
             {
                 ScoreRank[i].text = sortedProducts[i].score.ToString();
             }
         }
     }
-
-    //public void LoadRanked()
-    //{
-    //    if (File.Exists(filePath))
-    //    {
-    //        var data = File.ReadAllText(filePath);
-
-    //        Scoreinfo = JsonConvert.DeserializeObject<List<DataFormat>>(data);
-    //        var descListOb = Scoreinfo.OrderBy(x => x.score);
-    //        var json = JsonConvert.SerializeObject(descListOb);
-
-    //        var sortedProducts = (from prod in Scoreinfo
-    //                             orderby prod.score descending
-    //                             select prod).ToList();
-
-    //        for(int i=0; i<5; i++)
-    //        {
-    //            Score1.text = Scoreinfo[i].number + " : " + sortedProducts[i].score + "\n";
-    //            Score1.text = Scoreinfo[i].number + " : " + sortedProducts[i].score + "\n";
-    //        }
-
-    //    }
-    //}
 }

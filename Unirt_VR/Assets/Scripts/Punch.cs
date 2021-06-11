@@ -29,6 +29,7 @@ public class Punch : MonoBehaviour
         {
             if (other.CompareTag("Hit"))
             {
+                customController.ActivateHaptic1();
                 FadeScript.Instance.FadeWhite();
                 other.GetComponent<EnemyCtrl>().EnemyDamage();
                 audioSource.PlayOneShot(melleClip);
