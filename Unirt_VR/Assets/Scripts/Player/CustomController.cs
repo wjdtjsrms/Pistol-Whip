@@ -77,19 +77,23 @@ public partial class CustomController : MonoBehaviour
             handInstance.SetActive(false);
             controllerInstance.SetActive(true);
 
-
-
+            if (availableDevice.TryGetFeatureValue(CommonUsages.trigger, out float triggerValue))
+            {
+                if (triggerValue > 0.7f)
+                {
+                    ActivateHaptic2();
+                }
+            }
         }
         else // 핸드를 렌더한다.
         {
             handInstance.SetActive(true);
             controllerInstance.SetActive(false);
             UpdateHandAnimation(); // 핸드 애니메이션은 여기서만 수행한다.
-            
-            if (TriggerValue > 0.7f) 
-            {
-                ActivateHaptic2();
-            }
+
+
+
+
 
         }
     }
