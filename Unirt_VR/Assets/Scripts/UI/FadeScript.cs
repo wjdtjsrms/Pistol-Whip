@@ -71,6 +71,11 @@ public partial class FadeScript : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(FadeLoad("SampleScene"));
     }
+    public void FadeLoadTutorial()
+    {
+        StopAllCoroutines();
+        StartCoroutine(FadeLoad("Tutorial"));
+    }
     public void FadeRed()
     {
         StopAllCoroutines();

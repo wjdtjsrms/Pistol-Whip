@@ -8,10 +8,7 @@ public class TutorialButton : MonoBehaviour, IShotAble
     // Start is called before the first frame update
     public void OnShot(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
-        OnTutorial();
+        FadeScript.Instance.FadeLoadTutorial();
     }
-    private void OnTutorial()
-    {
-        SceneManager.LoadScene("Tutorial");
-    }
+
 }
