@@ -17,6 +17,10 @@ public partial class UIManager : MonoBehaviour
     [SerializeField]
     private ParticleSystem Restore_Effect; //Player회복하는 파티클
 
+    [SerializeField]
+    private AudioClip Player_Restore_Sound; // Player 회복 사운드 클립
+
+    AudioSource Restore_S;
 
     private YieldInstruction waitOneSecond = new WaitForSeconds(1.0f); // 1초를 대기하는 객체
     private int nowCombo = 0; // 현재 콤보수
@@ -30,6 +34,8 @@ public partial class UIManager : MonoBehaviour
         gameOverUI.gameObject.SetActive(false);
         crushHeart.gameObject.SetActive(false);
         waitTimeText.gameObject.SetActive(false);
+
+        Restore_S = GetComponent<AudioSource>();  //회복소리 오디오 소스 컴포넌트를 가져옵니다.
     }
 
     void Start()
@@ -39,14 +45,10 @@ public partial class UIManager : MonoBehaviour
         GameManager.Instance.actEnemyDie += ComboUp;
         GameManager.Instance.actPlayerDamage += PlayerGetDamage;
     }
-
 }
-
 
 public partial class UIManager : MonoBehaviour
 {
-
-
     // 최대 8콤보까지 증가한다.
     private void ComboUp()
     {
@@ -84,10 +86,10 @@ public partial class UIManager : MonoBehaviour
             waitTimeText.gameObject.SetActive(false);
             playerCanDie = false;
             Restore_Effect.Play(); // 회복 이펙트와 함께 회복
+
+            Restore_S.PlayOneShot(Player_Restore_Sound); //회복 사운드 재생
         }
-
     }
-
     // 15초안에 데미지를 한번 더 입으면 죽는다.
     IEnumerator wait15Second()
     {

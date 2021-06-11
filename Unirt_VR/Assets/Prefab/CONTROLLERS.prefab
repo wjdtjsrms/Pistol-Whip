@@ -2024,6 +2024,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5206418308942073966}
     m_Modifications:
+    - target: {fileID: 1063142102144474356, guid: 5926cd74caf0cf248baa7cd3167b882a, type: 3}
+      propertyPath: muteGroup
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1103483625883248994, guid: 5926cd74caf0cf248baa7cd3167b882a, type: 3}
       propertyPath: m_Name
       value: 'Player_Bottom_Effect '
