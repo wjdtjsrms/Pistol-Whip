@@ -11,7 +11,7 @@ public class ScoreLoad : MonoBehaviour
     [SerializeField]
     Text Score;
     [SerializeField]
-    Text[] ScoreRank;
+    Text ScoreRank1, ScoreRank2, ScoreRank3, ScoreRank4, ScoreRank5;
     string filePath;
 
     private void Start()
@@ -23,9 +23,9 @@ public class ScoreLoad : MonoBehaviour
     public void LoadScore()
     {
         
-        if (File.Exists(filePath)) //ÆÄÀÏÀÌ Á¸ÀçÇÒ¶§
+        if (File.Exists(filePath)) //íŒŒì¼ì´ ì¡´ì¬í• ë•Œ
         {
-            var data = File.ReadAllText(filePath); // ÆÄÀÏ ºÒ·¯¿À±â
+            var data = File.ReadAllText(filePath); // íŒŒì¼ ë¶ˆëŸ¬ì˜¤ê¸°
             GameManager.Instance.Scoreinfo = JsonConvert.DeserializeObject<List<DataFormat>>(data);
 
             //Scoreinfo = JsonConvert.DeserializeObject<List<DataFormat>>(data);
@@ -33,16 +33,19 @@ public class ScoreLoad : MonoBehaviour
             //var descListOb = GameManager.Instance.Scoreinfo.OrderBy(x => x.score);
             //var json = JsonConvert.SerializeObject(descListOb);
 
-            Score.text = GameManager.Instance.Scoreinfo[GameManager.Instance.Scoreinfo.Count-1].score.ToString(); // ÇöÀç Á¡¼ö Ç¥½Ã
+            Score.text = GameManager.Instance.Scoreinfo[GameManager.Instance.Scoreinfo.Count-1].score.ToString(); // í˜„ì¬ ì ìˆ˜ í‘œì‹œ
 
-            var sortedProducts = (from prod in GameManager.Instance.Scoreinfo // ³»¸²Â÷¼ø Á¤·Ä (Á¡¼ö ³ôÀº ¼ø´ë·Î)
+            var sortedProducts = (from prod in GameManager.Instance.Scoreinfo // ë‚´ë¦¼ì°¨ìˆœ ì •ë ¬ (ì ìˆ˜ ë†’ì€ ìˆœëŒ€ë¡œ)
                                   orderby prod.score descending
                                   select prod).ToList();
 
-            for (int i = 0; i < 5; i++) // ·©Å· »óÀ§ 5¸í Ç¥½ÃÇÏ±â
-            {
-                ScoreRank[i].text = sortedProducts[i].score.ToString();
-            }
+            // ë­í‚¹ ìƒìœ„ 5ëª… í‘œì‹œí•˜ê¸°
+            ScoreRank1.text = sortedProducts[0].score.ToString();
+            ScoreRank2.text = sortedProducts[1].score.ToString();
+            ScoreRank3.text = sortedProducts[2].score.ToString();
+            ScoreRank4.text = sortedProducts[3].score.ToString();
+            ScoreRank5.text = sortedProducts[4].score.ToString();
+
         }
     }
 }
