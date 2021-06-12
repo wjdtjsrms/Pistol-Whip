@@ -49,7 +49,7 @@ public partial class GameManager : MonoBehaviour
 
     private IEnumerator ReadyGame()
     {
-        yield return waitOneSecond;
+        yield return new WaitForSeconds(0.1f);
 
         actGamePause?.Invoke();
 

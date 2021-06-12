@@ -8790,15 +8790,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5206418309464581997, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.13
       objectReference: {fileID: 0}
     - target: {fileID: 5206418309464581997, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5206418309464581997, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.6
+      value: 2.3
       objectReference: {fileID: 0}
     - target: {fileID: 5206418309464581997, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8862,7 +8862,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5978461681223047812, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.52
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 5980356784650030552, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
       propertyPath: m_IsActive
@@ -8940,6 +8940,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7754364824238831041, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
+      propertyPath: parentObj
+      value: 
+      objectReference: {fileID: 1675498956}
     - target: {fileID: 7754364825686618535, guid: 73bf0f6f7797b2a40b9b569950dd0031, type: 3}
       propertyPath: DeadUI
       value: 
@@ -26027,7 +26031,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1964740287}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.779, y: 0, z: -0}
+  m_LocalPosition: {x: -1.779, y: -0.002, z: -0}
   m_LocalScale: {x: 4.3549576, y: 0.0028474, z: 0.29597}
   m_Children: []
   m_Father: {fileID: 1536851600}
@@ -27851,7 +27855,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 262285892891166445, guid: aa44113f889aa2a48a810531058504b5, type: 3}
       propertyPath: bulletCount
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 262285892891166447, guid: aa44113f889aa2a48a810531058504b5, type: 3}
       propertyPath: m_Name

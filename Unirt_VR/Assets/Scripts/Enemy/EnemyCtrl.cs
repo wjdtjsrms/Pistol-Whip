@@ -196,7 +196,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     {
         animator.SetBool("IsAttack", true); // 공격 애니메이션 실행
         muzzle.Play(); // 공격 이펙트 실행
-        audioSource.PlayOneShot(attackClip); // 공격 사운드 실행
+        //audioSource.PlayOneShot(attackClip); // 공격 사운드 실행
         BulletPooling.Instance.Spawn(barrelLocation); // 총알 생성
     }
 
