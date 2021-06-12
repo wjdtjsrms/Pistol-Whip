@@ -47,6 +47,8 @@ public partial class UIManager : MonoBehaviour
 
         GameManager.Instance.actGamePause += () => isGameStop = true;
         GameManager.Instance.actGameRestart += () => isGameStop = false;
+
+        GameManager.Instance.actPlayerDie += () => isGameStop = true;
     }
 }
 

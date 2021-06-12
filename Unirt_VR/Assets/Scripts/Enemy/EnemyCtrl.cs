@@ -113,7 +113,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     private void Update()
     {
 
-        if(animator.GetBool("IsRunning") == false)
+        if(isDie == false && animator.GetBool("IsRunning") == false)
         {
             playerPos = GameManager.Instance.PlayerPos;
             if (this.transform.position.y > 0)
@@ -196,7 +196,6 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     {
         animator.SetBool("IsAttack", true); // 공격 애니메이션 실행
         muzzle.Play(); // 공격 이펙트 실행
-        //audioSource.PlayOneShot(attackClip); // 공격 사운드 실행
         BulletPooling.Instance.Spawn(barrelLocation); // 총알 생성
     }
 
