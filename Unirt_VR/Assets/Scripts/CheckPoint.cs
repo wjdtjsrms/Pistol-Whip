@@ -23,10 +23,7 @@ public class CheckPoint : MonoBehaviour
     }
     
     // Start is called before the first frame update
-    public void Update()
-    {
-        playerpos();
-    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Checkpoint")) 
@@ -34,15 +31,13 @@ public class CheckPoint : MonoBehaviour
             movementProvider.moveType = MovementProvider.MoveType.GoFront;
             Enemy1.SetActive(true);
             Enemy2.SetActive(true);
-            Enemy3.SetActive(true);
-        }
-    }
-    public void playerpos()
-    { 
-        if (GameManager.Instance.PlayerPos.z == 133)
+       
+        } 
+        if (other.gameObject.CompareTag("Map")) 
         {
-            movementProvider.moveType = MovementProvider.MoveType.FreeMove;
-            
+            movementProvider.moveType = MovementProvider.MoveType.GoFront;
+         
+            Enemy3.SetActive(true);
         }
     }
   

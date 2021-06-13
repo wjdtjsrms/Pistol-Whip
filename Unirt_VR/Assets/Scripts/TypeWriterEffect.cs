@@ -59,34 +59,33 @@ public class TypeWriterEffect : MonoBehaviour, IShotAble
     public void OnShot(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
         
-        if (Diacnt == 6)
-        {
-            dialogUI.SetActive(false);
-        }
-        else
-        {
+        
             End_Typing();
-        }
+        
     }
     //다음버튼함수
     public void End_Typing()
     {
+        for (Diacnt= 0; Diacnt <6 ; Diacnt++)
+        {
+            if (text_full == true)
+            {
+                cnt++;
+                text_full = false;
+                text_cut = false;
+                StartCoroutine(ShowText(fulltext));
+
+            }
+            //텍스트 타이핑 생략
+            else
+            {
+
+                text_cut = true;
+             
+            }
+        }
         //다음 텍스트 호출
-        if (text_full == true)
-        {
-            cnt++;
-            text_full = false;
-            text_cut = false;
-            StartCoroutine(ShowText(fulltext));
-            
-        }
-        //텍스트 타이핑 생략
-        else
-        {
-            
-            text_cut = true;
-            Diacnt++;
-        }
+        
     }
 
     //텍스트 시작호출
