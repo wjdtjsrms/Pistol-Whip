@@ -6,8 +6,6 @@ using Newtonsoft.Json;
 using UnityEngine.UI;
 using System.Linq;
 
-//일반 형태 파일 저장
-
 public class ScoreSave : MonoBehaviour
 {
     string folderPath;
