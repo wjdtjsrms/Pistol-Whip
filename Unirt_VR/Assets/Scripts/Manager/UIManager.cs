@@ -103,6 +103,7 @@ public partial class UIManager : MonoBehaviour
         // 15초를 대기한다.
         for (int i = 15; i >= 0; i--)
         {
+            waitTimeText.text = i.ToString();
             yield return waitOneSecond;
             while(isGameStop)
             {
@@ -111,6 +112,7 @@ public partial class UIManager : MonoBehaviour
             waitTimeText.text = i.ToString();
         }
         Cure();
+
         yield break;
     }
 }

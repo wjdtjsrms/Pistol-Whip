@@ -10,7 +10,7 @@ public class PopUpMenu : MonoBehaviour
 
     void Update()
     {
-        if (CustomController.IsButtonPressed(CommonUsages.secondaryButton, ref isPressedB, false))
+        if (CustomController.IsButtonPressed(CommonUsages.secondaryButton, ref isPressedB, false) && GameManager.Instance.isGameStart == true)
         {
             GameManager.Instance.GamePause(this); // 일시정지 이벤트를 호출한다.
             childObject.gameObject.SetActive(true); 

@@ -23,6 +23,11 @@ public partial class GameManager : MonoBehaviour
         get;
         private set;
     }
+    public bool isGameStart
+    {
+        get;
+        private set;
+    }
     public int Score // 플레이어 점수
     {
         get ;

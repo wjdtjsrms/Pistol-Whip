@@ -15,7 +15,10 @@ public partial class GameManager : MonoBehaviour
         Score = 0;
         Count = 0;
         isGameOver = false;
+        isGameStart = false;
         audioSource = GetComponent<AudioSource>();
+
+
     }
 
     void Start()
@@ -74,6 +77,7 @@ public partial class GameManager : MonoBehaviour
         }
 
         actGameRestart?.Invoke();
+        isGameStart = true;
     }
 
 

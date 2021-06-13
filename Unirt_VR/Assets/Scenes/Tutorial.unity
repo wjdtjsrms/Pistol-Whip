@@ -5232,29 +5232,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3013545708177934642}
     m_Modifications:
-    - target: {fileID: 127260, guid: ac7a01ca06ca9044eb15b32cb7a936f8, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 141970, guid: ac7a01ca06ca9044eb15b32cb7a936f8, type: 3}
       propertyPath: m_Name
       value: glass_panel_1_with_door (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 141970, guid: ac7a01ca06ca9044eb15b32cb7a936f8, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 141970, guid: ac7a01ca06ca9044eb15b32cb7a936f8, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 417258, guid: ac7a01ca06ca9044eb15b32cb7a936f8, type: 3}
       propertyPath: m_RootOrder
       value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 417258, guid: ac7a01ca06ca9044eb15b32cb7a936f8, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.5808473
       objectReference: {fileID: 0}
     - target: {fileID: 417258, guid: ac7a01ca06ca9044eb15b32cb7a936f8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5296,18 +5280,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2331942, guid: ac7a01ca06ca9044eb15b32cb7a936f8, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 2ce01831e9f3ae441bb48623e5fbe0c0, type: 2}
-    - target: {fileID: 2331942, guid: ac7a01ca06ca9044eb15b32cb7a936f8, type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: bc992caed8aef9a4d9bf1cd320fe9a50, type: 2}
-    - target: {fileID: 2341864, guid: ac7a01ca06ca9044eb15b32cb7a936f8, type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: bc992caed8aef9a4d9bf1cd320fe9a50, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac7a01ca06ca9044eb15b32cb7a936f8, type: 3}
 --- !u!1 &2001722557
@@ -8321,7 +8293,7 @@ MonoBehaviour:
   bullet: {fileID: 4194686609574776596, guid: af2c7b93e114bf04b90851c59c7a7431, type: 3}
   scoreUI: {fileID: 3683448958366134239}
   attackClip: {fileID: 8300000, guid: d3247579c549643a5b3a95f9224eaf3c, type: 3}
-  muzzle: {fileID: 6275264126535691149}
+  muzzle: {fileID: 0}
   line: {fileID: 8591625734099825690}
   barrelLocation: {fileID: 6275264126535691150}
   limitDistance: 5
@@ -9152,11 +9124,6 @@ PrefabInstance:
 --- !u!4 &1782258063540461717 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2727866692886258110, guid: b2ddb8013342a764dac47c0029e5a331, type: 3}
-  m_PrefabInstance: {fileID: 1782258063540461716}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &1782258063540461718 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 1989615898989019517, guid: b2ddb8013342a764dac47c0029e5a331, type: 3}
   m_PrefabInstance: {fileID: 1782258063540461716}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1782258063540461719 stripped
@@ -31247,7 +31214,7 @@ MonoBehaviour:
   bullet: {fileID: 4194686609574776596, guid: af2c7b93e114bf04b90851c59c7a7431, type: 3}
   scoreUI: {fileID: 1606535802111101042}
   attackClip: {fileID: 8300000, guid: d3247579c549643a5b3a95f9224eaf3c, type: 3}
-  muzzle: {fileID: 8233571855263124520}
+  muzzle: {fileID: 0}
   line: {fileID: 5939725188305933239}
   barrelLocation: {fileID: 8233571855263124521}
   limitDistance: 5
@@ -41351,11 +41318,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2727866692886258110, guid: b2ddb8013342a764dac47c0029e5a331, type: 3}
   m_PrefabInstance: {fileID: 6275264126535691147}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &6275264126535691149 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 1989615898989019517, guid: b2ddb8013342a764dac47c0029e5a331, type: 3}
-  m_PrefabInstance: {fileID: 6275264126535691147}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6275264126535691150 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5571533452566496746, guid: b2ddb8013342a764dac47c0029e5a331, type: 3}
@@ -42465,7 +42427,7 @@ MonoBehaviour:
   bullet: {fileID: 4194686609574776596, guid: af2c7b93e114bf04b90851c59c7a7431, type: 3}
   scoreUI: {fileID: 8985754871411827908}
   attackClip: {fileID: 8300000, guid: d3247579c549643a5b3a95f9224eaf3c, type: 3}
-  muzzle: {fileID: 1782258063540461718}
+  muzzle: {fileID: 0}
   line: {fileID: 4077581924603870985}
   barrelLocation: {fileID: 1782258063540461719}
   limitDistance: 5
@@ -50252,11 +50214,6 @@ PrefabInstance:
 --- !u!4 &8233571855263124519 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2727866692886258110, guid: b2ddb8013342a764dac47c0029e5a331, type: 3}
-  m_PrefabInstance: {fileID: 8233571855263124518}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &8233571855263124520 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 1989615898989019517, guid: b2ddb8013342a764dac47c0029e5a331, type: 3}
   m_PrefabInstance: {fileID: 8233571855263124518}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &8233571855263124521 stripped
