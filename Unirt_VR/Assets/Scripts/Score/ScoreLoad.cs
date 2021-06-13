@@ -28,11 +28,6 @@ public class ScoreLoad : MonoBehaviour
             var data = File.ReadAllText(filePath); // 파일 불러오기
             GameManager.Instance.Scoreinfo = JsonConvert.DeserializeObject<List<DataFormat>>(data);
 
-            //Scoreinfo = JsonConvert.DeserializeObject<List<DataFormat>>(data);
-
-            //var descListOb = GameManager.Instance.Scoreinfo.OrderBy(x => x.score);
-            //var json = JsonConvert.SerializeObject(descListOb);
-
             Score.text = GameManager.Instance.Scoreinfo[GameManager.Instance.Scoreinfo.Count-1].score.ToString(); // 현재 점수 표시
 
             var sortedProducts = (from prod in GameManager.Instance.Scoreinfo // 내림차순 정렬 (점수 높은 순대로)

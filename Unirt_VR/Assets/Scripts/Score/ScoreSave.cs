@@ -10,14 +10,9 @@ using System.Linq;
 
 public class ScoreSave : MonoBehaviour
 {
-    //[SerializeField]
-    //List<DataFormat> Scoreinfo = new List<DataFormat>();
-
-
     string folderPath;
     string filePath;
 
-    // Start is called before the first frame update
     private void Start()
     {
         folderPath = Application.persistentDataPath + "/SaveFile";
