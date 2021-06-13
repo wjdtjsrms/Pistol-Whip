@@ -195,6 +195,7 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
     private void EnemyAttack()
     {
         animator.SetBool("IsAttack", true); // 공격 애니메이션 실행
+        muzzle.Stop(); // 공격 이펙트 실행
         muzzle.Play(); // 공격 이펙트 실행
         BulletPooling.Instance.Spawn(barrelLocation); // 총알 생성
     }
@@ -283,7 +284,6 @@ public partial class EnemyCtrl : MonoBehaviour, IShotAble
             StartCoroutine(laserprint());
             yield return waitTwoSecond;
             EnemyAttack();
-
             yield return waitAttackDely;
         }
         yield break;
